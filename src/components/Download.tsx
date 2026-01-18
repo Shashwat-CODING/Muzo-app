@@ -20,121 +20,101 @@ export async function DownloadSection() {
     const allReleases = await getReleases()
 
     return (
-        <section id="download" className="py-24 relative overflow-hidden bg-secondary/20">
+        <section id="download" className="py-24 relative overflow-hidden">
             <div className="container px-4 mx-auto">
-                <div className="text-center mb-12">
-                    <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-foreground">
-                        Get Muzo
-                    </h2>
-                    <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                        Experience the future of music streaming. Download the latest version for Android.
-                    </p>
-                </div>
+                <div className="flex flex-col items-center text-center space-y-8 max-w-2xl mx-auto">
 
-                <div className="max-w-4xl mx-auto">
-                    {latestRelease ? (
-                        <div className="bg-card rounded-3xl border border-border overflow-hidden shadow-sm">
+                    <div className="space-y-4">
+                        <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
+                            Ready to Listen?
+                        </h2>
+                        <p className="text-muted-foreground text-lg md:text-xl max-w-lg mx-auto leading-relaxed">
+                            Join thousands of users enjoying ad-free music today.
+                        </p>
+                    </div>
 
-                            <div className="p-6 md:p-10">
-                                <div className="flex flex-col md:flex-row gap-8 items-start">
-                                    {/* Release Info */}
-                                    <div className="flex-1 w-full space-y-6">
-                                        <div className="flex items-center justify-between">
-                                            <div className="flex items-center gap-4">
-                                                <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-                                                    <Package className="h-6 w-6" />
+                    <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto pt-4">
+                        {latestRelease ? (
+                            <>
+                                {latestRelease.assets.map(asset => (
+                                    <Button key={asset.name} size="lg" className="rounded-full h-14 px-8 text-lg shadow-xl shadow-primary/20 hover:shadow-primary/30 transition-all font-semibold" asChild>
+                                        <Link href={asset.browser_download_url}>
+                                            <Download className="mr-3 h-5 w-5" />
+                                            Download APK
+                                            <span className="ml-2 text-sm opacity-60 font-normal">
+                                                v{latestRelease.tag_name}
+                                            </span>
+                                        </Link>
+                                    </Button>
+                                ))}
+                            </>
+                        ) : (
+                            <Button size="lg" className="rounded-full h-14 px-8 text-lg" disabled>
+                                Loading...
+                            </Button>
+                        )}
+
+                        <Sheet>
+                            <SheetTrigger asChild>
+                                <Button variant="outline" size="lg" className="rounded-full h-14 px-8 text-lg border-2 hover:bg-secondary/50">
+                                    <History className="mr-3 h-5 w-5" />
+                                    Versions
+                                </Button>
+                            </SheetTrigger>
+                            <SheetContent className="w-full sm:max-w-md">
+                                <SheetHeader className="mb-6 text-left">
+                                    <SheetTitle className="text-2xl">Version History</SheetTitle>
+                                    <SheetDescription>
+                                        Manage your Muzo installation with previous releases.
+                                    </SheetDescription>
+                                </SheetHeader>
+                                <ScrollArea className="h-[calc(100vh-120px)] pr-4">
+                                    <div className="space-y-3">
+                                        {allReleases.map((release) => (
+                                            <div key={release.tag_name} className="group p-4 rounded-xl border border-border/50 bg-secondary/10 hover:bg-secondary/30 transition-all">
+                                                <div className="flex items-center justify-between mb-3">
+                                                    <div>
+                                                        <h4 className="font-semibold text-lg">{release.tag_name}</h4>
+                                                        <p className="text-xs text-muted-foreground">{new Date(release.published_at).toLocaleDateString()}</p>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <h3 className="text-2xl font-bold">{latestRelease.name || latestRelease.tag_name}</h3>
-                                                    <p className="text-sm text-muted-foreground font-mono">
-                                                        {latestRelease.tag_name} • {new Date(latestRelease.published_at).toLocaleDateString()}
-                                                    </p>
+                                                <div className="flex flex-col gap-2">
+                                                    {release.assets.map(asset => (
+                                                        <Button key={asset.name} variant="secondary" size="sm" className="w-full justify-between h-10 bg-background/50 hover:bg-background group-hover:shadow-sm" asChild>
+                                                            <Link href={asset.browser_download_url}>
+                                                                <span className="flex items-center">
+                                                                    <Download className="mr-2 h-3.5 w-3.5" />
+                                                                    Download
+                                                                </span>
+                                                                <span className="text-xs text-muted-foreground">
+                                                                    {(asset.size / 1024 / 1024).toFixed(1)} MB
+                                                                </span>
+                                                            </Link>
+                                                        </Button>
+                                                    ))}
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div className="prose prose-sm dark:prose-invert max-w-none max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
-                                            <ReleaseCard body={latestRelease.body} />
-                                        </div>
-
-                                        {/* Assets / Actions */}
-                                        <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-border mt-6">
-                                            {latestRelease.assets.map(asset => (
-                                                <Button key={asset.name} size="lg" className="rounded-full h-12 text-base shadow-sm" asChild>
-                                                    <Link href={asset.browser_download_url}>
-                                                        <Download className="mr-2 h-4 w-4" />
-                                                        Download APK
-                                                        <span className="ml-2 text-xs opacity-80 font-normal">
-                                                            ({(asset.size / 1024 / 1024).toFixed(1)} MB)
-                                                        </span>
-                                                    </Link>
-                                                </Button>
-                                            ))}
-
-                                            <Sheet>
-                                                <SheetTrigger asChild>
-                                                    <Button variant="outline" size="lg" className="rounded-full h-12 text-base hover:bg-secondary">
-                                                        <History className="mr-2 h-4 w-4" />
-                                                        Old Versions
-                                                    </Button>
-                                                </SheetTrigger>
-                                                <SheetContent className="w-full sm:max-w-md">
-                                                    <SheetHeader className="mb-6">
-                                                        <SheetTitle>Version History</SheetTitle>
-                                                        <SheetDescription>
-                                                            Previous releases of Muzo.
-                                                        </SheetDescription>
-                                                    </SheetHeader>
-                                                    <ScrollArea className="h-[calc(100vh-120px)] pr-4">
-                                                        <div className="space-y-4">
-                                                            {allReleases.map((release) => (
-                                                                <div key={release.tag_name} className="p-4 rounded-xl border border-border bg-card hover:bg-secondary/50 transition-colors">
-                                                                    <div className="flex items-center justify-between mb-2">
-                                                                        <h4 className="font-semibold">{release.tag_name}</h4>
-                                                                        <span className="text-xs text-muted-foreground">{new Date(release.published_at).toLocaleDateString()}</span>
-                                                                    </div>
-                                                                    <div className="flex flex-col gap-2">
-                                                                        {release.assets.map(asset => (
-                                                                            <Button key={asset.name} variant="secondary" size="sm" className="w-full justify-start h-8 text-xs" asChild>
-                                                                                <Link href={asset.browser_download_url}>
-                                                                                    <Download className="mr-2 h-3 w-3" />
-                                                                                    {asset.name}
-                                                                                </Link>
-                                                                            </Button>
-                                                                        ))}
-                                                                    </div>
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    </ScrollArea>
-                                                </SheetContent>
-                                            </Sheet>
-                                        </div>
+                                        ))}
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="text-center py-12 bg-card rounded-3xl border border-border">
-                            <p className="text-muted-foreground">Unable to fetch release information at this time.</p>
-                            <Button variant="link" asChild className="mt-4">
-                                <Link href="https://github.com/Shashwat-CODING/Muzo/releases">
-                                    Check GitHub Releases
-                                </Link>
-                            </Button>
-                        </div>
-                    )}
+                                </ScrollArea>
+                            </SheetContent>
+                        </Sheet>
+                    </div>
 
-                    <div className="mt-12 text-center">
-                        <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" asChild>
+                    <div className="pt-8">
+                        <Button variant="link" className="text-muted-foreground hover:text-foreground transition-colors" asChild>
                             <Link href="https://github.com/Shashwat-CODING/Muzo" target="_blank">
                                 <Github className="mr-2 h-4 w-4" />
-                                View Source Code on GitHub
+                                View Source on GitHub
                             </Link>
                         </Button>
                     </div>
+
                 </div>
             </div>
+
+            {/* Ambient Background Glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl opacity-50 pointer-events-none" />
         </section>
     )
 }
