@@ -46,6 +46,9 @@ export const metadata: Metadata = {
     icon: "https://raw.githubusercontent.com/Shashwat-CODING/Muzo/main/assets/logo.png",
     apple: "https://raw.githubusercontent.com/Shashwat-CODING/Muzo/main/assets/logo.png",
   },
+  verification: {
+    google: "DDNMbfj9kE-sFUucyChb1CdNWs_CG3KytZWMphpkoyk",
+  },
 };
 
 export default function RootLayout({
