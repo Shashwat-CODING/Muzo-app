@@ -11,6 +11,9 @@ const screenshots = [
     "https://raw.githubusercontent.com/Shashwat-CODING/Muzo/main/images/3.jpg",
     "https://raw.githubusercontent.com/Shashwat-CODING/Muzo/main/images/4.jpg",
     "https://raw.githubusercontent.com/Shashwat-CODING/Muzo/main/images/5.jpg",
+    "https://raw.githubusercontent.com/Shashwat-CODING/Muzo/main/images/6.jpg",
+    "https://raw.githubusercontent.com/Shashwat-CODING/Muzo/main/images/7.jpg",
+    "https://raw.githubusercontent.com/Shashwat-CODING/Muzo/main/images/8.jpg",
 ]
 
 export function Screenshots() {
