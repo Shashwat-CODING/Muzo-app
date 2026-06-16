@@ -1,1118 +1,1138 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Muzo - Premium Music Client</title>
-  <meta name="google-adsense-account" content="ca-pub-1237614381130102">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Muzo — Premium Music Client</title>
+<meta name="description" content="A privacy-focused YouTube Music client built with Flutter. Ad-free, background playback, synchronized lyrics, and more."/>
+<meta name="keywords" content="music player, youtube music, flutter, open source, android, ad-free, privacy, lofi"/>
+<meta name="author" content="Shashwat"/>
+<meta name="google-site-verification" content="DDNMbfj9kE-sFUucyChb1CdNWs_CG3KytZWMphpkoyk"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://muzo-app.vercel.app"/>
+<meta property="og:title" content="Muzo — Premium Music Client"/>
+<meta property="og:description" content="Experience the future of music streaming. Download Muzo for Android."/>
+<meta property="og:image" content="https://shashwat-coding.github.io/Muzo/assets/web.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Muzo — Premium Music Client"/>
+<meta name="twitter:image" content="https://shashwat-coding.github.io/Muzo/assets/web.png"/>
+<link rel="icon" href="https://shashwat-coding.github.io/Muzo/assets/web.png"/>
+<meta name="google-adsense-account" content="ca-pub-1237614381130102"/>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237614381130102" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 
-  <!-- SEO Meta -->
-  <meta name="description" content="A powerful, privacy-focused YouTube Music client built with Flutter. Ad-free, background playback, synchronized lyrics, and more." />
-  <meta name="keywords" content="music player, youtube music, flutter, open source, android, ad-free, privacy, lofi" />
-  <meta name="author" content="Shashwat" />
-  <meta name="creator" content="Shashwat" />
-  <meta name="google-site-verification" content="DDNMbfj9kE-sFUucyChb1CdNWs_CG3KytZWMphpkoyk" />
+<style>
+:root {
+  --bg:       #080808;
+  --bg2:      #0e0e0e;
+  --bg3:      #141414;
+  --surface:  #111111;
+  --surf2:    #181818;
+  --border:   rgba(255,255,255,0.08);
+  --bh:       rgba(255,255,255,0.18);
+  --text:     #f0f0f0;
+  --text2:    #787878;
+  --text3:    #3a3a3a;
+  --accent:   #f0f0f0;
+  --acc-i:    #080808;
+  --green:    #3ddc84;
+  --green-bg: rgba(61,220,132,0.08);
+  --green-b:  rgba(61,220,132,0.2);
+  --r:        6px;
+  --r-img:    10px;
+}
+[data-theme="light"] {
+  --bg:       #f6f6f4;
+  --bg2:      #eeeeec;
+  --bg3:      #e5e5e3;
+  --surface:  #ffffff;
+  --surf2:    #f0f0ee;
+  --border:   rgba(0,0,0,0.08);
+  --bh:       rgba(0,0,0,0.18);
+  --text:     #0a0a0a;
+  --text2:    #787878;
+  --text3:    #c0c0c0;
+  --accent:   #0a0a0a;
+  --acc-i:    #f6f6f4;
+}
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="en_US" />
-  <meta property="og:url" content="https://muzo-app.vercel.app" />
-  <meta property="og:title" content="Muzo - Premium Music Client" />
-  <meta property="og:description" content="Experience the future of music streaming. Download Muzo for Android." />
-  <meta property="og:site_name" content="Muzo" />
-  <meta property="og:image" content="https://shashwat-coding.github.io/Muzo/assets/web.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Muzo - Premium Music Client" />
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Muzo - Premium Music Client" />
-  <meta name="twitter:description" content="A powerful, privacy-focused YouTube Music client built with Flutter." />
-  <meta name="twitter:image" content="https://shashwat-coding.github.io/Muzo/assets/web.png" />
-  <meta name="twitter:creator" content="@Shashwat" />
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  transition: background .25s, color .25s;
+}
 
-  <!-- Icons -->
-  <link rel="icon" href="https://shashwat-coding.github.io/Muzo/assets/web.png" />
-  <link rel="apple-touch-icon" href="https://shashwat-coding.github.io/Muzo/assets/web.png" />
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 8px;
+  text-decoration: none; color: var(--text);
+}
+.nav-logo img {
+  width: 26px; height: 26px; border-radius: 5px;
+  border: 1px solid var(--border);
+}
+.nav-logo-text {
+  font-family: 'Space Mono', monospace;
+  font-size: 1rem; letter-spacing: 0.12em; font-weight: 700;
+  color: var(--text);
+}
+.nav-right {
+  display: flex; align-items: center; gap: 8px;
+}
+.nav-links-desktop {
+  display: flex; align-items: center; gap: 2px;
+  margin-right: 6px;
+}
+.nav-links-desktop a {
+  padding: 6px 12px;
+  font-size: 0.8rem; font-weight: 500; letter-spacing: 0.01em;
+  color: var(--text2); text-decoration: none;
+  border-radius: var(--r);
+  transition: color .18s, background .18s;
+}
+.nav-links-desktop a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+.icon-btn {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid var(--border);
+  background: transparent; color: var(--text2);
+  cursor: pointer; display: grid; place-items: center;
+  transition: border-color .18s, color .18s;
+  flex-shrink: 0;
+}
+.icon-btn:hover { border-color: var(--bh); color: var(--text); }
+.btn-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 7px 16px;
+  background: var(--accent); color: var(--acc-i);
+  border: none; border-radius: 100px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.78rem; font-weight: 600;
+  text-decoration: none; cursor: pointer; white-space: nowrap;
+  transition: opacity .18s, transform .18s;
+}
+.btn-pill:hover { opacity: 0.85; transform: translateY(-1px); }
 
-  <!-- Google AdSense -->
-  <meta name="google-adsense-account" content="ca-pub-1237614381130102" />
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237614381130102" crossorigin="anonymous"></script>
+/* ── HERO ── */
+.hero {
+  padding-top: 56px;
+  min-height: 100svh;
+  display: flex; flex-direction: column;
+  position: relative; overflow: hidden;
+}
+.hero-inner {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 24px;
+  align-items: center;
+  min-height: calc(100svh - 56px);
+}
 
-  <!-- Karst font via Fontsource CDN (Google doesn't have it; use Bebas Neue as display + DM Mono for tech) -->
-  <!-- Karst is available via @fontsource, we'll load it inline via @font-face from CDN -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- Bebas Neue for bold display headers, DM Mono for stats/numbers, DM Sans for body -->
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+.hero-left { padding: 60px 0; }
 
-  <style>
-    /* ============================
-       KARST FONT (self-hosted via jsDelivr fontsource)
-       ============================ */
-    @import url('https://cdn.jsdelivr.net/npm/@fontsource/karst@5/index.css');
+.live-tag {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 5px 12px;
+  border: 1px solid var(--green-b);
+  background: var(--green-bg);
+  border-radius: 100px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 28px;
+}
+.live-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); animation: blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
 
-    /* fallback if fontsource CDN is blocked */
-    :root {
-      --display: 'Karst', 'Bebas Neue', sans-serif;
-      --body: 'DM Sans', sans-serif;
-      --mono: 'DM Mono', monospace;
-    }
+.hero-headline {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+.hero-headline .dim { color: var(--text3); }
 
-    /* ============================
-       THEME TOKENS
-       ============================ */
-    :root {
-      --bg:        #090909;
-      --bg2:       #0f0f0f;
-      --bg3:       #161616;
-      --surface:   #141414;
-      --surface2:  #1e1e1e;
-      --border:    rgba(255,255,255,0.07);
-      --border-h:  rgba(255,255,255,0.15);
-      --text:      #f2f2f2;
-      --text2:     #888;
-      --text3:     #444;
-      --accent:    #f2f2f2;
-      --accent-i:  #090909;
-      --pill:      rgba(255,255,255,0.05);
-      --shadow:    rgba(0,0,0,0.7);
-      --glow:      rgba(255,255,255,0.03);
-      --ni:        0.022;
-    }
-    [data-theme="light"] {
-      --bg:        #f8f8f7;
-      --bg2:       #f1f1ef;
-      --bg3:       #e8e8e5;
-      --surface:   #ffffff;
-      --surface2:  #f4f4f2;
-      --border:    rgba(0,0,0,0.07);
-      --border-h:  rgba(0,0,0,0.16);
-      --text:      #0c0c0c;
-      --text2:     #666;
-      --text3:     #aaa;
-      --accent:    #0c0c0c;
-      --accent-i:  #f8f8f7;
-      --pill:      rgba(0,0,0,0.04);
-      --shadow:    rgba(0,0,0,0.12);
-      --glow:      rgba(0,0,0,0.02);
-      --ni:        0.01;
-    }
+.hero-desc {
+  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  color: var(--text2); line-height: 1.8; font-weight: 400;
+  max-width: 400px; margin-bottom: 32px;
+}
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
+.tag-row {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 32px;
+}
+.tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.67rem; color: var(--text2); letter-spacing: 0.04em;
+}
 
-    body {
-      font-family: var(--body);
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-      transition: background .3s, color .3s;
-      -webkit-font-smoothing: antialiased;
-    }
+.hero-btns {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 12px 22px;
+  background: var(--accent); color: var(--acc-i);
+  border: none; border-radius: var(--r);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.88rem; font-weight: 600;
+  text-decoration: none; cursor: pointer;
+  transition: opacity .18s, transform .18s;
+}
+.btn-primary:hover { opacity: 0.85; transform: translateY(-2px); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 12px 22px;
+  background: transparent; color: var(--text2);
+  border: 1px solid var(--border); border-radius: var(--r);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.88rem; font-weight: 500;
+  text-decoration: none; cursor: pointer;
+  transition: all .18s;
+}
+.btn-ghost:hover { border-color: var(--bh); color: var(--text); transform: translateY(-2px); }
 
-    /* grain overlay */
-    body::after {
-      content: '';
-      position: fixed; inset: 0; z-index: 9998; pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      opacity: var(--ni);
-    }
+.hero-stats {
+  display: flex; gap: 32px; flex-wrap: wrap;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.stat-n {
+  font-family: 'Space Mono', monospace;
+  font-size: 1.5rem; font-weight: 700;
+  color: var(--text); letter-spacing: -0.02em;
+}
+.stat-l {
+  font-size: 0.72rem; color: var(--text2);
+  margin-top: 2px; letter-spacing: 0.03em;
+  font-weight: 400;
+}
 
-    /* ============================
-       NAV
-       ============================ */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      height: 60px;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 clamp(1rem, 4vw, 3rem);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(24px) saturate(160%);
-      -webkit-backdrop-filter: blur(24px) saturate(160%);
-      background: color-mix(in srgb, var(--bg) 82%, transparent);
-    }
-    .nav-logo {
-      display: flex; align-items: center; gap: 9px;
-      text-decoration: none; color: var(--text);
-    }
-    .nav-logo img {
-      width: 28px; height: 28px; border-radius: 7px;
-      border: 1px solid var(--border);
-    }
-    .nav-logo-text {
-      font-family: var(--display);
-      font-size: 1.35rem; letter-spacing: 0.08em;
-      color: var(--text);
-    }
-    .nav-links { display: flex; align-items: center; gap: 0.1rem; }
-    .nav-link {
-      padding: 0.4rem 0.75rem;
-      font-size: 0.8rem; font-weight: 500; letter-spacing: 0.02em;
-      color: var(--text2); text-decoration: none;
-      border-radius: 6px;
-      transition: color .2s, background .2s;
-    }
-    .nav-link:hover { color: var(--text); background: var(--pill); }
-    .nav-right { display: flex; align-items: center; gap: 0.5rem; }
-    .theme-btn {
-      width: 34px; height: 34px; border-radius: 50%;
-      border: 1px solid var(--border);
-      background: var(--surface); color: var(--text2);
-      cursor: pointer; display: grid; place-items: center;
-      transition: all .2s; flex-shrink: 0;
-    }
-    .theme-btn:hover { border-color: var(--border-h); color: var(--text); }
-    .nav-dl {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 0.42rem 1rem;
-      background: var(--accent); color: var(--accent-i);
-      border: none; border-radius: 6px;
-      font-family: var(--body); font-size: 0.8rem; font-weight: 600;
-      text-decoration: none; cursor: pointer; white-space: nowrap;
-      transition: opacity .2s, transform .2s;
-    }
-    .nav-dl:hover { opacity: 0.83; transform: translateY(-1px); }
-    .nav-mobile-links { display: none; }
+/* PHONE VISUAL */
+.hero-right {
+  height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.phones {
+  position: relative; width: 320px; height: 500px;
+}
+.ph {
+  position: absolute;
+  border-radius: var(--r-img);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ph-a {
+  width: 200px; height: 380px;
+  left: 0; top: 60px;
+  transform: rotate(-5deg);
+  box-shadow: 0 24px 60px rgba(0,0,0,.7);
+  z-index: 1;
+}
+.ph-b {
+  width: 200px; height: 380px;
+  right: 0; top: 50px;
+  transform: rotate(4deg);
+  box-shadow: 0 32px 80px rgba(0,0,0,.8);
+  z-index: 2;
+}
 
-    /* ============================
-       LAYOUT HELPERS
-       ============================ */
-    main { padding-top: 60px; }
-    .sec { padding: clamp(3.5rem, 7vw, 6rem) clamp(1rem, 4vw, 3rem); }
-    .container { max-width: 1080px; margin: 0 auto; }
+/* ── TICKER ── */
+.ticker-wrap {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+  overflow: hidden; padding: 12px 0;
+}
+.ticker {
+  display: flex; gap: 0; white-space: nowrap;
+  animation: tick 25s linear infinite;
+}
+@keyframes tick { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+.ticker-item {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 0 28px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase;
+}
+.ticker-item span { color: var(--text2); }
+.ticker-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text3); }
 
-    /* ============================
-       HERO
-       ============================ */
-    .hero {
-      min-height: calc(100svh - 60px);
-      display: flex; align-items: center;
-      position: relative; overflow: hidden;
-    }
-    .hero-glow {
-      position: absolute; inset: 0; pointer-events: none;
-      background: radial-gradient(ellipse 70% 55% at 50% -5%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 65%);
-    }
-    .hero-inner {
-      display: grid;
-      grid-template-columns: 1fr 420px;
-      gap: 3rem; align-items: center;
-      width: 100%;
-    }
+/* ── AD ── */
+.ad-strip {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 24px;
+  text-align: center;
+}
+.ad-lbl {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem; color: var(--text3); letter-spacing: 0.12em;
+  text-transform: uppercase; margin-bottom: 8px;
+}
 
-    /* live badge */
-    .live-badge {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 0.32rem 0.8rem;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      background: var(--pill);
-      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--text2);
-      margin-bottom: 1.4rem;
-      animation: fadeUp .5s ease both;
-    }
-    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; animation: blink 2s infinite; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+/* ── SECTION HELPERS ── */
+.sec { padding: clamp(48px, 8vw, 88px) 24px; }
+.container { max-width: 1200px; margin: 0 auto; }
+.eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem; color: var(--text3); letter-spacing: 0.14em;
+  text-transform: uppercase; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+.eyebrow::before { content:''; display:block; width:20px; height:1px; background:var(--text3); }
+.sec-h {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700; letter-spacing: -0.03em;
+  line-height: 1.1; color: var(--text);
+  margin-bottom: 12px;
+}
+.sec-sub {
+  font-size: 0.95rem; color: var(--text2); font-weight: 400;
+  line-height: 1.75; max-width: 480px;
+}
 
-    .hero h1 {
-      font-family: var(--display);
-      font-size: clamp(3.8rem, 8vw, 7rem);
-      line-height: 0.95;
-      letter-spacing: 0.04em;
-      color: var(--text);
-      animation: fadeUp .55s .08s ease both;
-    }
-    .hero h1 .muted { color: var(--text3); }
+/* ── DOWNLOAD ── */
+.dl-sec { background: var(--bg2); }
+.latest-card {
+  margin-top: 32px;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  background: var(--surface);
+  overflow: hidden;
+}
+.latest-top {
+  padding: 28px 28px 24px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px; align-items: start;
+  border-bottom: 1px solid var(--border);
+}
+.latest-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid var(--green-b);
+  background: var(--green-bg);
+  border-radius: 100px;
+  color: var(--green);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.latest-name {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem; color: var(--text3); letter-spacing: 0.08em;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.latest-ver {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-weight: 700; letter-spacing: -0.04em;
+  line-height: 1; color: var(--text); margin-bottom: 6px;
+}
+.latest-date {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem; color: var(--text2); margin-bottom: 20px;
+}
+.latest-stats {
+  display: flex; gap: 28px; flex-wrap: wrap;
+}
+.ls-n {
+  font-family: 'Space Mono', monospace;
+  font-size: 1.3rem; font-weight: 700; color: var(--text);
+}
+.ls-l {
+  font-size: 0.67rem; color: var(--text3); margin-top: 2px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  font-family: 'Space Mono', monospace;
+}
+.latest-notes-col {
+  max-width: 300px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem; color: var(--text2); line-height: 1.7;
+  display: none;
+}
+.latest-bottom {
+  padding: 20px 28px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  background: var(--bg2);
+}
+.dl-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 18px;
+  border-radius: var(--r);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.82rem; font-weight: 600;
+  text-decoration: none; cursor: pointer; border: none;
+  transition: opacity .18s, transform .18s;
+}
+.dl-btn.main { background: var(--accent); color: var(--acc-i); }
+.dl-btn.main:hover { opacity: 0.83; transform: translateY(-1px); }
+.dl-btn.sec {
+  background: transparent; color: var(--text2);
+  border: 1px solid var(--border);
+}
+.dl-btn.sec:hover { border-color: var(--bh); color: var(--text); transform: translateY(-1px); }
+.dl-size { font-size: 0.7rem; opacity: 0.5; font-family: 'Space Mono', monospace; }
 
-    .hero-desc {
-      margin-top: 1.25rem;
-      font-size: clamp(0.88rem, 1.5vw, 1rem);
-      color: var(--text2); line-height: 1.75;
-      font-weight: 300; max-width: 420px;
-      animation: fadeUp .55s .16s ease both;
-    }
+/* ALL RELEASES TABLE */
+.rel-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 48px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;
+}
+.rel-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; color: var(--text);
+}
+.releases-list {
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  display: flex; flex-direction: column; gap: 1px;
+  background: var(--border);
+}
+.rel-row {
+  background: var(--surface);
+  padding: 14px 20px;
+  display: grid;
+  grid-template-columns: 90px 1fr auto auto;
+  align-items: center; gap: 12px;
+  transition: background .12s;
+}
+.rel-row:hover { background: var(--surf2); }
+.rel-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.82rem; font-weight: 700; color: var(--text);
+}
+.rel-date { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--text3); }
+.rel-assets { display: flex; flex-wrap: wrap; gap: 6px; }
+.rel-asset {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px;
+  border: 1px solid var(--border); border-radius: 4px;
+  background: var(--bg2); color: var(--text2);
+  font-size: 0.72rem; font-family: 'Space Mono', monospace;
+  text-decoration: none; transition: all .12s;
+}
+.rel-asset:hover { border-color: var(--bh); color: var(--text); }
+.rel-dl {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem; color: var(--text3);
+  white-space: nowrap; text-align: right;
+  display: flex; align-items: center; gap: 4px;
+}
 
-    .tag-row {
-      display: flex; flex-wrap: wrap; gap: 0.45rem;
-      margin-top: 1.4rem;
-      animation: fadeUp .55s .22s ease both;
-    }
-    .tag {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 0.28rem 0.7rem;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      background: var(--pill);
-      font-size: 0.74rem; font-weight: 500; color: var(--text2);
-      font-family: var(--mono);
-    }
+.skel {
+  background: linear-gradient(90deg, var(--surface) 25%, var(--surf2) 50%, var(--surface) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite; border-radius: var(--r); height: 50px;
+}
+@keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
 
-    .hero-btns {
-      display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
-      margin-top: 2rem;
-      animation: fadeUp .55s .28s ease both;
-    }
-    .btn-p {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 0.75rem 1.6rem;
-      background: var(--accent); color: var(--accent-i);
-      border: none; border-radius: 6px;
-      font-family: var(--body); font-size: 0.88rem; font-weight: 600;
-      text-decoration: none; cursor: pointer;
-      transition: opacity .2s, transform .2s;
-    }
-    .btn-p:hover { opacity: 0.83; transform: translateY(-2px); }
-    .btn-s {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 0.75rem 1.6rem;
-      background: transparent; color: var(--text2);
-      border: 1px solid var(--border); border-radius: 6px;
-      font-family: var(--body); font-size: 0.88rem; font-weight: 500;
-      text-decoration: none; cursor: pointer;
-      transition: all .2s;
-    }
-    .btn-s:hover { border-color: var(--border-h); color: var(--text); transform: translateY(-2px); }
+/* ── FEATURED ── */
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-top: 28px;
+}
+.feat-card {
+  background: var(--surface);
+  display: flex; align-items: center; gap: 14px;
+  padding: 20px;
+  text-decoration: none; color: var(--text);
+  transition: background .15s;
+}
+.feat-card:hover { background: var(--surf2); }
+.feat-ico {
+  width: 38px; height: 38px; flex-shrink: 0;
+  border-radius: var(--r); border: 1px solid var(--border);
+  background: var(--bg2);
+  display: grid; place-items: center; color: var(--text2);
+}
+.feat-ico svg { width: 18px; height: 18px; }
+.feat-name { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+.feat-sub {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem; color: var(--text3); margin-top: 3px;
+}
 
-    .hero-kpis {
-      display: flex; gap: 2rem; margin-top: 2.5rem;
-      animation: fadeUp .55s .34s ease both;
-      flex-wrap: wrap;
-    }
-    .kpi {}
-    .kpi-n {
-      font-family: var(--mono); font-size: 1.6rem; font-weight: 500;
-      color: var(--text); letter-spacing: -0.02em;
-    }
-    .kpi-l { font-size: 0.73rem; color: var(--text3); margin-top: 3px; letter-spacing: 0.04em; text-transform: uppercase; }
+/* ── FEATURES ── */
+.feat-sec { background: var(--bg2); }
+.feat-grid-main {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: var(--r);
+  overflow: hidden; margin-top: 28px;
+}
+.feat-cell {
+  background: var(--surface);
+  padding: 24px;
+  transition: background .15s;
+}
+.feat-cell:hover { background: var(--surf2); }
+.feat-ico-box {
+  width: 36px; height: 36px; border-radius: var(--r);
+  border: 1px solid var(--border); background: var(--bg3);
+  display: grid; place-items: center; margin-bottom: 16px; color: var(--text2);
+}
+.feat-ico-box svg { width: 17px; height: 17px; }
+.feat-cell-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem; font-weight: 700; letter-spacing: -0.01em;
+  color: var(--text); margin-bottom: 8px;
+}
+.feat-cell-desc {
+  font-size: 0.82rem; color: var(--text2); line-height: 1.7; font-weight: 400;
+}
 
-    /* PHONE VISUAL */
-    .hero-visual {
-      position: relative;
-      display: flex; justify-content: center; align-items: center;
-      animation: fadeUp .7s .15s ease both;
-      height: 520px;
-    }
-    .ph-wrap { position: relative; width: 280px; height: 480px; }
-    .ph {
-      position: absolute;
-      border-radius: 26px; overflow: hidden;
-      border: 1px solid var(--border);
-    }
-    .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .ph.a {
-      width: 210px; height: 400px;
-      left: 10px; top: 60px;
-      transform: rotate(-5.5deg);
-      box-shadow: 0 30px 70px var(--shadow);
-      z-index: 1;
-    }
-    .ph.b {
-      width: 210px; height: 400px;
-      right: 10px; top: 40px;
-      transform: rotate(4deg);
-      box-shadow: 0 40px 90px var(--shadow);
-      z-index: 2;
-    }
+/* ── SCREENSHOTS ── */
+.ss-sec { background: var(--bg); }
+.ss-scroll {
+  display: flex; gap: 10px;
+  overflow-x: auto; padding: 24px 0 12px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.ss-scroll::-webkit-scrollbar { display: none; }
+.ss-pad { flex-shrink: 0; width: 24px; }
+.ss-item {
+  flex-shrink: 0; width: 170px;
+  scroll-snap-align: start;
+  border-radius: var(--r-img);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: transform .25s, box-shadow .25s;
+}
+.ss-item:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,.6); }
+.ss-item img { width: 100%; display: block; }
 
-    @keyframes fadeUp {
-      from { opacity:0; transform:translateY(18px); }
-      to   { opacity:1; transform:translateY(0); }
-    }
+/* lightbox */
+.lb { position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,.95); display: none; place-items: center; }
+.lb.on { display: grid; }
+.lb img { max-height: 92vh; max-width: 92vw; border-radius: var(--r-img); border: 1px solid var(--border); }
+.lb-x {
+  position: absolute; top: 20px; right: 20px;
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--surf2); border: 1px solid var(--border);
+  color: var(--text); cursor: pointer; display: grid; place-items: center;
+}
 
-    /* ============================
-       AD STRIP
-       ============================ */
-    .ad-strip {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      background: var(--bg2);
-      padding: 0.9rem clamp(1rem, 4vw, 3rem);
-      text-align: center;
-    }
-    .ad-lbl { font-size: 0.65rem; color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; font-family: var(--mono); }
+/* ── TECH STACK ── */
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: var(--r);
+  overflow: hidden; margin-top: 28px;
+}
+.st-cell {
+  background: var(--surface); padding: 14px 18px;
+  display: flex; align-items: center; gap: 10px;
+  transition: background .12s;
+}
+.st-cell:hover { background: var(--surf2); }
+.st-layer {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem; color: var(--text3); letter-spacing: 0.06em;
+  text-transform: uppercase; width: 66px; flex-shrink: 0;
+}
+.st-name { font-size: 0.82rem; font-weight: 500; color: var(--text); }
 
-    /* ============================
-       LATEST RELEASE HERO CARD
-       ============================ */
-    .latest-sec { background: var(--bg2); }
-    .latest-card {
-      border: 1px solid var(--border-h);
-      border-radius: 16px;
-      overflow: hidden;
-      background: var(--surface);
-      margin-top: 2.5rem;
-    }
-    .latest-top {
-      padding: 2rem 2.5rem;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 2rem; align-items: start;
-      border-bottom: 1px solid var(--border);
-    }
-    .latest-ver {
-      font-family: var(--display);
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      letter-spacing: 0.04em;
-      line-height: 1;
-      color: var(--text);
-    }
-    .latest-name {
-      font-family: var(--mono);
-      font-size: 0.8rem; color: var(--text3);
-      letter-spacing: 0.08em; text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    }
-    .latest-date {
-      font-family: var(--mono);
-      font-size: 0.78rem; color: var(--text2);
-      margin-top: 0.5rem;
-    }
-    .latest-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 0.3rem 0.75rem;
-      border: 1px solid #4ade8044;
-      border-radius: 4px;
-      background: #4ade8010;
-      color: #4ade80;
-      font-family: var(--mono); font-size: 0.7rem; font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-    .latest-stats-row {
-      display: flex; gap: 2.5rem; margin-top: 1rem; flex-wrap: wrap;
-    }
-    .ls {
-      font-family: var(--mono);
-    }
-    .ls-n { font-size: 1.6rem; font-weight: 500; color: var(--text); }
-    .ls-l { font-size: 0.68rem; color: var(--text3); margin-top: 2px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .latest-bottom {
-      padding: 1.5rem 2.5rem;
-      display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
-    }
-    .dl-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 0.72rem 1.5rem;
-      border-radius: 6px;
-      font-family: var(--body); font-size: 0.85rem; font-weight: 600;
-      text-decoration: none; cursor: pointer; border: none;
-      transition: opacity .2s, transform .2s;
-    }
-    .dl-btn.main { background: var(--accent); color: var(--accent-i); }
-    .dl-btn.main:hover { opacity: 0.82; transform: translateY(-1px); }
-    .dl-btn.sec {
-      background: transparent; color: var(--text2);
-      border: 1px solid var(--border);
-    }
-    .dl-btn.sec:hover { border-color: var(--border-h); color: var(--text); transform: translateY(-1px); }
-    .dl-size { font-family: var(--mono); font-size: 0.72rem; opacity: 0.65; }
+/* ── OPEN SOURCE ── */
+.oss-sec { background: var(--bg2); }
+.oss-card {
+  border: 1px solid var(--border); border-radius: var(--r);
+  overflow: hidden; margin-top: 28px; background: var(--surface);
+}
+.oss-top {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 40px; padding: 32px;
+  border-bottom: 1px solid var(--border);
+}
+.oss-h {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  font-weight: 700; letter-spacing: -0.02em;
+  color: var(--text); line-height: 1.25; margin-bottom: 10px;
+}
+.oss-p { font-size: 0.88rem; color: var(--text2); line-height: 1.75; font-weight: 400; }
+.oss-btns { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
+.gh-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: var(--r); overflow: hidden;
+  align-self: start;
+}
+.gh-cell { background: var(--bg2); padding: 18px; text-align: center; }
+.gh-n {
+  font-family: 'Space Mono', monospace;
+  font-size: 1.4rem; font-weight: 700; color: var(--text);
+}
+.gh-l {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem; color: var(--text3); margin-top: 4px;
+  letter-spacing: 0.07em; text-transform: uppercase;
+}
+.oss-bottom {
+  padding: 16px 32px;
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  background: var(--bg2);
+}
+.oss-meta {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem; color: var(--text3);
+  display: flex; align-items: center; gap: 5px;
+}
+.oss-meta svg { width: 11px; height: 11px; }
 
-    /* ============================
-       ALL RELEASES TABLE
-       ============================ */
-    .releases-list { margin-top: 2rem; display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--border); }
-    .rel-row {
-      background: var(--surface);
-      padding: 1.1rem 1.5rem;
-      display: grid;
-      grid-template-columns: 100px 1fr auto auto;
-      align-items: center; gap: 1rem;
-      transition: background .15s;
-    }
-    .rel-row:hover { background: var(--surface2); }
-    .rel-tag { font-family: var(--mono); font-size: 0.85rem; font-weight: 500; color: var(--text); }
-    .rel-date { font-family: var(--mono); font-size: 0.73rem; color: var(--text3); }
-    .rel-assets { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .rel-asset {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 0.3rem 0.8rem;
-      border: 1px solid var(--border); border-radius: 4px;
-      background: var(--pill); color: var(--text2);
-      font-size: 0.75rem; font-family: var(--mono);
-      text-decoration: none;
-      transition: all .15s;
-    }
-    .rel-asset:hover { border-color: var(--border-h); color: var(--text); }
-    .rel-dl-count {
-      font-family: var(--mono); font-size: 0.75rem; color: var(--text3);
-      white-space: nowrap; text-align: right;
-      display: flex; align-items: center; gap: 4px;
-    }
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 36px 24px;
+}
+.footer-inner {
+  max-width: 1200px; margin: 0 auto;
+}
+.footer-top {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 24px; flex-wrap: wrap;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.footer-brand { display: flex; align-items: center; gap: 8px; }
+.footer-brand img { width: 24px; height: 24px; border-radius: 5px; border: 1px solid var(--border); }
+.footer-brand-name {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.95rem; font-weight: 700; letter-spacing: 0.1em;
+}
+.footer-tagline {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem; color: var(--text3); margin-top: 6px; letter-spacing: 0.04em;
+}
+.footer-links { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+.footer-link {
+  font-size: 0.78rem; color: var(--text3); text-decoration: none;
+  transition: color .18s;
+}
+.footer-link:hover { color: var(--text); }
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 8px;
+}
+.footer-copy {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem; color: var(--text3);
+}
 
-    .skeleton {
-      background: linear-gradient(90deg, var(--surface) 25%, var(--surface2) 50%, var(--surface) 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-      border-radius: 8px; height: 56px;
-    }
-    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+/* ── SCROLL REVEAL ── */
+.rv { opacity: 0; transform: translateY(16px); transition: opacity .5s ease, transform .5s ease; }
+.rv.in { opacity: 1; transform: none; }
+.rv.d1 { transition-delay: .07s; }
+.rv.d2 { transition-delay: .14s; }
+.rv.d3 { transition-delay: .21s; }
 
-    /* ============================
-       FEATURED ON
-       ============================ */
-    .featured-row {
-      display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2.5rem;
-    }
-    .feat-card {
-      flex: 1; min-width: 220px;
-      display: flex; align-items: center; gap: 1rem;
-      padding: 1.25rem 1.5rem;
-      border: 1px solid var(--border); border-radius: 10px;
-      background: var(--surface); text-decoration: none;
-      color: var(--text);
-      transition: border-color .2s, background .2s, transform .2s;
-    }
-    .feat-card:hover { border-color: var(--border-h); background: var(--surface2); transform: translateY(-2px); }
-    .feat-ico {
-      width: 40px; height: 40px; flex-shrink: 0;
-      border-radius: 8px; border: 1px solid var(--border);
-      background: var(--bg3);
-      display: grid; place-items: center;
-    }
-    .feat-ico svg { width: 20px; height: 20px; }
-    .feat-name { font-size: 0.88rem; font-weight: 600; color: var(--text); }
-    .feat-sub { font-size: 0.75rem; color: var(--text3); margin-top: 2px; font-family: var(--mono); }
-
-    /* ============================
-       FEATURES GRID
-       ============================ */
-    .feat-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
-      margin-top: 2.5rem;
-    }
-    .feat-cell {
-      background: var(--surface);
-      padding: 1.75rem;
-      transition: background .2s;
-      position: relative;
-    }
-    .feat-cell:hover { background: var(--surface2); }
-    .feat-cell-ico {
-      width: 38px; height: 38px; border-radius: 8px;
-      border: 1px solid var(--border); background: var(--bg2);
-      display: grid; place-items: center; margin-bottom: 1.1rem;
-      color: var(--text2);
-    }
-    .feat-cell-ico svg { width: 18px; height: 18px; }
-    .feat-cell-title {
-      font-family: var(--display);
-      font-size: 1.05rem; letter-spacing: 0.06em;
-      color: var(--text); margin-bottom: 0.5rem;
-    }
-    .feat-cell-desc { font-size: 0.83rem; color: var(--text2); line-height: 1.65; font-weight: 300; }
-
-    /* optional login note */
-    .login-note {
-      display: inline-flex; align-items: center; gap: 6px;
-      margin-top: 0.9rem;
-      font-family: var(--mono); font-size: 0.71rem; color: var(--text3);
-    }
-    .login-note svg { width: 12px; height: 12px; }
-
-    /* ============================
-       SCREENSHOTS
-       ============================ */
-    .ss-sec { background: var(--bg2); }
-    .ss-scroll {
-      display: flex; gap: 0.85rem;
-      overflow-x: auto; padding: 2rem 0 1rem;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
-    }
-    .ss-scroll::-webkit-scrollbar { height: 3px; }
-    .ss-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-    .ss-item {
-      flex-shrink: 0; width: 185px;
-      scroll-snap-align: start;
-      border-radius: 20px; overflow: hidden;
-      border: 1px solid var(--border);
-      box-shadow: 0 16px 40px var(--shadow);
-      cursor: pointer;
-      transition: transform .3s, box-shadow .3s;
-    }
-    .ss-item:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 28px 60px var(--shadow); }
-    .ss-item img { width: 100%; display: block; }
-    .ss-pad { flex-shrink: 0; }
-
-    /* lightbox */
-    .lb { position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,0.93); display: none; place-items: center; backdrop-filter: blur(16px); }
-    .lb.on { display: grid; }
-    .lb img { max-height: 92vh; max-width: 92vw; border-radius: 18px; border: 1px solid var(--border); box-shadow: 0 40px 100px rgba(0,0,0,0.8); }
-    .lb-x {
-      position: absolute; top: 1.5rem; right: 1.5rem;
-      width: 40px; height: 40px; border-radius: 50%;
-      background: var(--surface2); border: 1px solid var(--border);
-      color: var(--text); cursor: pointer; display: grid; place-items: center;
-      font-size: 1rem;
-    }
-
-    /* ============================
-       TECH STACK
-       ============================ */
-    .stack-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
-      margin-top: 2.5rem;
-    }
-    .st-cell {
-      background: var(--surface); padding: 1.1rem 1.4rem;
-      display: flex; align-items: center; gap: 0.75rem;
-      transition: background .15s;
-    }
-    .st-cell:hover { background: var(--surface2); }
-    .st-layer { font-family: var(--mono); font-size: 0.67rem; color: var(--text3); letter-spacing: 0.07em; text-transform: uppercase; width: 70px; flex-shrink: 0; }
-    .st-name { font-size: 0.84rem; font-weight: 500; color: var(--text); }
-
-    /* ============================
-       OPEN SOURCE
-       ============================ */
-    .oss-card {
-      border: 1px solid var(--border); border-radius: 16px;
-      overflow: hidden; margin-top: 2.5rem;
-      background: var(--surface);
-    }
-    .oss-top {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 3rem; padding: 2.5rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .oss-h { font-family: var(--display); font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: 0.04em; color: var(--text); line-height: 1.1; margin-bottom: 0.75rem; }
-    .oss-p { font-size: 0.88rem; color: var(--text2); line-height: 1.7; font-weight: 300; }
-    .oss-btns { display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap; }
-    .gh-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 1px; background: var(--border);
-      border-radius: 10px; overflow: hidden;
-    }
-    .gh-cell { background: var(--bg2); padding: 1.3rem; text-align: center; }
-    .gh-n { font-family: var(--mono); font-size: 1.5rem; font-weight: 500; color: var(--text); }
-    .gh-l { font-size: 0.7rem; color: var(--text3); margin-top: 3px; letter-spacing: 0.07em; text-transform: uppercase; font-family: var(--mono); }
-    .oss-bottom {
-      padding: 1.25rem 2.5rem;
-      display: flex; align-items: center; gap: 1rem;
-      background: var(--bg2);
-      flex-wrap: wrap;
-    }
-    .oss-meta { font-family: var(--mono); font-size: 0.73rem; color: var(--text3); display: flex; align-items: center; gap: 5px; }
-
-    /* ============================
-       FOOTER
-       ============================ */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem clamp(1rem, 4vw, 3rem);
-    }
-    .footer-top {
-      display: flex; align-items: flex-start; justify-content: space-between;
-      gap: 2rem; flex-wrap: wrap;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 1.5rem;
-    }
-    .footer-brand { display: flex; align-items: center; gap: 9px; }
-    .footer-brand img { width: 26px; height: 26px; border-radius: 6px; border: 1px solid var(--border); }
-    .footer-brand-name { font-family: var(--display); font-size: 1.25rem; letter-spacing: 0.08em; color: var(--text); }
-    .footer-brand-tagline { font-size: 0.76rem; color: var(--text3); margin-top: 4px; font-family: var(--mono); }
-    .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center; }
-    .footer-link { font-size: 0.8rem; color: var(--text3); text-decoration: none; transition: color .2s; }
-    .footer-link:hover { color: var(--text); }
-    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
-    .footer-copy { font-family: var(--mono); font-size: 0.72rem; color: var(--text3); }
-
-    /* ============================
-       SCROLL REVEAL
-       ============================ */
-    .rv { opacity: 0; transform: translateY(20px); transition: opacity .55s ease, transform .55s ease; }
-    .rv.in { opacity: 1; transform: none; }
-    .rv.d1 { transition-delay: .08s; }
-    .rv.d2 { transition-delay: .16s; }
-    .rv.d3 { transition-delay: .24s; }
-
-    /* section headers */
-    .sec-tag {
-      font-family: var(--mono); font-size: 0.68rem; font-weight: 600;
-      letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3);
-      display: flex; align-items: center; gap: 8px; margin-bottom: 0.9rem;
-    }
-    .sec-tag::before { content: ''; width: 18px; height: 1px; background: var(--text3); }
-    .sec-h {
-      font-family: var(--display);
-      font-size: clamp(2rem, 4.5vw, 3.2rem);
-      letter-spacing: 0.04em; line-height: 1.05;
-      color: var(--text); margin-bottom: 0.85rem;
-    }
-    .sec-sub { font-size: 0.92rem; color: var(--text2); font-weight: 300; line-height: 1.7; max-width: 480px; }
-
-    /* ============================
-       RESPONSIVE
-       ============================ */
-    @media (max-width: 900px) {
-      .nav-links { display: none; }
-      .hero-inner { grid-template-columns: 1fr; }
-      .hero-visual { order: -1; height: 300px; }
-      .ph-wrap { width: 240px; height: 320px; }
-      .ph.a { width: 165px; height: 305px; left: 5px; top: 10px; }
-      .ph.b { width: 165px; height: 305px; right: 5px; top: 0; }
-      .feat-grid { grid-template-columns: 1fr 1fr; }
-      .latest-top { grid-template-columns: 1fr; }
-      .oss-top { grid-template-columns: 1fr; }
-      .gh-grid { grid-template-columns: repeat(2,1fr); }
-      .rel-row { grid-template-columns: 80px 1fr; grid-template-rows: auto auto; }
-      .rel-date { grid-column: 2; }
-      .rel-assets { grid-column: 1 / -1; }
-      .rel-dl-count { grid-column: 1 / -1; text-align: left; }
-    }
-    @media (max-width: 600px) {
-      .feat-grid { grid-template-columns: 1fr; }
-      .latest-stats-row { gap: 1.5rem; }
-      .latest-bottom { gap: 0.6rem; }
-      .hero-kpis { gap: 1.25rem; }
-      .hero h1 { font-size: clamp(3rem, 12vw, 4.5rem); }
-      .hero-btns { flex-direction: column; align-items: flex-start; }
-      .btn-p, .btn-s { width: 100%; justify-content: center; }
-      .footer-top { flex-direction: column; }
-      .footer-bottom { flex-direction: column; align-items: flex-start; }
-      .oss-bottom { flex-direction: column; align-items: flex-start; }
-    }
-
-    /* SVG icon helpers */
-    .ico { display: inline-block; vertical-align: middle; }
-  </style>
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  .nav-links-desktop { display: none; }
+  .hero-inner {
+    grid-template-columns: 1fr;
+    padding: 0 20px;
+  }
+  .hero-right {
+    display: none;
+  }
+  .hero-left { padding: 40px 0 40px; }
+  .feat-grid-main { grid-template-columns: 1fr 1fr; }
+  .featured-grid { grid-template-columns: 1fr; }
+  .oss-top { grid-template-columns: 1fr; }
+  .latest-top { grid-template-columns: 1fr; }
+  .latest-notes-col { max-width: 100%; }
+  .rel-row { grid-template-columns: 80px 1fr; }
+  .rel-date { grid-column: 2; }
+  .rel-assets { grid-column: 1 / -1; }
+  .rel-dl { grid-column: 1 / -1; justify-content: flex-start; }
+}
+@media (max-width: 600px) {
+  nav { padding: 0 16px; }
+  .hero-left { padding: 32px 0 32px; }
+  .hero-headline { font-size: clamp(2.4rem, 11vw, 3.2rem); }
+  .feat-grid-main { grid-template-columns: 1fr; }
+  .hero-btns { flex-direction: column; align-items: stretch; }
+  .btn-primary, .btn-ghost { justify-content: center; }
+  .hero-stats { gap: 20px; }
+  .latest-stats { gap: 18px; }
+  .oss-btns { flex-direction: column; }
+  .footer-top { flex-direction: column; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+  .sec { padding: 40px 16px; }
+  .latest-top { padding: 20px; }
+  .latest-bottom { padding: 16px 20px; }
+  .oss-top { padding: 20px; }
+  .oss-bottom { padding: 14px 20px; }
+  .rel-row { padding: 12px 16px; }
+  .ticker-item { padding: 0 20px; }
+}
+</style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="#">
-    <img src="https://shashwat-coding.github.io/Muzo/assets/web.png" alt="Muzo logo" onerror="this.style.display='none'" />
+    <img src="https://shashwat-coding.github.io/Muzo/assets/web.png" alt="Muzo" onerror="this.style.display='none'"/>
     <span class="nav-logo-text">MUZO</span>
   </a>
-  <div class="nav-links">
-    <a class="nav-link" href="#features">Features</a>
-    <a class="nav-link" href="#screenshots">Screenshots</a>
-    <a class="nav-link" href="#download">Download</a>
-    <a class="nav-link" href="#opensource">Open Source</a>
-  </div>
   <div class="nav-right">
-    <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
-      <svg id="theme-ico" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+    <div class="nav-links-desktop">
+      <a href="#features">Features</a>
+      <a href="#screenshots">Screenshots</a>
+      <a href="#download">Download</a>
+      <a href="#opensource">Open Source</a>
+    </div>
+    <button class="icon-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+      <svg id="theme-ico" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
       </svg>
     </button>
-    <a class="nav-dl" href="#download">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.586L7.707 11.293l-1.414 1.414L12 18.414l5.707-5.707-1.414-1.414L13 15.586V3h-2v12.586zM5 20h14v2H5v-2z"/></svg>
+    <a class="btn-pill" href="#download">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.586L7.707 11.293l-1.414 1.414L12 18.414l5.707-5.707-1.414-1.414L13 15.586V3h-2v12.586zM5 20h14v2H5v-2z"/></svg>
       Download
     </a>
   </div>
 </nav>
 
-<main>
-
-  <!-- ======== HERO ======== -->
-  <section class="hero sec">
-    <div class="hero-glow"></div>
-    <div class="container hero-inner">
-      <div>
-        <div class="live-badge">
-          <span class="live-dot"></span>
-          Open Source · v<span id="hero-version">3.4.0</span>
-        </div>
-        <h1>MUSIC<br/><span class="muted">WITHOUT</span><br/>LIMITS</h1>
-        <p class="hero-desc">A privacy-focused YouTube Music client built with Flutter. Stream ad-free, listen offline, see real-time karaoke lyrics — no account needed.</p>
-        <div class="tag-row">
-          <span class="tag">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-            Privacy First
-          </span>
-          <span class="tag">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-            Ad-Free
-          </span>
-          <span class="tag">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9H2v2h17V9zm0-4H2v2h17V5zM2 15h13v-2H2v2zm15 0v3l5-4-5-4v3H2v2h15z"/></svg>
-            Offline Downloads
-          </span>
-          <span class="tag">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-            Flutter
-          </span>
-          <span class="tag">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z"/></svg>
-            Android
-          </span>
-        </div>
-        <div class="hero-btns">
-          <a class="btn-p" href="#download">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.586L7.707 11.293l-1.414 1.414L12 18.414l5.707-5.707-1.414-1.414L13 15.586V3h-2v12.586zM5 20h14v2H5v-2z"/></svg>
-            Download APK
-          </a>
-          <a class="btn-s" href="https://github.com/Shashwat-CODING/Muzo" target="_blank" rel="noopener">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.031 1.531 1.031.892 1.529 2.341 1.087 2.91.832.091-.647.35-1.087.636-1.337-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.114 2.504.336 1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.482C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-            View on GitHub
-          </a>
-        </div>
-        <div class="hero-kpis">
-          <div class="kpi">
-            <div class="kpi-n" id="kpi-stars">—</div>
-            <div class="kpi-l">GitHub Stars</div>
-          </div>
-          <div class="kpi">
-            <div class="kpi-n" id="kpi-downloads">—</div>
-            <div class="kpi-l">Total Downloads</div>
-          </div>
-          <div class="kpi">
-            <div class="kpi-n">MIT</div>
-            <div class="kpi-l">License</div>
-          </div>
-        </div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="live-tag">
+        <span class="live-dot"></span>
+        Open Source &nbsp;·&nbsp; v<span id="hero-version">3.4.0</span>
       </div>
-      <div class="hero-visual">
-        <div class="ph-wrap">
-          <div class="ph a">
-            <img src="https://shashwat-coding.github.io/Muzo/images/3.jpg" alt="Muzo library" loading="eager" />
-          </div>
-          <div class="ph b">
-            <img src="https://shashwat-coding.github.io/Muzo/images/1.jpg" alt="Muzo player" loading="eager" />
-          </div>
+      <h1 class="hero-headline">MUSIC<br/><span class="dim">WITHOUT</span><br/>LIMITS</h1>
+      <p class="hero-desc">A privacy-focused YouTube Music client built with Flutter. Stream ad-free, listen offline, see real-time karaoke lyrics — no account needed.</p>
+      <div class="tag-row">
+        <span class="tag">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+          Privacy First
+        </span>
+        <span class="tag">Ad-Free</span>
+        <span class="tag">Offline</span>
+        <span class="tag">Flutter</span>
+        <span class="tag">Android</span>
+        <span class="tag">MIT</span>
+      </div>
+      <div class="hero-btns">
+        <a class="btn-primary" href="#download">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.586L7.707 11.293l-1.414 1.414L12 18.414l5.707-5.707-1.414-1.414L13 15.586V3h-2v12.586zM5 20h14v2H5v-2z"/></svg>
+          Download APK
+        </a>
+        <a class="btn-ghost" href="https://github.com/Shashwat-CODING/Muzo" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.031 1.531 1.031.892 1.529 2.341 1.087 2.91.832.091-.647.35-1.087.636-1.337-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.114 2.504.336 1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.482C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-n" id="kpi-stars">—</div>
+          <div class="stat-l">GitHub Stars</div>
+        </div>
+        <div>
+          <div class="stat-n" id="kpi-downloads">—</div>
+          <div class="stat-l">Total Downloads</div>
+        </div>
+        <div>
+          <div class="stat-n">MIT</div>
+          <div class="stat-l">License</div>
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- AD TOP -->
-  <div class="ad-strip">
-    <div class="ad-lbl">Advertisement</div>
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1237614381130102" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-  </div>
-
-  <!-- ======== LATEST RELEASE HERO ======== -->
-  <section id="download" class="sec latest-sec">
-    <div class="container">
-      <div class="rv">
-        <div class="sec-tag">Download</div>
-        <h2 class="sec-h">GET MUZO</h2>
-        <p class="sec-sub">Free, forever. Pick the latest stable release or browse all versions below.</p>
+    <div class="hero-right">
+      <div class="phones">
+        <div class="ph ph-a">
+          <img src="https://shashwat-coding.github.io/Muzo/images/3.jpg" alt="Muzo library" loading="eager"/>
+        </div>
+        <div class="ph ph-b">
+          <img src="https://shashwat-coding.github.io/Muzo/images/1.jpg" alt="Muzo player" loading="eager"/>
+        </div>
       </div>
-      <div class="latest-card rv d1" id="latest-card">
-        <div class="latest-top">
-          <div>
-            <div class="latest-badge">
-              <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/></svg>
-              Latest Stable
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker" id="ticker">
+    <div class="ticker-item"><span>Synced Lyrics</span><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><span>Lofi Mode</span><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><span>Ad-Free</span><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><span>Offline Downloads</span><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><span>Background Play</span><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><span>No Account Needed</span><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><span>Dynamic Themes</span><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><span>Gesture Player</span><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><span>MIT License</span><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><span>Flutter</span><span class="ticker-dot"></span></div>
+    <!-- duplicate for seamless loop -->
+    <div class="ticker-item"><span>Synced Lyrics</span><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><span>Lofi Mode</span><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><span>Ad-Free</span><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><span>Offline Downloads</span><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><span>Background Play</span><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><span>No Account Needed</span><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><span>Dynamic Themes</span><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><span>Gesture Player</span><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><span>MIT License</span><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><span>Flutter</span><span class="ticker-dot"></span></div>
+  </div>
+</div>
+
+<!-- AD -->
+<div class="ad-strip">
+  <div class="ad-lbl">Advertisement</div>
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1237614381130102" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+
+<!-- DOWNLOAD -->
+<section id="download" class="sec dl-sec">
+  <div class="container">
+    <div class="rv">
+      <div class="eyebrow">Download</div>
+      <h2 class="sec-h">Get Muzo</h2>
+      <p class="sec-sub">Free, forever. Pick the latest stable release or browse all versions below.</p>
+    </div>
+    <div class="latest-card rv d1" id="latest-card">
+      <div class="latest-top">
+        <div>
+          <div class="latest-badge">
+            <svg width="7" height="7" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/></svg>
+            Latest Stable
+          </div>
+          <div class="latest-name">Latest Release</div>
+          <div class="latest-ver" id="latest-ver">v3.4.0</div>
+          <div class="latest-date" id="latest-date">— — —</div>
+          <div class="latest-stats">
+            <div>
+              <div class="ls-n" id="latest-total-dl">—</div>
+              <div class="ls-l">Downloads</div>
             </div>
-            <div class="latest-name">Latest Release</div>
-            <div class="latest-ver" id="latest-ver">v3.4.0</div>
-            <div class="latest-date" id="latest-date">— — —</div>
-            <div class="latest-stats-row">
-              <div class="ls">
-                <div class="ls-n" id="latest-total-dl">—</div>
-                <div class="ls-l">Downloads (this release)</div>
-              </div>
-              <div class="ls">
-                <div class="ls-n" id="latest-assets-count">—</div>
-                <div class="ls-l">Assets</div>
-              </div>
-              <div class="ls">
-                <div class="ls-n" id="latest-size">—</div>
-                <div class="ls-l">Largest APK</div>
-              </div>
+            <div>
+              <div class="ls-n" id="latest-assets-count">—</div>
+              <div class="ls-l">Assets</div>
             </div>
-          </div>
-          <div id="latest-notes" style="max-width:320px; font-size:0.82rem; color:var(--text2); line-height:1.65; font-family:var(--mono); display:none;"></div>
-        </div>
-        <div class="latest-bottom" id="latest-assets">
-          <div class="skeleton" style="width:150px;height:38px;border-radius:6px;"></div>
-          <div class="skeleton" style="width:130px;height:38px;border-radius:6px;"></div>
-        </div>
-      </div>
-
-      <!-- All releases -->
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:3rem;flex-wrap:wrap;gap:1rem;" class="rv d2">
-        <div style="font-family:var(--display);font-size:1.4rem;letter-spacing:0.05em;color:var(--text)">ALL RELEASES</div>
-        <a class="btn-s" style="font-size:0.78rem;padding:0.5rem 1rem;" href="https://github.com/Shashwat-CODING/Muzo/releases" target="_blank" rel="noopener">View on GitHub
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7zM14 3v2h3.586l-9.293 9.293 1.414 1.414L19 6.414V10h2V3h-7z"/></svg>
-        </a>
-      </div>
-      <div class="releases-list rv d3" id="releases-list">
-        <div class="skeleton" style="border-radius:0;"></div>
-        <div class="skeleton" style="border-radius:0;margin-top:1px;"></div>
-        <div class="skeleton" style="border-radius:0;margin-top:1px;"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======== FEATURED ON ======== -->
-  <section class="sec" style="background:var(--bg);">
-    <div class="container">
-      <div class="rv">
-        <div class="sec-tag">Featured On</div>
-        <h2 class="sec-h">FOUND IN THE WILD</h2>
-        <p class="sec-sub">Muzo has been featured and listed on third-party app stores and directories.</p>
-      </div>
-      <div class="featured-row rv d1">
-        <a class="feat-card" href="https://appteka.store/apps/a3br289146" target="_blank" rel="noopener">
-          <div class="feat-ico">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-            </svg>
-          </div>
-          <div>
-            <div class="feat-name">Appteka Store</div>
-            <div class="feat-sub">appteka.store &nbsp;&#8599;</div>
-          </div>
-        </a>
-        <a class="feat-card" href="https://github-store.org/" target="_blank" rel="noopener">
-          <div class="feat-ico">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.031 1.531 1.031.892 1.529 2.341 1.087 2.91.832.091-.647.35-1.087.636-1.337-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.114 2.504.336 1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.482C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
-            </svg>
-          </div>
-          <div>
-            <div class="feat-name">GitHub Store</div>
-            <div class="feat-sub">github-store.org &nbsp;&#8599;</div>
-          </div>
-        </a>
-        <a class="feat-card" href="https://github.com/Shashwat-CODING/Muzo/releases" target="_blank" rel="noopener">
-          <div class="feat-ico">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="16 18 22 12 16 6"></polyline>
-              <polyline points="8 6 2 12 8 18"></polyline>
-            </svg>
-          </div>
-          <div>
-            <div class="feat-name">GitHub Releases</div>
-            <div class="feat-sub">Direct APK downloads &nbsp;&#8599;</div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- AD MID -->
-  <div class="ad-strip">
-    <div class="ad-lbl">Advertisement</div>
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1237614381130102" data-ad-slot="auto" data-ad-format="rectangle" data-full-width-responsive="true"></ins>
-  </div>
-
-  <!-- ======== FEATURES ======== -->
-  <section id="features" class="sec" style="background:var(--bg2);">
-    <div class="container">
-      <div class="rv">
-        <div class="sec-tag">Features</div>
-        <h2 class="sec-h">EVERYTHING IT SHOULD BE</h2>
-        <p class="sec-sub">Built for people who take their music seriously.</p>
-      </div>
-      <div class="feat-grid rv d1">
-
-        <div class="feat-cell">
-          <div class="feat-cell-ico">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-          </div>
-          <div class="feat-cell-title">SYNCED KARAOKE</div>
-          <div class="feat-cell-desc">Real-time synchronized lyrics that auto-scroll. Karaoke mode highlights individual words as they're sung — line by line, syllable by syllable.</div>
-          <div class="feat-cell-desc" style="margin-top:0.6rem; font-style:italic; color:var(--text3)">Lyrics appear above controls in gesture mode — frosted glass, always accessible.</div>
-        </div>
-
-        <div class="feat-cell">
-          <div class="feat-cell-ico">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.66 7.93L12 2.27 6.34 7.93c-3.12 3.12-3.12 8.19 0 11.31C7.9 20.8 9.95 21.58 12 21.58c2.05 0 4.1-.78 5.66-2.34 3.12-3.12 3.12-8.19 0-11.31zM12 19.59c-1.6 0-3.11-.62-4.24-1.76C6.62 16.69 6 15.19 6 13.59s.62-3.11 1.76-4.24L12 5.1v14.49z"/></svg>
-          </div>
-          <div class="feat-cell-title">LOFI MODE</div>
-          <div class="feat-cell-desc">Instantly transform any track — slowed speed (0.9x), pitch correction, and native reverb effects. Your chill, your way, one tap.</div>
-        </div>
-
-        <div class="feat-cell">
-          <div class="feat-cell-ico">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-4.54c.22-.59.35-1.51.35-2.33h-2l-.02 5.87C12.41 15.55 11.97 16 11.4 16c-.61 0-1.1-.49-1.1-1.1 0-.51.34-.94.8-1.06V11.77c-1.63.43-2.83 1.91-2.83 3.68 0 2.09 1.69 3.78 3.78 3.78 1.09 0 2.07-.45 2.77-1.17l2.73 2.73 1.29-1.12z"/></svg>
-          </div>
-          <div class="feat-cell-title">GESTURE PLAYER</div>
-          <div class="feat-cell-desc">Immersive full-screen gesture controls. Swipe to skip tracks, swipe up/down for volume, double-tap to play/pause. Album art fills your screen.</div>
-        </div>
-
-        <div class="feat-cell">
-          <div class="feat-cell-ico">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 9H2v2h17V9zm0-4H2v2h17V5zM2 15h13v-2H2v2zm15 0v3l5-4-5-4v3H2v2h15z"/></svg>
-          </div>
-          <div class="feat-cell-title">AUTO-QUEUE</div>
-          <div class="feat-cell-desc">Automatically queues recommended songs for endless playback. Smart Library with Favorites, History, custom Playlists, and channel subscriptions.</div>
-        </div>
-
-        <div class="feat-cell">
-          <div class="feat-cell-ico">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-          </div>
-          <div class="feat-cell-title">PRIVACY FIRST</div>
-          <div class="feat-cell-desc">No tracking, no ads, no data collection. All favorites, playlists, and history stored locally on your device. Nothing leaves your phone.</div>
-          <div class="login-note">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-            Account login is optional — never required.
-          </div>
-        </div>
-
-        <div class="feat-cell">
-          <div class="feat-cell-ico">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.586L7.707 11.293l-1.414 1.414L12 18.414l5.707-5.707-1.414-1.414L13 15.586V3h-2v12.586zM5 20h14v2H5v-2z"/></svg>
-          </div>
-          <div class="feat-cell-title">OFFLINE DOWNLOADS</div>
-          <div class="feat-cell-desc">Download songs and videos for offline listening. Take your library anywhere, even without a connection.</div>
-        </div>
-
-        <div class="feat-cell">
-          <div class="feat-cell-ico">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></svg>
-          </div>
-          <div class="feat-cell-title">DYNAMIC THEMING</div>
-          <div class="feat-cell-desc">UI adapts colors from the currently playing album art. Glassmorphic elements, smooth transitions, and a lush dark aesthetic throughout.</div>
-        </div>
-
-        <div class="feat-cell">
-          <div class="feat-cell-ico">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-          </div>
-          <div class="feat-cell-title">AUDIO QUALITY</div>
-          <div class="feat-cell-desc">Choose High, Medium, or Low quality. Platform-specific native audio effects. Multi-language audio auto-detection and switching.</div>
-        </div>
-
-        <div class="feat-cell">
-          <div class="feat-cell-ico">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2.05v2.02c3.95.49 7 3.85 7 7.93 0 3.21-1.81 6-4.72 7.28L13 17v5h5l-1.22-1.22C19.91 19.07 22 15.76 22 12c0-5.18-3.95-9.45-9-9.95zM11 2.05C5.95 2.55 2 6.82 2 12c0 3.76 2.09 7.07 5.22 8.78L6 22h5v-5l-2.28 2.28C7.81 18 6 15.21 6 12c0-4.08 3.05-7.44 7-7.93V2.05z"/></svg>
-          </div>
-          <div class="feat-cell-title">INSTANT LAUNCH</div>
-          <div class="feat-cell-desc">Zero-wait startup with parallel background loading. RapidAPI fallback ensures playback never stops if the primary API hiccups.</div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ======== SCREENSHOTS ======== -->
-  <section id="screenshots" class="sec ss-sec">
-    <div class="container">
-      <div class="rv">
-        <div class="sec-tag">Screenshots</div>
-        <h2 class="sec-h">SEE IT IN ACTION</h2>
-        <p class="sec-sub">Tap any screenshot to view full size.</p>
-      </div>
-    </div>
-    <div class="ss-scroll rv d1" id="ss-scroll">
-      <div class="ss-pad" style="width:clamp(1rem,4vw,3rem);"></div>
-      <!-- injected by JS -->
-      <div class="ss-pad" style="width:clamp(1rem,4vw,3rem);"></div>
-    </div>
-  </section>
-
-  <!-- AD BOTTOM -->
-  <div class="ad-strip">
-    <div class="ad-lbl">Advertisement</div>
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1237614381130102" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-  </div>
-
-  <!-- ======== TECH STACK ======== -->
-  <section class="sec" style="background:var(--bg);">
-    <div class="container">
-      <div class="rv">
-        <div class="sec-tag">Tech Stack</div>
-        <h2 class="sec-h">BUILT ON THE BEST</h2>
-      </div>
-      <div class="stack-grid rv d1">
-        <div class="st-cell"><span class="st-layer">Framework</span><span class="st-name">Flutter + Dart 3.x</span></div>
-        <div class="st-cell"><span class="st-layer">State</span><span class="st-name">Riverpod</span></div>
-        <div class="st-cell"><span class="st-layer">Audio</span><span class="st-name">Just Audio</span></div>
-        <div class="st-cell"><span class="st-layer">Service</span><span class="st-name">Audio Service</span></div>
-        <div class="st-cell"><span class="st-layer">YouTube</span><span class="st-name">youtube_explode_dart</span></div>
-        <div class="st-cell"><span class="st-layer">Stream API</span><span class="st-name">JioSaavn (fast-saavn)</span></div>
-        <div class="st-cell"><span class="st-layer">Lyrics</span><span class="st-name">flutter_lyric + custom</span></div>
-        <div class="st-cell"><span class="st-layer">Storage</span><span class="st-name">Hive</span></div>
-        <div class="st-cell"><span class="st-layer">Network</span><span class="st-name">Dio + Http</span></div>
-        <div class="st-cell"><span class="st-layer">UI Icons</span><span class="st-name">FluentUI System Icons</span></div>
-        <div class="st-cell"><span class="st-layer">Cache</span><span class="st-name">Cached Network Image</span></div>
-        <div class="st-cell"><span class="st-layer">Animation</span><span class="st-name">flutter_animate</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======== OPEN SOURCE ======== -->
-  <section id="opensource" class="sec" style="background:var(--bg2);">
-    <div class="container">
-      <div class="rv">
-        <div class="sec-tag">Open Source</div>
-        <h2 class="sec-h">FREE, FOREVER</h2>
-      </div>
-      <div class="oss-card rv d1">
-        <div class="oss-top">
-          <div>
-            <h3 class="oss-h">Fully open source under the MIT License.</h3>
-            <p class="oss-p">Fork it, build on it, contribute back. Every feature, every line of code is in the open. Built with Flutter, Claude AI, and a deep respect for open source culture.</p>
-            <div class="oss-btns">
-              <a class="btn-p" href="https://github.com/Shashwat-CODING/Muzo" target="_blank" rel="noopener">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.031 1.531 1.031.892 1.529 2.341 1.087 2.91.832.091-.647.35-1.087.636-1.337-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.114 2.504.336 1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.482C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-                Star on GitHub
-              </a>
-              <a class="btn-s" href="https://github.com/Shashwat-CODING/Muzo/fork" target="_blank" rel="noopener">Fork Repo</a>
-              <a class="btn-s" href="https://github.com/Shashwat-CODING/Muzo/issues" target="_blank" rel="noopener">Report Issue</a>
+            <div>
+              <div class="ls-n" id="latest-size">—</div>
+              <div class="ls-l">Largest APK</div>
             </div>
           </div>
-          <div class="gh-grid" id="gh-grid">
-            <div class="gh-cell"><div class="gh-n" id="gh-stars">—</div><div class="gh-l">Stars</div></div>
-            <div class="gh-cell"><div class="gh-n" id="gh-forks">—</div><div class="gh-l">Forks</div></div>
-            <div class="gh-cell"><div class="gh-n" id="gh-issues">—</div><div class="gh-l">Issues</div></div>
-            <div class="gh-cell"><div class="gh-n" id="gh-watchers">—</div><div class="gh-l">Watchers</div></div>
-          </div>
         </div>
-        <div class="oss-bottom">
-          <span class="oss-meta">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-            MIT License
-          </span>
-          <span class="oss-meta">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-4.54c.22-.59.35-1.51.35-2.33h-2l-.02 5.87C12.41 15.55 11.97 16 11.4 16c-.61 0-1.1-.49-1.1-1.1 0-.51.34-.94.8-1.06V11.77c-1.63.43-2.83 1.91-2.83 3.68 0 2.09 1.69 3.78 3.78 3.78 1.09 0 2.07-.45 2.77-1.17l2.73 2.73 1.29-1.12z"/></svg>
-            Android · iOS · macOS
-          </span>
-          <span class="oss-meta">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 6v6l4 2"/></svg>
-            Actively Maintained
-          </span>
-        </div>
+        <div class="latest-notes-col" id="latest-notes"></div>
+      </div>
+      <div class="latest-bottom" id="latest-assets">
+        <div class="skel" style="width:140px;height:38px;border-radius:6px;"></div>
+        <div class="skel" style="width:120px;height:38px;border-radius:6px;"></div>
       </div>
     </div>
-  </section>
 
-</main>
+    <div class="rel-header rv d2">
+      <div class="rel-title">All Releases</div>
+      <a class="btn-ghost" style="font-size:0.78rem;padding:7px 14px;" href="https://github.com/Shashwat-CODING/Muzo/releases" target="_blank" rel="noopener">
+        View on GitHub
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7zM14 3v2h3.586l-9.293 9.293 1.414 1.414L19 6.414V10h2V3h-7z"/></svg>
+      </a>
+    </div>
+    <div class="releases-list rv d3" id="releases-list">
+      <div class="skel" style="border-radius:0;"></div>
+      <div class="skel" style="border-radius:0;margin-top:1px;"></div>
+      <div class="skel" style="border-radius:0;margin-top:1px;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED -->
+<section class="sec" style="background:var(--bg);">
+  <div class="container">
+    <div class="rv">
+      <div class="eyebrow">Featured On</div>
+      <h2 class="sec-h">Found in the Wild</h2>
+      <p class="sec-sub">Muzo has been featured on third-party app stores and directories.</p>
+    </div>
+    <div class="featured-grid rv d1">
+      <a class="feat-card" href="https://appteka.store/apps/a3br289146" target="_blank" rel="noopener">
+        <div class="feat-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="feat-name">Appteka Store</div>
+          <div class="feat-sub">appteka.store ↗</div>
+        </div>
+      </a>
+      <a class="feat-card" href="https://github-store.org/" target="_blank" rel="noopener">
+        <div class="feat-ico">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.031 1.531 1.031.892 1.529 2.341 1.087 2.91.832.091-.647.35-1.087.636-1.337-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.114 2.504.336 1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.482C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        </div>
+        <div>
+          <div class="feat-name">GitHub Store</div>
+          <div class="feat-sub">github-store.org ↗</div>
+        </div>
+      </a>
+      <a class="feat-card" href="https://github.com/Shashwat-CODING/Muzo/releases" target="_blank" rel="noopener">
+        <div class="feat-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+          </svg>
+        </div>
+        <div>
+          <div class="feat-name">GitHub Releases</div>
+          <div class="feat-sub">Direct APK downloads ↗</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- AD MID -->
+<div class="ad-strip">
+  <div class="ad-lbl">Advertisement</div>
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1237614381130102" data-ad-slot="auto" data-ad-format="rectangle" data-full-width-responsive="true"></ins>
+</div>
+
+<!-- FEATURES -->
+<section id="features" class="sec feat-sec">
+  <div class="container">
+    <div class="rv">
+      <div class="eyebrow">Features</div>
+      <h2 class="sec-h">Everything it should be</h2>
+      <p class="sec-sub">Built for people who take their music seriously.</p>
+    </div>
+    <div class="feat-grid-main rv d1">
+      <div class="feat-cell">
+        <div class="feat-ico-box">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+        </div>
+        <div class="feat-cell-title">Synced Karaoke</div>
+        <div class="feat-cell-desc">Real-time synchronized lyrics that auto-scroll. Karaoke mode highlights individual words as they're sung — line by line, syllable by syllable.</div>
+      </div>
+      <div class="feat-cell">
+        <div class="feat-ico-box">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.66 7.93L12 2.27 6.34 7.93c-3.12 3.12-3.12 8.19 0 11.31C7.9 20.8 9.95 21.58 12 21.58c2.05 0 4.1-.78 5.66-2.34 3.12-3.12 3.12-8.19 0-11.31zM12 19.59c-1.6 0-3.11-.62-4.24-1.76C6.62 16.69 6 15.19 6 13.59s.62-3.11 1.76-4.24L12 5.1v14.49z"/></svg>
+        </div>
+        <div class="feat-cell-title">Lofi Mode</div>
+        <div class="feat-cell-desc">Instantly transform any track — slowed speed, pitch correction, and native reverb effects. Your chill, your way, one tap.</div>
+      </div>
+      <div class="feat-cell">
+        <div class="feat-ico-box">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-4.54c.22-.59.35-1.51.35-2.33h-2l-.02 5.87C12.41 15.55 11.97 16 11.4 16c-.61 0-1.1-.49-1.1-1.1 0-.51.34-.94.8-1.06V11.77c-1.63.43-2.83 1.91-2.83 3.68 0 2.09 1.69 3.78 3.78 3.78 1.09 0 2.07-.45 2.77-1.17l2.73 2.73 1.29-1.12z"/></svg>
+        </div>
+        <div class="feat-cell-title">Gesture Player</div>
+        <div class="feat-cell-desc">Immersive full-screen gesture controls. Swipe to skip tracks, swipe up/down for volume, double-tap to play/pause.</div>
+      </div>
+      <div class="feat-cell">
+        <div class="feat-ico-box">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 9H2v2h17V9zm0-4H2v2h17V5zM2 15h13v-2H2v2zm15 0v3l5-4-5-4v3H2v2h15z"/></svg>
+        </div>
+        <div class="feat-cell-title">Auto-Queue</div>
+        <div class="feat-cell-desc">Automatically queues recommended songs for endless playback. Smart Library with Favorites, History, custom Playlists, and channel subscriptions.</div>
+      </div>
+      <div class="feat-cell">
+        <div class="feat-ico-box">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+        </div>
+        <div class="feat-cell-title">Privacy First</div>
+        <div class="feat-cell-desc">No tracking, no ads, no data collection. All favorites, playlists, and history stored locally on your device. Nothing leaves your phone.</div>
+      </div>
+      <div class="feat-cell">
+        <div class="feat-ico-box">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.586L7.707 11.293l-1.414 1.414L12 18.414l5.707-5.707-1.414-1.414L13 15.586V3h-2v12.586zM5 20h14v2H5v-2z"/></svg>
+        </div>
+        <div class="feat-cell-title">Offline Downloads</div>
+        <div class="feat-cell-desc">Download songs and videos for offline listening. Take your library anywhere, even without a connection.</div>
+      </div>
+      <div class="feat-cell">
+        <div class="feat-ico-box">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></svg>
+        </div>
+        <div class="feat-cell-title">Dynamic Theming</div>
+        <div class="feat-cell-desc">UI adapts colors from the currently playing album art. Glassmorphic elements, smooth transitions, and a rich dark aesthetic.</div>
+      </div>
+      <div class="feat-cell">
+        <div class="feat-ico-box">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+        </div>
+        <div class="feat-cell-title">Audio Quality</div>
+        <div class="feat-cell-desc">Choose High, Medium, or Low quality. Platform-specific native audio effects. Multi-language audio auto-detection and switching.</div>
+      </div>
+      <div class="feat-cell">
+        <div class="feat-ico-box">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2.05v2.02c3.95.49 7 3.85 7 7.93 0 3.21-1.81 6-4.72 7.28L13 17v5h5l-1.22-1.22C19.91 19.07 22 15.76 22 12c0-5.18-3.95-9.45-9-9.95zM11 2.05C5.95 2.55 2 6.82 2 12c0 3.76 2.09 7.07 5.22 8.78L6 22h5v-5l-2.28 2.28C7.81 18 6 15.21 6 12c0-4.08 3.05-7.44 7-7.93V2.05z"/></svg>
+        </div>
+        <div class="feat-cell-title">Instant Launch</div>
+        <div class="feat-cell-desc">Zero-wait startup with parallel background loading. RapidAPI fallback ensures playback never stops if the primary API hiccups.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCREENSHOTS -->
+<section id="screenshots" class="sec ss-sec">
+  <div class="container">
+    <div class="rv">
+      <div class="eyebrow">Screenshots</div>
+      <h2 class="sec-h">See it in action</h2>
+      <p class="sec-sub">Tap any screenshot to view full size.</p>
+    </div>
+  </div>
+  <div class="ss-scroll rv d1" id="ss-scroll">
+    <div class="ss-pad"></div>
+    <div class="ss-pad"></div>
+  </div>
+</section>
+
+<!-- AD BOTTOM -->
+<div class="ad-strip">
+  <div class="ad-lbl">Advertisement</div>
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1237614381130102" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+
+<!-- TECH STACK -->
+<section class="sec" style="background:var(--bg2);">
+  <div class="container">
+    <div class="rv">
+      <div class="eyebrow">Tech Stack</div>
+      <h2 class="sec-h">Built on the best</h2>
+    </div>
+    <div class="stack-grid rv d1">
+      <div class="st-cell"><span class="st-layer">Framework</span><span class="st-name">Flutter + Dart 3.x</span></div>
+      <div class="st-cell"><span class="st-layer">State</span><span class="st-name">Riverpod</span></div>
+      <div class="st-cell"><span class="st-layer">Audio</span><span class="st-name">Just Audio</span></div>
+      <div class="st-cell"><span class="st-layer">Service</span><span class="st-name">Audio Service</span></div>
+      <div class="st-cell"><span class="st-layer">YouTube</span><span class="st-name">youtube_explode_dart</span></div>
+      <div class="st-cell"><span class="st-layer">Stream</span><span class="st-name">JioSaavn (fast-saavn)</span></div>
+      <div class="st-cell"><span class="st-layer">Lyrics</span><span class="st-name">flutter_lyric + custom</span></div>
+      <div class="st-cell"><span class="st-layer">Storage</span><span class="st-name">Hive</span></div>
+      <div class="st-cell"><span class="st-layer">Network</span><span class="st-name">Dio + Http</span></div>
+      <div class="st-cell"><span class="st-layer">UI Icons</span><span class="st-name">FluentUI System Icons</span></div>
+      <div class="st-cell"><span class="st-layer">Cache</span><span class="st-name">Cached Network Image</span></div>
+      <div class="st-cell"><span class="st-layer">Animation</span><span class="st-name">flutter_animate</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- OPEN SOURCE -->
+<section id="opensource" class="sec oss-sec">
+  <div class="container">
+    <div class="rv">
+      <div class="eyebrow">Open Source</div>
+      <h2 class="sec-h">Free, forever</h2>
+    </div>
+    <div class="oss-card rv d1">
+      <div class="oss-top">
+        <div>
+          <h3 class="oss-h">Fully open source under the MIT License.</h3>
+          <p class="oss-p">Fork it, build on it, contribute back. Every feature, every line of code is in the open. Built with Flutter, Claude AI, and a deep respect for open source culture.</p>
+          <div class="oss-btns">
+            <a class="btn-primary" href="https://github.com/Shashwat-CODING/Muzo" target="_blank" rel="noopener">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.031 1.531 1.031.892 1.529 2.341 1.087 2.91.832.091-.647.35-1.087.636-1.337-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.114 2.504.336 1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.482C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+              Star on GitHub
+            </a>
+            <a class="btn-ghost" href="https://github.com/Shashwat-CODING/Muzo/fork" target="_blank" rel="noopener">Fork</a>
+            <a class="btn-ghost" href="https://github.com/Shashwat-CODING/Muzo/issues" target="_blank" rel="noopener">Report Issue</a>
+          </div>
+        </div>
+        <div class="gh-grid">
+          <div class="gh-cell"><div class="gh-n" id="gh-stars">—</div><div class="gh-l">Stars</div></div>
+          <div class="gh-cell"><div class="gh-n" id="gh-forks">—</div><div class="gh-l">Forks</div></div>
+          <div class="gh-cell"><div class="gh-n" id="gh-issues">—</div><div class="gh-l">Issues</div></div>
+          <div class="gh-cell"><div class="gh-n" id="gh-watchers">—</div><div class="gh-l">Watchers</div></div>
+        </div>
+      </div>
+      <div class="oss-bottom">
+        <span class="oss-meta">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+          MIT License
+        </span>
+        <span class="oss-meta">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-4.54c.22-.59.35-1.51.35-2.33h-2l-.02 5.87C12.41 15.55 11.97 16 11.4 16c-.61 0-1.1-.49-1.1-1.1 0-.51.34-.94.8-1.06V11.77c-1.63.43-2.83 1.91-2.83 3.68 0 2.09 1.69 3.78 3.78 3.78 1.09 0 2.07-.45 2.77-1.17l2.73 2.73 1.29-1.12z"/></svg>
+          Android · Flutter
+        </span>
+        <span class="oss-meta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Actively Maintained
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="container">
+  <div class="footer-inner">
     <div class="footer-top">
       <div>
         <div class="footer-brand">
-          <img src="https://shashwat-coding.github.io/Muzo/assets/web.png" alt="Muzo" onerror="this.style.display='none'" />
+          <img src="https://shashwat-coding.github.io/Muzo/assets/web.png" alt="Muzo" onerror="this.style.display='none'"/>
           <span class="footer-brand-name">MUZO</span>
         </div>
-        <div class="footer-brand-tagline">Premium Music Client · Built with Flutter</div>
+        <div class="footer-tagline">Premium Music Client · Built with Flutter</div>
       </div>
       <div class="footer-links">
         <a class="footer-link" href="https://github.com/Shashwat-CODING/Muzo" target="_blank" rel="noopener">GitHub</a>
         <a class="footer-link" href="https://github.com/Shashwat-CODING/Muzo/releases" target="_blank" rel="noopener">Releases</a>
         <a class="footer-link" href="https://appteka.store/apps/a3br289146" target="_blank" rel="noopener">Appteka</a>
-        <a class="footer-link" href="https://github-store.org/" target="_blank" rel="noopener">GitHub Store</a>
         <a class="footer-link" href="https://github.com/Shashwat-CODING/Muzo/issues" target="_blank" rel="noopener">Issues</a>
         <a class="footer-link" href="https://github.com/Shashwat-CODING/Muzo/blob/main/LICENSE" target="_blank" rel="noopener">License</a>
         <a class="footer-link" href="https://github.com/Shashwat-CODING" target="_blank" rel="noopener">Author</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="footer-copy">&#169; 2026 Shashwat. Released under the MIT License.</div>
-      <div class="footer-copy">Built with Flutter + Claude AI + Gemini AI + Antigravity IDE</div>
+      <div class="footer-copy">© 2026 Shashwat. Released under the MIT License.</div>
+      <div class="footer-copy">Built with Flutter · Claude AI · Gemini AI</div>
     </div>
   </div>
 </footer>
@@ -1120,24 +1140,26 @@
 <!-- LIGHTBOX -->
 <div class="lb" id="lb" onclick="lbClose()">
   <button class="lb-x" onclick="lbClose()">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
   </button>
-  <img id="lb-img" src="" alt="Screenshot" onclick="event.stopPropagation()" />
+  <img id="lb-img" src="" alt="Screenshot" onclick="event.stopPropagation()"/>
 </div>
 
 <script>
-/* ========== THEME ========== */
+/* THEME */
 function setTheme(t) {
   document.documentElement.setAttribute('data-theme', t);
   localStorage.setItem('muzo-theme', t);
   const ico = document.getElementById('theme-ico');
   if (t === 'dark') {
+    ico.setAttribute('fill', 'currentColor');
+    ico.removeAttribute('stroke');
     ico.innerHTML = '<path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>';
   } else {
-    ico.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
-    ico.setAttribute('fill', 'none');
+    ico.removeAttribute('fill');
     ico.setAttribute('stroke', 'currentColor');
     ico.setAttribute('stroke-width', '2');
+    ico.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
   }
 }
 function toggleTheme() {
@@ -1150,7 +1172,7 @@ function toggleTheme() {
   setTheme(saved || sys);
 })();
 
-/* ========== LIGHTBOX ========== */
+/* LIGHTBOX */
 function lbOpen(src) {
   document.getElementById('lb-img').src = src;
   document.getElementById('lb').classList.add('on');
@@ -1162,10 +1184,10 @@ function lbClose() {
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') lbClose(); });
 
-/* ========== SCREENSHOTS ========== */
+/* SCREENSHOTS */
 (function() {
   const scroll = document.getElementById('ss-scroll');
-  const pad = scroll.querySelector('.ss-pad:last-child');
+  const lastPad = scroll.querySelector('.ss-pad:last-child');
   for (let i = 1; i <= 14; i++) {
     const d = document.createElement('div');
     d.className = 'ss-item';
@@ -1175,33 +1197,32 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') lbClose(); }
     img.alt = 'Muzo Screenshot ' + i;
     img.loading = 'lazy';
     d.appendChild(img);
-    scroll.insertBefore(d, pad);
+    scroll.insertBefore(d, lastPad);
   }
 })();
 
-/* ========== SCROLL REVEAL ========== */
+/* SCROLL REVEAL */
 const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
-}, { threshold: 0.08 });
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }});
+}, { threshold: 0.06 });
 document.querySelectorAll('.rv').forEach(el => obs.observe(el));
 
-/* ========== FORMAT NUMBER ========== */
+/* FORMAT */
 function fmt(n) {
   if (!n && n !== 0) return '—';
-  if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
-  if (n >= 1000) return (n / 1000).toFixed(1) + 'k';
+  if (n >= 1000000) return (n/1000000).toFixed(1)+'M';
+  if (n >= 1000) return (n/1000).toFixed(1)+'k';
   return String(n);
 }
 function fmtBytes(b) {
   if (!b) return '';
-  const mb = b / 1048576;
-  return mb.toFixed(1) + ' MB';
+  return (b/1048576).toFixed(1)+' MB';
 }
 function fmtDate(s) {
-  return new Date(s).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  return new Date(s).toLocaleDateString('en-US', {year:'numeric',month:'short',day:'numeric'});
 }
 
-/* ========== GITHUB API ========== */
+/* GITHUB API */
 async function loadGH() {
   try {
     const [repoRes, relRes] = await Promise.all([
@@ -1211,118 +1232,97 @@ async function loadGH() {
     const repo = await repoRes.json();
     const releases = await relRes.json();
 
-    // Repo stats
-    document.getElementById('kpi-stars').textContent   = fmt(repo.stargazers_count);
-    document.getElementById('gh-stars').textContent    = fmt(repo.stargazers_count);
-    document.getElementById('gh-forks').textContent    = fmt(repo.forks_count);
-    document.getElementById('gh-issues').textContent   = fmt(repo.open_issues_count);
+    document.getElementById('kpi-stars').textContent = fmt(repo.stargazers_count);
+    document.getElementById('gh-stars').textContent  = fmt(repo.stargazers_count);
+    document.getElementById('gh-forks').textContent  = fmt(repo.forks_count);
+    document.getElementById('gh-issues').textContent = fmt(repo.open_issues_count);
     document.getElementById('gh-watchers').textContent = fmt(repo.watchers_count);
 
-    // Total downloads across all releases
     let totalDL = 0;
-    releases.forEach(r => (r.assets || []).forEach(a => totalDL += a.download_count || 0));
+    releases.forEach(r => (r.assets||[]).forEach(a => totalDL += a.download_count||0));
     document.getElementById('kpi-downloads').textContent = fmt(totalDL);
 
     if (!releases || !releases.length) return;
 
-    // ---- LATEST RELEASE ----
     const latest = releases[0];
     document.getElementById('hero-version').textContent = latest.tag_name;
     document.getElementById('latest-ver').textContent   = latest.tag_name;
     document.getElementById('latest-date').textContent  = 'Released ' + fmtDate(latest.published_at);
 
-    const latestDL = (latest.assets || []).reduce((s, a) => s + (a.download_count || 0), 0);
-    document.getElementById('latest-total-dl').textContent    = fmt(latestDL);
-    document.getElementById('latest-assets-count').textContent = String((latest.assets || []).filter(a => a.name.match(/\.(apk|aab|ipa|zip|exe|dmg)$/i)).length || 0);
+    const latestDL = (latest.assets||[]).reduce((s,a) => s+(a.download_count||0), 0);
+    document.getElementById('latest-total-dl').textContent     = fmt(latestDL);
+    document.getElementById('latest-assets-count').textContent = String((latest.assets||[]).filter(a=>a.name.match(/\.(apk|aab|ipa|zip|exe|dmg)$/i)).length||0);
 
-    const apkAssets = (latest.assets || []).filter(a => a.name.endsWith('.apk'));
-    const biggestApk = apkAssets.sort((a, b) => b.size - a.size)[0];
+    const apkAssets = (latest.assets||[]).filter(a=>a.name.endsWith('.apk'));
+    const biggestApk = apkAssets.sort((a,b)=>b.size-a.size)[0];
     document.getElementById('latest-size').textContent = biggestApk ? fmtBytes(biggestApk.size) : '—';
 
-    // Release notes snippet
     if (latest.body) {
       const notesEl = document.getElementById('latest-notes');
-      const lines = latest.body.replace(/[#*`]/g, '').split('\n').filter(l => l.trim()).slice(0, 6);
+      const lines = latest.body.replace(/[#*`]/g,'').split('\n').filter(l=>l.trim()).slice(0,6);
       notesEl.textContent = lines.join(' · ');
       notesEl.style.display = 'block';
     }
 
-    // Latest download buttons
     const assetsEl = document.getElementById('latest-assets');
     assetsEl.innerHTML = '';
-    const dlAssets = (latest.assets || []).filter(a => a.name.match(/\.(apk|aab|ipa|zip|exe|dmg)$/i));
+    const dlAssets = (latest.assets||[]).filter(a=>a.name.match(/\.(apk|aab|ipa|zip|exe|dmg)$/i));
     if (dlAssets.length) {
-      dlAssets.forEach((a, i) => {
+      dlAssets.forEach((a,i) => {
         const link = document.createElement('a');
-        link.className = 'dl-btn ' + (i === 0 ? 'main' : 'sec');
+        link.className = 'dl-btn '+(i===0?'main':'sec');
         link.href = a.browser_download_url;
         link.download = '';
-        const cleanName = a.name.replace(/^(Muzo[-_]?)/i, '').replace(/-release/i, '').replace('.apk', '') || a.name;
-        link.innerHTML = `
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.586L7.707 11.293l-1.414 1.414L12 18.414l5.707-5.707-1.414-1.414L13 15.586V3h-2v12.586zM5 20h14v2H5v-2z"/></svg>
-          ${cleanName}
-          <span class="dl-size">${fmtBytes(a.size)}</span>
-        `;
+        const cleanName = a.name.replace(/^(Muzo[-_]?)/i,'').replace(/-release/i,'').replace('.apk','')||a.name;
+        link.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.586L7.707 11.293l-1.414 1.414L12 18.414l5.707-5.707-1.414-1.414L13 15.586V3h-2v12.586zM5 20h14v2H5v-2z"/></svg>${cleanName}<span class="dl-size">${fmtBytes(a.size)}</span>`;
         assetsEl.appendChild(link);
       });
     } else {
       assetsEl.innerHTML = `<a class="dl-btn main" href="${latest.html_url}" target="_blank" rel="noopener">View Release on GitHub</a>`;
     }
 
-    // Add total downloads next to latest buttons
     if (latestDL > 0) {
       const dlInfo = document.createElement('span');
-      dlInfo.style.cssText = 'font-family:var(--mono);font-size:0.72rem;color:var(--text3);display:flex;align-items:center;gap:4px;';
-      dlInfo.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.586L7.707 11.293l-1.414 1.414L12 18.414l5.707-5.707-1.414-1.414L13 15.586V3h-2v12.586zM5 20h14v2H5v-2z"/></svg>${fmt(latestDL)} downloads`;
+      dlInfo.style.cssText = 'font-family:"Space Mono",monospace;font-size:0.7rem;color:var(--text3);display:flex;align-items:center;gap:4px;';
+      dlInfo.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.586L7.707 11.293l-1.414 1.414L12 18.414l5.707-5.707-1.414-1.414L13 15.586V3h-2v12.586zM5 20h14v2H5v-2z"/></svg>${fmt(latestDL)} downloads`;
       assetsEl.appendChild(dlInfo);
     }
 
-    // ---- ALL RELEASES ----
     const listEl = document.getElementById('releases-list');
     listEl.innerHTML = '';
-    releases.forEach((r, i) => {
-      if (i === 0) return; // skip latest (shown above)
-      const relDL = (r.assets || []).reduce((s, a) => s + (a.download_count || 0), 0);
-      const relAssets = (r.assets || []).filter(a => a.name.match(/\.(apk|aab|ipa|zip|exe|dmg)$/i));
+    releases.forEach((r,i) => {
+      if (i===0) return;
+      const relDL = (r.assets||[]).reduce((s,a)=>s+(a.download_count||0),0);
+      const relAssets = (r.assets||[]).filter(a=>a.name.match(/\.(apk|aab|ipa|zip|exe|dmg)$/i));
       const row = document.createElement('div');
       row.className = 'rel-row';
       const assetsHtml = relAssets.length
-        ? relAssets.map(a => `<a class="rel-asset" href="${a.browser_download_url}" download>
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.586L7.707 11.293l-1.414 1.414L12 18.414l5.707-5.707-1.414-1.414L13 15.586V3h-2v12.586zM5 20h14v2H5v-2z"/></svg>
-            ${a.name.replace(/^(Muzo[-_]?)/i,'').replace(/-release/i,'') || a.name}
-            <span style="opacity:0.55">${fmtBytes(a.size)}</span>
-          </a>`).join('')
-        : `<a class="rel-asset" href="${r.html_url}" target="_blank" rel="noopener">View &#8599;</a>`;
+        ? relAssets.map(a=>`<a class="rel-asset" href="${a.browser_download_url}" download>
+            <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.586L7.707 11.293l-1.414 1.414L12 18.414l5.707-5.707-1.414-1.414L13 15.586V3h-2v12.586zM5 20h14v2H5v-2z"/></svg>
+            ${a.name.replace(/^(Muzo[-_]?)/i,'').replace(/-release/i,'')||a.name}
+            <span style="opacity:.45">${fmtBytes(a.size)}</span></a>`).join('')
+        : `<a class="rel-asset" href="${r.html_url}" target="_blank" rel="noopener">View ↗</a>`;
       row.innerHTML = `
         <span class="rel-tag">${r.tag_name}</span>
-        <span class="rel-date">${fmtDate(r.published_at)}${r.prerelease ? ' &middot; pre-release' : ''}</span>
+        <span class="rel-date">${fmtDate(r.published_at)}${r.prerelease?' · pre':''}</span>
         <div class="rel-assets">${assetsHtml}</div>
-        <div class="rel-dl-count">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.586L7.707 11.293l-1.414 1.414L12 18.414l5.707-5.707-1.414-1.414L13 15.586V3h-2v12.586zM5 20h14v2H5v-2z"/></svg>
+        <div class="rel-dl">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.586L7.707 11.293l-1.414 1.414L12 18.414l5.707-5.707-1.414-1.414L13 15.586V3h-2v12.586zM5 20h14v2H5v-2z"/></svg>
           ${fmt(relDL)}
-        </div>
-      `;
+        </div>`;
       listEl.appendChild(row);
     });
-
   } catch (err) {
     console.error('GitHub API error', err);
-    document.getElementById('releases-list').innerHTML = `<div class="rel-row">
-      <span class="rel-tag">Latest</span>
-      <span></span>
-      <div class="rel-assets"><a class="rel-asset" href="https://github.com/Shashwat-CODING/Muzo/releases/latest" target="_blank" rel="noopener">View on GitHub &#8599;</a></div>
-      <span></span>
-    </div>`;
-    document.getElementById('latest-assets').innerHTML = `<a class="dl-btn main" href="https://github.com/Shashwat-CODING/Muzo/releases/latest" target="_blank" rel="noopener">View Latest Release &#8599;</a>`;
+    document.getElementById('releases-list').innerHTML = `<div class="rel-row"><span class="rel-tag">Latest</span><span></span><div class="rel-assets"><a class="rel-asset" href="https://github.com/Shashwat-CODING/Muzo/releases/latest" target="_blank" rel="noopener">View on GitHub ↗</a></div><span></span></div>`;
+    document.getElementById('latest-assets').innerHTML = `<a class="dl-btn main" href="https://github.com/Shashwat-CODING/Muzo/releases/latest" target="_blank" rel="noopener">View Latest Release ↗</a>`;
   }
 }
-
 loadGH();
 
-/* ========== ADSENSE ========== */
-try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e){}
-try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e){}
-try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e){}
+try{(adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}
+try{(adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}
+try{(adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}
 </script>
 </body>
 </html>
