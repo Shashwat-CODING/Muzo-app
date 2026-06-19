@@ -87,6 +87,7 @@ nav {
 .nav-logo img {
   width: 28px; height: 28px; border-radius: 7px;
   border: 1px solid var(--border);
+  object-fit: cover;
 }
 .nav-logo-text {
   font-family: 'Syne', sans-serif;
@@ -128,7 +129,7 @@ nav {
   padding-top: 60px;
   min-height: 100svh;
   display: grid;
-  grid-template-columns: 1fr 480px;
+  grid-template-columns: 1fr 460px;
   align-items: center;
   max-width: 1280px;
   margin: 0 auto;
@@ -138,15 +139,15 @@ nav {
   position: relative;
 }
 
-/* ambient glow behind vinyl */
+/* ambient glow behind logo card */
 .hero::after {
   content: '';
   position: absolute;
-  right: 80px; top: 50%;
+  right: 60px; top: 50%;
   transform: translateY(-50%);
-  width: 420px; height: 420px;
+  width: 460px; height: 460px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(91,79,232,0.35) 0%, rgba(0,229,255,0.1) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(91,79,232,0.28) 0%, rgba(0,229,255,0.08) 45%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -270,127 +271,112 @@ nav {
   letter-spacing: 0.04em; text-transform: uppercase;
 }
 
-/* ── VINYL ── */
+/* ── HERO VISUAL: logo showcase (replaces the spinning vinyl) ── */
 .hero-right {
   position: relative; z-index: 1;
   display: flex; align-items: center; justify-content: center;
   height: 100%;
 }
-.vinyl-wrap {
+.logo-stage {
   position: relative;
-  width: 380px; height: 380px;
+  width: 360px; height: 360px;
   display: flex; align-items: center; justify-content: center;
 }
-.vinyl {
-  width: 340px; height: 340px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 50% 50%, #1a1a2e 0%, #1a1a2e 16%,
-      transparent 16.5%),
-    repeating-conic-gradient(
-      from 0deg,
-      rgba(91,79,232,0.12) 0deg 0.5deg,
-      rgba(0,0,0,0) 0.5deg 3deg
-    ),
-    radial-gradient(circle, #0d0d22 30%, #191930 50%, #0a0a18 100%);
-  box-shadow:
-    0 0 0 1px rgba(91,79,232,0.3),
-    0 0 60px rgba(91,79,232,0.2),
-    0 0 120px rgba(0,229,255,0.08),
-    inset 0 0 40px rgba(0,0,0,0.6);
-  animation: spin 18s linear infinite;
-  position: relative;
-}
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-/* Vinyl grooves */
-.vinyl::before {
+/* slow ambient rotation ring behind the card — quiet, not a spinning record */
+.logo-stage::before {
   content: '';
-  position: absolute; inset: 0;
-  border-radius: 50%;
-  background:
-    repeating-radial-gradient(
-      circle at center,
-      transparent 0px,
-      transparent 8px,
-      rgba(255,255,255,0.025) 8px,
-      rgba(255,255,255,0.025) 9px
-    );
-}
-
-.vinyl-label {
   position: absolute;
-  width: 100px; height: 100px;
+  width: 320px; height: 320px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--violet-d) 0%, var(--bg3) 100%);
-  border: 2px solid rgba(91,79,232,0.4);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  z-index: 2;
-  box-shadow: 0 0 20px rgba(91,79,232,0.5);
+  border: 1px dashed rgba(132,120,255,0.18);
+  animation: ring-rotate 60s linear infinite;
 }
-.vinyl-label img {
-  width: 52px; height: 52px;
+.logo-stage::after {
+  content: '';
+  position: absolute;
+  width: 380px; height: 380px;
   border-radius: 50%;
+  border: 1px solid rgba(0,229,255,0.08);
+  animation: ring-rotate 90s linear infinite reverse;
+}
+@keyframes ring-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* the card holding the full logo */
+.logo-card {
+  position: relative;
+  width: 232px; height: 232px;
+  border-radius: 56px;
+  background: linear-gradient(155deg, var(--surf2) 0%, var(--bg3) 100%);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow:
+    0 0 0 1px rgba(91,79,232,0.15),
+    0 30px 70px rgba(0,0,0,0.55),
+    0 0 90px rgba(91,79,232,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+  animation: card-float 6s ease-in-out infinite;
+}
+@keyframes card-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.logo-card img {
+  width: 78%; height: 78%;
+  border-radius: 38px;
   object-fit: cover;
-  border: 1px solid rgba(91,79,232,0.3);
+  display: block;
 }
-.vinyl-center-hole {
-  position: absolute;
-  width: 12px; height: 12px; border-radius: 50%;
-  background: var(--bg); z-index: 3;
-  box-shadow: 0 0 0 2px rgba(91,79,232,0.4);
-}
-
-/* tonearm */
-.tonearm {
-  position: absolute;
-  top: 8px; right: -10px;
-  width: 130px; height: 2px;
-  transform-origin: 100% 50%;
-  transform: rotate(-30deg);
-  z-index: 5;
-}
-.tonearm-body {
-  width: 100%; height: 100%;
-  background: linear-gradient(90deg, rgba(132,120,255,0.6), rgba(132,120,255,0.2));
-  border-radius: 2px;
-}
-.tonearm-head {
-  position: absolute;
-  left: 0; top: 50%;
-  transform: translateY(-50%);
-  width: 10px; height: 10px; border-radius: 50%;
-  background: var(--violet-l);
-  box-shadow: 0 0 8px rgba(132,120,255,0.8);
-}
-.tonearm-pivot {
-  position: absolute;
-  right: 0; top: 50%;
-  transform: translateY(-50%) translateX(50%);
-  width: 18px; height: 18px; border-radius: 50%;
-  background: var(--surf3);
-  border: 2px solid rgba(91,79,232,0.5);
+.logo-card-glow {
+  position: absolute; inset: -2px;
+  border-radius: 58px;
+  background: linear-gradient(135deg, var(--violet-l), var(--cyan));
+  opacity: 0.18;
+  filter: blur(18px);
+  z-index: -1;
 }
 
-/* floating badges on vinyl */
-.vinyl-badge {
+/* small feature chips orbiting the card — calmer than emoji badges */
+.stage-chip {
   position: absolute;
-  padding: 6px 12px;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 13px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 100px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem; color: var(--text2);
+  font-size: 0.66rem; color: var(--text2);
   white-space: nowrap;
-  animation: float-badge 4s ease-in-out infinite;
+  backdrop-filter: blur(8px);
+  animation: chip-float 5s ease-in-out infinite;
 }
-.vinyl-badge.b1 { top: 30px; left: -40px; animation-delay: 0s; }
-.vinyl-badge.b2 { bottom: 60px; left: -60px; animation-delay: 1.4s; }
-.vinyl-badge.b3 { bottom: 20px; right: -50px; animation-delay: 0.7s; }
-@keyframes float-badge {
+.stage-chip svg { width: 11px; height: 11px; color: var(--violet-l); flex-shrink: 0; }
+.stage-chip.c1 { top: 6px; left: -18px; animation-delay: 0s; }
+.stage-chip.c2 { bottom: 36px; left: -44px; animation-delay: 1.6s; }
+.stage-chip.c3 { bottom: 0px; right: -36px; animation-delay: 0.8s; }
+@keyframes chip-float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  50% { transform: translateY(-7px); }
+}
+
+/* waveform strip beneath the card — references audio/sync, not a record player */
+.stage-wave {
+  position: absolute;
+  bottom: -54px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; align-items: flex-end; gap: 3px;
+  height: 28px;
+}
+.stage-wave span {
+  display: block;
+  width: 3px; border-radius: 2px;
+  background: linear-gradient(180deg, var(--violet-l), var(--cyan));
+  opacity: 0.55;
+  animation: wave-bounce 1.6s ease-in-out infinite;
+}
+@keyframes wave-bounce {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
 }
 
 /* ── TICKER ── */
@@ -834,7 +820,7 @@ footer {
   border-bottom: 1px solid var(--border); margin-bottom: 20px;
 }
 .footer-brand { display: flex; align-items: center; gap: 10px; }
-.footer-brand img { width: 26px; height: 26px; border-radius: 6px; border: 1px solid var(--border); }
+.footer-brand img { width: 26px; height: 26px; border-radius: 6px; border: 1px solid var(--border); object-fit: cover; }
 .footer-brand-name {
   font-family: 'Syne', sans-serif;
   font-size: 1.05rem; font-weight: 800; letter-spacing: 0.1em; color: var(--text);
@@ -908,8 +894,10 @@ footer {
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .vinyl { animation: none; }
-  .vinyl-badge { animation: none; }
+  .logo-card { animation: none; }
+  .logo-stage::before, .logo-stage::after { animation: none; }
+  .stage-chip { animation: none; }
+  .stage-wave span { animation: none; transform: scaleY(0.7); }
   .rv { opacity: 1; transform: none; }
 }
 </style>
@@ -992,21 +980,33 @@ footer {
   </div>
 
   <div class="hero-right">
-    <div class="vinyl-wrap">
-      <div class="vinyl">
-        <div class="vinyl-label">
-          <img src="https://shashwat-coding.github.io/Muzo/assets/web.png" alt="Muzo" onerror="this.parentElement.style.background='linear-gradient(135deg,#3D33C8,#06070F)'"/>
-          <div class="vinyl-center-hole"></div>
-        </div>
+    <div class="logo-stage">
+      <div class="logo-card">
+        <div class="logo-card-glow"></div>
+        <img src="https://shashwat-coding.github.io/Muzo/assets/web.png" alt="Muzo app icon" onerror="this.parentElement.style.background='linear-gradient(135deg,#3D33C8,#06070F)'"/>
       </div>
-      <div class="tonearm">
-        <div class="tonearm-body"></div>
-        <div class="tonearm-head"></div>
-        <div class="tonearm-pivot"></div>
+      <div class="stage-chip c1">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+        Synced Lyrics
       </div>
-      <div class="vinyl-badge b1">♪ Synced Lyrics</div>
-      <div class="vinyl-badge b2">🔒 Privacy First</div>
-      <div class="vinyl-badge b3">☁ Lofi Mode</div>
+      <div class="stage-chip c2">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+        Privacy First
+      </div>
+      <div class="stage-chip c3">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.66 7.93L12 2.27 6.34 7.93c-3.12 3.12-3.12 8.19 0 11.31C7.9 20.8 9.95 21.58 12 21.58c2.05 0 4.1-.78 5.66-2.34 3.12-3.12 3.12-8.19 0-11.31zM12 19.59c-1.6 0-3.11-.62-4.24-1.76C6.62 16.69 6 15.19 6 13.59s.62-3.11 1.76-4.24L12 5.1v14.49z"/></svg>
+        Lofi Mode
+      </div>
+      <div class="stage-wave" aria-hidden="true">
+        <span style="height:10px; animation-delay: 0s;"></span>
+        <span style="height:18px; animation-delay: .15s;"></span>
+        <span style="height:26px; animation-delay: .3s;"></span>
+        <span style="height:14px; animation-delay: .45s;"></span>
+        <span style="height:22px; animation-delay: .6s;"></span>
+        <span style="height:12px; animation-delay: .75s;"></span>
+        <span style="height:20px; animation-delay: .9s;"></span>
+        <span style="height:16px; animation-delay: 1.05s;"></span>
+      </div>
     </div>
   </div>
 </div>
