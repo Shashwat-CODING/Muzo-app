@@ -88,7 +88,7 @@ export default function App() {
           navLinks={navLinks}
           mainText="A powerful, privacy-focused YouTube Music client built with Flutter. Ad-free, offline cache, word-by-word karaoke lyrics, Spotify playlist imports, and a sleek gesture-driven UI."
           readMoreLink="#features"
-          imageSrc="/hero_img.png"
+          imageSrc="/hero1.png"
           imageAlt="A portrait of a person in a black turtleneck, in profile."
           overlayText={{
             part1: 'less is',
