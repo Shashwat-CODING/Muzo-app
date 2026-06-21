@@ -1,0 +1,89 @@
+<USER_REQUEST>
+show features like this You are given a task to integrate an existing React component in the codebase
+
+The codebase should support:
+- shadcn project structure  
+- Tailwind CSS
+- Typescript
+
+If it doesn't, provide instructions on how to setup project via shadcn CLI, install Tailwind or Typescript.
+
+Determine the default path for components and styles. 
+If default path for components is not /components/ui, provide instructions on why it's important to create this folder
+Copy-paste this component to /components/ui folder:
+```tsx
+features-8.tsx
+import { Card, CardContent } from '@/components/ui/card'
+import { Shield, Users } from 'lucide-react'
+
+export function Features() {
+    return (
+        <section className="bg-gray-50 py-16 md:py-32 dark:bg-transparent">
+            <div className="mx-auto max-w-3xl lg:max-w-5xl px-6">
+                <div className="relative">
+                    <div className="relative z-10 grid grid-cols-6 gap-3">
+                        <Card className="relative col-span-full flex overflow-hidden lg:col-span-2">
+                            <CardContent className="relative m-auto size-fit pt-6">
+                                <div className="relative flex h-24 w-56 items-center">
+                                    <svg className="text-muted absolute inset-0 size-full" viewBox="0 0 254 104" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M112.891 97.7022C140.366 97.0802 171.004 94.6715 201.087 87.5116C210.43 85.2881 219.615 82.6412 228.284 78.2473C232.198 76.3179 235.905 73.9942 239.348 71.3124C241.85 69.2557 243.954 66.7571 245.555 63.9408C249.34 57.3235 248.281 50.5341 242.498 45.6109C239.033 42.7237 235.228 40.2703 231.169 38.3054C219.443 32.7209 207.141 28.4382 194.482 25.534C184.013 23.1927 173.358 21.7755 162.64 21.2989C161.376 21.3512 160.113 21.181 158.908 20.796C158.034 20.399 156.857 19.1682 156.962 18.4535C157.115 17.8927 157.381 17.3689 157.743 16.9139C158.104 16.4588 15
+<truncated 40919 bytes>
+} className={cn("p-6 pt-0", className)} {...props} />
+))
+CardContent.displayName = "CardContent"
+
+const CardFooter = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("flex items-center p-6 pt-0", className)}
+    {...props}
+  />
+))
+CardFooter.displayName = "CardFooter"
+
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
+
+```
+
+Install NPM dependencies:
+```bash
+lucide-react
+```
+
+Implementation Guidelines
+ 1. Analyze the component structure and identify all required dependencies
+ 2. Review the component's argumens and state
+ 3. Identify any required context providers or hooks and install them
+ 4. Questions to Ask
+ - What data/props will be passed to this component?
+ - Are there any specific state management requirements?
+ - Are there any required assets (images, icons, etc.)?
+ - What is the expected responsive behavior?
+ - What is the best place to use this component in the app?
+
+Steps to integrate
+ 0. Copy paste all the code above in the correct directories
+ 1. Install external dependencies
+ 2. Fill image assets with Unsplash stock images you know exist
+ 3. Use lucide-react icons for svgs or logos if component requires them
+
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-21T16:12:29+05:30.
+
+The user's current state is as follows:
+Active Document: /Users/shashwat/Documents/Muzo/README.md (LANGUAGE_MARKDOWN)
+Cursor is on line: 206
+Other open documents:
+- /Users/shashwat/Documents/Muzo/changelog.md (LANGUAGE_MARKDOWN)
+- /Users/shashwat/Documents/Muzo/lib/services/notification_service.dart (LANGUAGE_DART)
+- /Users/shashwat/Documents/Muzo/lib/screens/album_screen.dart (LANGUAGE_DART)
+- /Users/shashwat/Documents/Muzo/lib/widgets/artist_tile.dart (LANGUAGE_DART)
+- /Users/shashwat/Documents/Muzo/lib/screens/playlist_details_screen.dart (LANGUAGE_DART)
+Running terminal commands:
+- npm run dev (in /Users/shashwat/Desktop/muzo-w, running for 15m0s)
+</ADDITIONAL_METADATA>
