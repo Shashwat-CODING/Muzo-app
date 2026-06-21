@@ -88,7 +88,7 @@ export default function App() {
           navLinks={navLinks}
           mainText="A powerful, privacy-focused YouTube Music client built with Flutter. Ad-free, offline cache, word-by-word karaoke lyrics, Spotify playlist imports, and a sleek gesture-driven UI."
           readMoreLink="#features"
-          imageSrc="/hero1.png"
+          imageSrc="/hero.png"
           imageAlt="A portrait of a person in a black turtleneck, in profile."
           overlayText={{
             part1: 'less is',
@@ -144,10 +144,10 @@ export default function App() {
           </section>
         )}
 
-                {/* DOWNLOADS & RELEASES */}
+        {/* DOWNLOADS & RELEASES */}
         <section id="downloads" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 scroll-mt-16 relative">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-orange-600/10 via-transparent to-transparent -z-10" />
-          
+
           <div className="text-center space-y-3 mb-12">
             <span className="text-[10px] text-orange-400 font-semibold tracking-wide uppercase px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20">GitHub Releases</span>
             <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight">
@@ -356,7 +356,7 @@ export default function App() {
           <TechStackTable />
         </section>
 
-                {/* SETUP & INSTALLATION SECTION */}
+        {/* SETUP & INSTALLATION SECTION */}
         <section id="setup" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 scroll-mt-16 relative">
           <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-orange-500/10 blur-3xl rounded-full -z-10" />
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -489,7 +489,7 @@ export default function App() {
           </div>
         </section>
 
-                {/* CONTRIBUTORS & ACKNOWLEDGEMENTS */}
+        {/* CONTRIBUTORS & ACKNOWLEDGEMENTS */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative">
           <div className="absolute inset-0 bg-white/[0.02] -z-10 rounded-t-3xl" />
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 text-left relative z-10">
