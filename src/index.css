@@ -13,7 +13,17 @@
   background-color: #09090b;
   color: #e4e4e7;
   scrollbar-color: #27272a #09090b;
+
+  /* shadcn-compatible design tokens (used by motion-footer) */
+  --background: 9 9 11;        /* zinc-950 */
+  --foreground: 228 228 231;   /* zinc-200 */
+  --primary: 249 115 22;       /* orange-500 */
+  --secondary: 161 161 170;    /* zinc-400 */
+  --muted: 82 82 91;           /* zinc-600 */
+  --border: 39 39 42;          /* zinc-800 */
+  --destructive: 239 68 68;    /* red-500 */
 }
+
 
 body {
   background-color: #09090b;
@@ -88,3 +98,189 @@ h1, h2, h3, h4, h5, h6 {
 ::-webkit-scrollbar-thumb:hover {
   background: #3f3f46;
 }
+
+/* ═══════════════════════════════════════════════════════
+   MUZO GLOBAL DESIGN SYSTEM
+   All interactive elements should use these classes.
+═══════════════════════════════════════════════════════ */
+
+/* ── Glass Pill (shared base for all pills/buttons) ── */
+.glass-pill {
+  background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+  border: 1px solid rgba(255,255,255,0.09);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 4px 24px -8px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-pill:hover {
+  background: linear-gradient(145deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.03) 100%);
+  border-color: rgba(255,255,255,0.18);
+  box-shadow: 0 8px 32px -8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.14);
+}
+
+/* ── btn-primary: solid orange CTA ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: #f97316;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: -0.01em;
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(249,115,22,0.4);
+  box-shadow: 0 0 0 0 rgba(249,115,22,0);
+  transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background: #ea7015;
+  box-shadow: 0 0 20px rgba(249,115,22,0.35);
+  transform: translateY(-1px);
+}
+.btn-primary:active { transform: scale(0.97); }
+
+/* ── btn-secondary: white solid CTA (download) ── */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: #fff;
+  color: #000;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: -0.01em;
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
+  cursor: pointer;
+}
+.btn-secondary:hover { background: #e4e4e7; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+.btn-secondary:active { transform: scale(0.97); }
+
+/* ── btn-ghost: glass pill ghost ── */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: -0.01em;
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  color: #a1a1aa;
+  cursor: pointer;
+}
+.btn-ghost:hover { color: #fff; }
+
+/* ── badge-orange: orange accent label badge ── */
+.badge-orange {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.2rem 0.75rem;
+  border-radius: 9999px;
+  background: rgba(249,115,22,0.10);
+  border: 1px solid rgba(249,115,22,0.22);
+  color: #fb923c;
+  box-shadow: 0 0 12px rgba(249,115,22,0.12);
+}
+
+/* ── badge-neutral: subtle neutral tag ── */
+.badge-neutral {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #a1a1aa;
+}
+
+/* ── section-label: consistent eyebrow text ── */
+.section-label {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 0.25rem 0.85rem;
+  border-radius: 9999px;
+  background: rgba(249,115,22,0.09);
+  border: 1px solid rgba(249,115,22,0.20);
+  color: #fb923c;
+  box-shadow: 0 0 14px rgba(249,115,22,0.10);
+}
+
+/* ── glass-card: the standard card surface ── */
+.glass-card {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+.glass-card:hover {
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.09);
+}
+
+/* ── pill-filter: tab/filter pill switcher ── */
+.pill-filter-bar {
+  display: flex;
+  gap: 0.375rem;
+  padding: 0.375rem;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 9999px;
+}
+.pill-filter {
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #71717a;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
+  text-transform: capitalize;
+}
+.pill-filter:hover { color: #fff; background: rgba(255,255,255,0.05); }
+.pill-filter.active {
+  background: #fff;
+  color: #000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+/* ── copy-btn: inline terminal copy button ── */
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.4rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #71717a;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.copy-btn:hover { color: #fff; background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.15); }

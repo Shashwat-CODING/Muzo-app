@@ -136,7 +136,7 @@ export const MinimalistHero = ({
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold text-white tracking-tighter uppercase leading-none text-right">
             {overlayText.part1}
             <br />
-            <span className="text-zinc-500">{overlayText.part2}</span>
+            <span className="text-zinc-400">{overlayText.part2}</span>
           </h1>
         </motion.div>
       </div>
