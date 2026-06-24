@@ -14,34 +14,80 @@ interface AccordionItemProps {
   onMouseEnter: () => void;
 }
 
+const PhoneFrame: React.FC<{ imageUrl: string; title: string }> = ({ imageUrl, title }) => (
+  <div className="relative mx-auto w-[190px] h-[390px] bg-zinc-950 rounded-[32px] border-[5px] border-zinc-800 shadow-[0_15px_35px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col transition-all duration-500 scale-95 md:scale-100 hover:scale-[1.02]">
+    {/* Dynamic Island / Notch */}
+    <div className="absolute top-2 left-1/2 -translate-x-1/2 w-16 h-3.5 bg-zinc-900 rounded-full z-30 flex items-center justify-center border border-white/5">
+      <div className="w-1 h-1 rounded-full bg-zinc-700/80 mr-2" />
+      <div className="w-6 h-0.5 bg-zinc-800 rounded-full" />
+    </div>
+
+    {/* Screen reflection glare */}
+    <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/0 pointer-events-none z-20" />
+
+    {/* Screenshot */}
+    <img
+      src={imageUrl}
+      alt={title}
+      className="w-full h-full object-cover z-10"
+      onError={(e) => {
+        const t = e.target as HTMLImageElement;
+        t.onerror = null;
+        t.src = 'https://placehold.co/400x800/0d0d0f/ffffff?text=App+Screen';
+      }}
+    />
+  </div>
+);
+
 const AccordionItem: React.FC<AccordionItemProps> = ({ item, isActive, onMouseEnter }) => (
   <div
     className={`
       relative overflow-hidden cursor-pointer glass-card !border-white/10 !rounded-2xl
       transition-all duration-700 ease-in-out
       w-full md:h-[460px]
-      ${isActive ? 'h-[300px] md:w-[380px]' : 'h-[56px] md:w-[56px]'}
+      ${isActive ? 'h-[430px] md:w-[360px]' : 'h-[56px] md:w-[56px]'}
     `}
     onMouseEnter={onMouseEnter}
   >
-    <img
-      src={item.imageUrl}
-      alt={item.title}
-      className="absolute inset-0 w-full h-full object-cover opacity-75 transition-opacity duration-300 hover:opacity-90"
-      onError={(e) => {
-        const t = e.target as HTMLImageElement;
-        t.onerror = null;
-        t.src = 'https://placehold.co/400x460/0d0d0f/ffffff?text=Image+Error';
-      }}
-    />
-    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+    {isActive ? (
+      <>
+        {/* Active: Blurred background for depth */}
+        <img
+          src={item.imageUrl}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover opacity-20 blur-xl scale-110 transition-opacity duration-300"
+        />
+        <div className="absolute inset-0 bg-black/40 z-0" />
+        
+        {/* Active: Phone Mockup Container */}
+        <div className="absolute inset-0 flex items-center justify-center p-4 z-10">
+          <PhoneFrame imageUrl={item.imageUrl} title={item.title} />
+        </div>
+      </>
+    ) : (
+      <>
+        {/* Inactive: Clean cover view */}
+        <img
+          src={item.imageUrl}
+          alt={item.title}
+          className="absolute inset-0 w-full h-full object-cover opacity-30 transition-opacity duration-300 hover:opacity-50"
+          onError={(e) => {
+            const t = e.target as HTMLImageElement;
+            t.onerror = null;
+            t.src = 'https://placehold.co/400x460/0d0d0f/ffffff?text=Image';
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+      </>
+    )}
 
+    {/* Title tag */}
     <span className={`
-      absolute text-white text-xs font-bold tracking-tight whitespace-nowrap
-      transition-all duration-500 ease-in-out
+      absolute text-white text-[10px] md:text-xs font-bold tracking-widest uppercase whitespace-nowrap
+      transition-all duration-500 ease-in-out z-20 pointer-events-none
       ${isActive
-        ? 'bottom-5 left-5 rotate-0 opacity-100'
-        : 'bottom-4 left-4 md:bottom-20 md:left-1/2 md:-translate-x-1/2 md:rotate-90 opacity-40 hover:opacity-80'
+        ? 'bottom-4 left-1/2 -translate-x-1/2 opacity-0'
+        : 'bottom-4 left-4 md:bottom-20 md:left-1/2 md:-translate-x-1/2 md:rotate-90 opacity-50 hover:opacity-100'
       }
     `}>
       {item.title}
@@ -50,7 +96,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ item, isActive, onMouseEn
 );
 
 export function LandingAccordionItem() {
-  const [activeIndex, setActiveIndex] = useState(1);
+  const [activeIndex, setActiveIndex] = useState(0);
   const activeItem = accordionItems[activeIndex];
 
   return (

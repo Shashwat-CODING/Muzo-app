@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Code2, Disc, Database, Globe, Layers, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useSpotlight } from "@/lib/use-spotlight";
 
 interface TechItem {
   name: string;
@@ -28,6 +29,8 @@ const CATEGORIES = ["all", "core", "audio", "data", "ui"] as const;
 
 export default function TechStackTable() {
   const [filter, setFilter] = useState<typeof CATEGORIES[number]>("all");
+  const { handleMouseMove } = useSpotlight();
+  
   const filtered = filter === "all" ? TECH_ITEMS : TECH_ITEMS.filter(i => i.category === filter);
 
   return (
@@ -50,20 +53,24 @@ export default function TechStackTable() {
       {/* Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filtered.map((item, idx) => (
-          <div key={idx} className="glass-card p-6 flex flex-col justify-between group">
+          <div
+            key={idx}
+            onMouseMove={handleMouseMove}
+            className="glass-card spotlight-card p-6 flex flex-col justify-between group overflow-hidden"
+          >
             <div className="space-y-4">
               <div className="flex items-start justify-between">
-                <div className="p-2.5 rounded-xl bg-orange-500/10 border border-orange-500/20">
+                <div className="p-2.5 rounded-xl bg-orange-500/10 border border-orange-500/20 z-10">
                   {item.icon}
                 </div>
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1.5 z-10">
                   <span className="badge-neutral">{item.category}</span>
                   {item.version && <span className="badge-orange">{item.version}</span>}
                 </div>
               </div>
 
               <div>
-                <h5 className="text-base font-bold text-white tracking-tight group-hover:text-orange-300 transition-colors">
+                <h5 className="text-base font-bold text-white tracking-tight group-hover:text-orange-400 transition-colors">
                   {item.name}
                 </h5>
                 <p className="text-[10px] text-zinc-500 mt-0.5">
@@ -74,7 +81,7 @@ export default function TechStackTable() {
               <p className="text-sm text-zinc-400 leading-relaxed">{item.roleInMuzo}</p>
             </div>
 
-            <div className="pt-4 mt-4 border-t border-white/[0.06] flex items-center justify-between">
+            <div className="pt-4 mt-4 border-t border-white/[0.06] flex items-center justify-between z-10">
               <a
                 href={item.url}
                 target="_blank"

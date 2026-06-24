@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import {
   Download, Github, Star, GitFork, AlertCircle, Copy, Check,
-  Users, Heart, ExternalLink
+  Users, Heart, ExternalLink, HelpCircle
 } from "lucide-react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { fetchRepoStats, fetchContributors, fetchReleases } from "@/lib/github";
 import type { RepoStats, Contributor, Release } from "@/lib/github";
+import { Navbar } from "@/components/ui/navbar";
 import { MinimalistHero } from "@/components/ui/minimalist-hero";
 import { MorphingText } from "@/components/ui/liquid-text";
 import { LandingAccordionItem } from "@/components/ui/interactive-image-accordion";
@@ -14,8 +15,20 @@ import TechStackTable from "@/components/TechStackTable";
 import { Features } from "@/components/ui/features-8";
 import { CinematicFooter } from "@/components/ui/motion-footer";
 import { cn } from "@/lib/utils";
+import { useSpotlight } from "@/lib/use-spotlight";
 
-// ─── Reusable Section Header ───────────────────────────────────────────────
+// ── Glow Background (Drifting Ambient Orbs) ──────────────────────────────────
+function GlowBackground() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10 select-none">
+      <div className="absolute top-[10%] left-[5%] w-[40vw] h-[40vw] max-w-[500px] rounded-full bg-orange-600/10 blur-[100px] animate-glow-drift-1" />
+      <div className="absolute top-[45%] right-[5%] w-[45vw] h-[45vw] max-w-[600px] rounded-full bg-orange-500/5 blur-[120px] animate-glow-drift-2" />
+      <div className="absolute bottom-[20%] left-[10%] w-[35vw] h-[35vw] max-w-[450px] rounded-full bg-orange-700/10 blur-[90px] animate-glow-drift-1" />
+    </div>
+  );
+}
+
+// ── Reusable Section Header ───────────────────────────────────────────────
 function SectionHeader({ label, title, description }: { label: string; title: string; description?: string }) {
   return (
     <div className="text-center space-y-3 mb-14">
@@ -26,12 +39,44 @@ function SectionHeader({ label, title, description }: { label: string; title: st
   );
 }
 
-// ─── Stats Card ────────────────────────────────────────────────────────────
-function StatCard({ label, children }: { label: string; children: React.ReactNode }) {
+// ── Stats Card ────────────────────────────────────────────────────────────
+function StatCard({ label, children, onMouseMove }: { label: string; children: React.ReactNode; onMouseMove?: React.MouseEventHandler<HTMLDivElement> }) {
   return (
-    <div className="glass-card p-6 text-center flex flex-col items-center justify-center gap-2">
-      <span className="text-[10px] text-zinc-500 font-bold tracking-widest uppercase">{label}</span>
-      <div className="text-2xl font-bold text-white flex items-center gap-1.5">{children}</div>
+    <div
+      onMouseMove={onMouseMove}
+      className="glass-card spotlight-card p-6 text-center flex flex-col items-center justify-center gap-2 overflow-hidden"
+    >
+      <span className="text-[10px] text-zinc-500 font-bold tracking-widest uppercase z-10">{label}</span>
+      <div className="text-2xl font-bold text-white flex items-center gap-1.5 z-10">{children}</div>
+    </div>
+  );
+}
+
+// ── FAQ Item Component ───────────────────────────────────────────────────
+function FAQItem({ question, answer }: { question: string; answer: string }) {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <div className="glass-card overflow-hidden transition-all duration-300 border border-white/5 hover:border-white/10">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between p-6 text-left cursor-pointer z-10"
+      >
+        <span className="font-bold text-white text-sm md:text-base tracking-tight">{question}</span>
+        <span className={cn(
+          "text-orange-400 font-bold text-xl transition-all duration-300 select-none",
+          isOpen ? "rotate-45 text-orange-500" : ""
+        )}>
+          +
+        </span>
+      </button>
+      <div className={cn(
+        "grid transition-all duration-500 ease-in-out px-6 pb-6 border-t border-white/[0.03]",
+        isOpen ? "grid-rows-[1fr] opacity-100 pt-4" : "grid-rows-[0fr] opacity-0 pt-0 h-0 border-t-transparent pointer-events-none"
+      )}>
+        <div className="overflow-hidden">
+          <p className="text-zinc-400 text-xs md:text-sm leading-relaxed">{answer}</p>
+        </div>
+      </div>
     </div>
   );
 }
@@ -46,6 +91,8 @@ export default function LandingPage() {
   const [expandedRelease, setExpandedRelease] = useState<string | null>(null);
   const [showOlder, setShowOlder] = useState(false);
   const [showFullLatestChangelog, setShowFullLatestChangelog] = useState(false);
+
+  const { handleMouseMove } = useSpotlight();
 
   useEffect(() => {
     async function loadData() {
@@ -89,14 +136,31 @@ export default function LandingPage() {
   const SECTION = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 scroll-mt-16";
   const DIVIDER = "border-b border-white/[0.06]";
 
+  const faqs = [
+    { question: "Is Muzo completely free?", answer: "Yes! Muzo is 100% free, open source, and built without any advertising, analytics trackers, or hidden telemetry." },
+    { question: "Does it require a YouTube Premium subscription?", answer: "No. Muzo functions independently. It streams natively from YouTube Music APIs and blocks all intrusive audio/visual ads without requiring any subscription." },
+    { question: "How does offline playback work?", answer: "Muzo caches streamed songs to your local storage dynamically using a secure NoSQL Hive database. You can also manually download tracks or playlists for full offline listening." },
+    { question: "Can I import my Spotify playlists?", answer: "Absolutely! Just copy any public Spotify playlist link, paste it into the Muzo import field, and the app will instantly match and load the tracks." },
+    { question: "Is my personal listening data safe?", answer: "Muzo is designed with a strict privacy-first model. There is zero telemetry, tracking, or cloud sharing of your listening history unless you opt in to cloud sync. All databases run locally on your device." }
+  ];
+
   return (
     <TooltipProvider>
-      <div className="min-h-screen bg-[#09090b] text-zinc-200 relative font-sans selection:bg-orange-500/20 selection:text-white">
+      <div className="min-h-screen bg-[#09090b] text-zinc-200 relative font-sans selection:bg-orange-500/20 selection:text-white overflow-x-hidden">
+        
+        {/* Global floating shrinking Navbar */}
+        <Navbar
+          logoText="MUZO"
+          navLinks={navLinks}
+          downloadUrl="#downloads"
+          githubUrl="https://github.com/Shashwat-CODING/Muzo"
+        />
+
+        {/* Ambient Drifting Glow Orbs */}
+        <GlowBackground />
 
         {/* ── HERO ──────────────────────────────────────────────────────── */}
         <MinimalistHero
-          logoText="MUZO"
-          navLinks={navLinks}
           mainText="A powerful, privacy-focused YouTube Music client built with Flutter. Ad-free, offline cache, word-by-word karaoke lyrics, Spotify playlist imports, and a sleek gesture-driven UI."
           readMoreLink="#features"
           imageSrc="/hero1.png"
@@ -117,18 +181,21 @@ export default function LandingPage() {
         {stats && (
           <section className={`${SECTION} ${DIVIDER} pb-16 md:pb-20`}>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-              <StatCard label="GitHub Stars">
+              <StatCard label="GitHub Stars" onMouseMove={handleMouseMove}>
                 <Star className="w-5 h-5 text-orange-400" /> {stats.stars}
               </StatCard>
-              <StatCard label="Repository Forks">
+              <StatCard label="Repository Forks" onMouseMove={handleMouseMove}>
                 <GitFork className="w-5 h-5 text-orange-400" /> {stats.forks}
               </StatCard>
-              <StatCard label="Latest Version">
+              <StatCard label="Latest Version" onMouseMove={handleMouseMove}>
                 <span className="text-orange-400 text-lg font-mono">{stats.version}</span>
               </StatCard>
-              <div className="glass-card p-6 text-center flex flex-col items-center justify-center gap-3">
-                <span className="text-[10px] text-zinc-500 font-bold tracking-widest uppercase">Release APK</span>
-                <a href={stats.downloadUrl} className="btn-primary w-full">
+              <div
+                onMouseMove={handleMouseMove}
+                className="glass-card spotlight-card p-6 text-center flex flex-col items-center justify-center gap-3 overflow-hidden"
+              >
+                <span className="text-[10px] text-zinc-500 font-bold tracking-widest uppercase z-10">Release APK</span>
+                <a href={stats.downloadUrl} className="btn-primary w-full z-10">
                   <Download className="w-4 h-4" /> Download
                 </a>
               </div>
@@ -400,6 +467,30 @@ export default function LandingPage() {
                 <span className="text-zinc-500">Launching lib/main.dart on device...</span><br />
                 <span className="text-green-400/80 animate-pulse">▋</span>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── FAQ SECTION ───────────────────────────────────────────────── */}
+        <section id="faq" className={`${SECTION} ${DIVIDER}`}>
+          <div className="flex flex-col lg:flex-row gap-12 items-start">
+            <div className="w-full lg:w-4/12 space-y-4 lg:sticky lg:top-24">
+              <span className="section-label">Common Questions</span>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-zinc-400 text-sm leading-relaxed">
+                Have a question about the client, privacy settings, or compiler targets? We've got you covered.
+              </p>
+              <div className="hidden lg:flex items-center gap-3 p-4 rounded-2xl bg-white/[0.02] border border-white/5 text-zinc-400 text-xs">
+                <HelpCircle className="w-5 h-5 text-orange-400 shrink-0" />
+                <span>Cannot find what you need? Feel free to open an issue on the GitHub repository.</span>
+              </div>
+            </div>
+            <div className="w-full lg:w-8/12 space-y-3">
+              {faqs.map((faq, i) => (
+                <FAQItem key={i} question={faq.question} answer={faq.answer} />
+              ))}
             </div>
           </div>
         </section>

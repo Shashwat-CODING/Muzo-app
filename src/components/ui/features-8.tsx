@@ -1,13 +1,16 @@
 import { WifiOff, CircleUser, Server, ShieldCheck, Music2, RefreshCcw } from 'lucide-react'
+import { useSpotlight } from '@/lib/use-spotlight';
 
 // Shared feature icon wrapper
 const IconBox = ({ children }: { children: React.ReactNode }) => (
-  <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-orange-500/10 text-orange-400 border border-orange-500/20">
+  <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-orange-500/10 text-orange-400 border border-orange-500/20 z-10">
     {children}
   </div>
 );
 
 export function Features() {
+  const { handleMouseMove } = useSpotlight();
+
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
       {/* Section header */}
@@ -22,16 +25,19 @@ export function Features() {
       <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
 
         {/* ── Top Banner: Ad-Free ─────────────────────────────────────── */}
-        <div className="col-span-1 md:col-span-6 glass-card overflow-hidden">
-          <div className="p-8 md:p-10 flex flex-col md:flex-row items-center gap-10">
-            <div className="flex-1 space-y-4 text-center md:text-left">
+        <div
+          onMouseMove={handleMouseMove}
+          className="col-span-1 md:col-span-6 glass-card spotlight-card overflow-hidden"
+        >
+          <div className="p-8 md:p-10 flex flex-col md:flex-row items-center gap-10 z-10">
+            <div className="flex-1 space-y-4 text-center md:text-left z-10">
               <IconBox><ShieldCheck className="w-5 h-5" /></IconBox>
               <h3 className="text-2xl font-bold text-white mt-4">100% Ad-Free Experience</h3>
               <p className="text-zinc-400 text-sm leading-relaxed max-w-md">
                 Say goodbye to disruptive audio ads, intrusive banners, and popups. Muzo strips all advertisements natively, providing a clean, uninterrupted listening session from start to finish.
               </p>
             </div>
-            <div className="flex-1 flex justify-center">
+            <div className="flex-1 flex justify-center z-10">
               <div className="relative w-64 h-36 bg-[#0d0d0f] rounded-2xl border border-white/[0.06] shadow-2xl flex items-center justify-center overflow-hidden">
                 <div className="text-5xl font-black text-white/20 tracking-tight select-none">0 Ads</div>
                 <div className="absolute inset-0 bg-orange-500/[0.04]" />
@@ -41,9 +47,12 @@ export function Features() {
         </div>
 
         {/* ── Background Playback ─────────────────────────────────────── */}
-        <div className="col-span-1 md:col-span-3 glass-card p-8 flex flex-col gap-auto">
+        <div
+          onMouseMove={handleMouseMove}
+          className="col-span-1 md:col-span-3 glass-card spotlight-card p-8 flex flex-col justify-between overflow-hidden"
+        >
           <IconBox><Music2 className="w-5 h-5" /></IconBox>
-          <div className="mt-auto pt-8 space-y-2">
+          <div className="pt-8 space-y-2 z-10">
             <h3 className="text-xl font-bold text-white">Background Playback</h3>
             <p className="text-zinc-400 text-sm leading-relaxed">
               Enjoy uninterrupted background audio streaming with flawless system media control drawer integration.
@@ -52,9 +61,12 @@ export function Features() {
         </div>
 
         {/* ── Encrypted Sync ──────────────────────────────────────────── */}
-        <div className="col-span-1 md:col-span-3 glass-card p-8 flex flex-col">
+        <div
+          onMouseMove={handleMouseMove}
+          className="col-span-1 md:col-span-3 glass-card spotlight-card p-8 flex flex-col justify-between overflow-hidden"
+        >
           <IconBox><Server className="w-5 h-5" /></IconBox>
-          <div className="mt-auto pt-8 space-y-2">
+          <div className="pt-8 space-y-2 z-10">
             <h3 className="text-xl font-bold text-white">Encrypted Cloud Sync</h3>
             <p className="text-zinc-400 text-sm leading-relaxed">
               Log in to securely store your settings, custom playlists, and music history on the server. Never lose your data again.
@@ -63,20 +75,26 @@ export function Features() {
         </div>
 
         {/* ── Guest Mode ──────────────────────────────────────────────── */}
-        <div className="col-span-1 md:col-span-2 glass-card p-8 flex flex-col items-center text-center">
-          <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/[0.04] text-zinc-400 border border-white/[0.06]">
+        <div
+          onMouseMove={handleMouseMove}
+          className="col-span-1 md:col-span-2 glass-card spotlight-card p-8 flex flex-col items-center text-center justify-between overflow-hidden"
+        >
+          <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/[0.04] text-zinc-400 border border-white/[0.06] z-10">
             <CircleUser className="w-5 h-5" strokeWidth={1.5} />
           </div>
-          <div className="mt-auto pt-8 space-y-2">
+          <div className="pt-8 space-y-2 z-10">
             <h3 className="text-lg font-bold text-white">Guest Mode</h3>
             <p className="text-zinc-400 text-sm">Stream immediately without requiring any login or registration.</p>
           </div>
         </div>
 
         {/* ── Offline Playback ────────────────────────────────────────── */}
-        <div className="col-span-1 md:col-span-4 glass-card p-8 flex flex-col sm:flex-row items-center gap-8 relative overflow-hidden">
-          <div className="absolute right-0 top-0 w-64 h-64 bg-orange-500/[0.06] blur-3xl rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-          <div className="flex-1 space-y-4 relative z-10">
+        <div
+          onMouseMove={handleMouseMove}
+          className="col-span-1 md:col-span-4 glass-card spotlight-card p-8 flex flex-col sm:flex-row items-center gap-8 relative overflow-hidden"
+        >
+          <div className="absolute right-0 top-0 w-64 h-64 bg-orange-500/[0.04] blur-3xl rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none z-0" />
+          <div className="flex-1 space-y-4 z-10">
             <IconBox><WifiOff className="w-5 h-5" /></IconBox>
             <h3 className="text-xl font-bold text-white mt-4">Offline Playback</h3>
             <p className="text-zinc-400 text-sm leading-relaxed">
@@ -85,7 +103,7 @@ export function Features() {
           </div>
 
           {/* Mini download widget */}
-          <div className="flex-1 w-full bg-[#0d0d0f] border border-white/[0.06] rounded-2xl p-4 space-y-2.5 relative z-10">
+          <div className="flex-1 w-full bg-[#0d0d0f]/80 backdrop-blur border border-white/[0.06] rounded-2xl p-4 space-y-2.5 z-10">
             <div className="flex items-center justify-between mb-1">
               <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Downloads</span>
               <RefreshCcw className="w-3 h-3 text-zinc-600" />

@@ -284,3 +284,96 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.15s ease;
 }
 .copy-btn:hover { color: #fff; background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.15); }
+
+/* ── UI/UX ENHANCEMENTS ── */
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1.5); }
+  50% { transform: translateY(-12px) scale(1.52) rotate(1deg); }
+}
+.animate-float-hero {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Spotlight card glow effects */
+.spotlight-card {
+  position: relative;
+}
+.spotlight-card > * {
+  position: relative;
+  z-index: 2;
+}
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    300px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+    rgba(249, 115, 22, 0.08),
+    transparent 80%
+  );
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.spotlight-card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    200px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+    rgba(249, 115, 22, 0.25),
+    transparent 60%
+  );
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.spotlight-card:hover::before,
+.spotlight-card:hover::after {
+  opacity: 1;
+}
+
+/* Scroll progress animation using CSS Scroll-driven animations */
+@media (prefers-reduced-motion: no-preference) {
+  @supports ((animation-timeline: scroll())) {
+    @keyframes grow-progress {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+    .scroll-progress-bar {
+      transform-origin: 0 50%;
+      animation: grow-progress auto linear;
+      animation-timeline: scroll();
+    }
+  }
+}
+
+/* Ambient glow blobs */
+@keyframes glow-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(10%, 15%) scale(1.2); }
+}
+@keyframes glow-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-15%, -10%) scale(0.9); }
+}
+.animate-glow-drift-1 {
+  animation: glow-drift-1 15s ease-in-out infinite alternate;
+}
+.animate-glow-drift-2 {
+  animation: glow-drift-2 20s ease-in-out infinite alternate;
+}
+
+/* Text glow styles */
+.gradient-text-orange {
+  background: linear-gradient(135deg, #fff 30%, #ffedd5 70%, #f97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
