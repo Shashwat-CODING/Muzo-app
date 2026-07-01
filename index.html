@@ -1,38 +1,636 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
 
 <head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Muzo - Ad-Free, Privacy-Focused YouTube Music Client</title>
-
-  <!-- SEO Meta Tags -->
+  <title>Muzo</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="Permissions-Policy" content="interest-cohort=(), user-id=()" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description"
-    content="Muzo is a powerful, ad-free, and privacy-focused YouTube Music client built with Flutter. Stream music, cache tracks offline, view synced lyrics, and import playlists in a sleek interface." />
-  <meta name="keywords"
-    content="YouTube Music Client, Muzo Music, Ad-free music, Offline Music Player, Muzo App, Flutter Music Player, Privacy-focused player, Spotify playlist import, synced lyrics" />
-  <meta name="author" content="Shashwat" />
-  <meta name="robots" content="index, follow" />
+    content="Open source multilingual Android application for streaming music from YouTube Music" />
+  <meta name="keywords" content="Musicplayer, Muzo, Android, Apk, Youtube Music, listen, free, Open Source, FOSS" />
+  <meta name="page-topic" content="Software" />
+  <link rel="canonical" href="https://n-zik.vercel.app/" />
+  <meta name="google-site-verification" content="68Ttq133b0hXiEqi0augRXtlA_g7wV1ciy3IuE-P-Wg" />
 
-  <!-- Open Graph / Facebook -->
+  <!-- Open Graph / Discord Embeds -->
+  <meta property="og:site_name" content="Muzo" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Muzo - Ad-Free, Privacy-Focused Music Client" />
+  <meta property="og:title" content="Muzo" />
   <meta property="og:description"
-    content="Cache YouTube Music offline, import Spotify playlists, view synced karaoke lyrics, all in a sleek ad-free interface." />
-  <meta property="og:image" content="/hero1.png" />
+    content="Open source multilingual Android application for streaming music from YouTube Music" />
+  <meta property="og:url" content="https://n-zik.vercel.app/" />
+  <meta property="og:image" content="https://n-zik.vercel.app/favicon.png" />
+  <meta name="theme-color" content="#ff7a00" />
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:title" content="Muzo - Privacy-Focused YouTube Music Client" />
-  <meta property="twitter:description"
-    content="Powerful ad-free YouTube Music client with offline playback, playlist imports, and karaoke lyrics." />
-  <meta property="twitter:image" content="/hero1.png" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link href="css/fonts.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/reveal.js"></script>
+  <script name="lang" src="js/multilingual.js"></script>
+  <link rel="stylesheet" href="css/custom.css" />
+  <script src="js/additional.js" defer></script>
+  <script>
+    window.va =
+      window.va ||
+      function () {
+        (window.vaq = window.vaq || []).push(arguments);
+      };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script>
+    document.documentElement.classList.remove('no-js');
+  </script>
 </head>
 
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
+<body id="top" class="has-animations" ontouchstart="detecttouch()" onload="LoadingScreen.loaded()">
+  <script>
+    const preference = localStorage.getItem('dark');
+    if (preference == 'true') {
+      document.body.classList.add('dark');
+    } else if (
+      preference !== 'false' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+    ) {
+      document.body.classList.add('dark');
+    }
+  </script>
+  <div class="loadingScreen">
+    <div class="loader"></div>
+  </div>
+  <div class="body-wrap">
+    <div class="site-particles-container">
+      <canvas id="site-particles"></canvas>
+    </div>
+    <header class="site-header text-light">
+      <div class="container">
+        <div class="site-header-inner">
+          <div class="brand header-brand">
+            <h1 class="m-0" style="display: flex; align-items: center; gap: 12px;">
+              <a href="#" tabindex="0" style="display: flex;">
+                <img class="header-logo-image" src="logo.png" width="50" alt="Logo" />
+              </a>
+              <span id="headerTitle" style="font-size: 24px; font-weight: bold; color: var(--color);">Muzo</span>
+            </h1>
+          </div>
+          <nav class="header-nav"
+            style="display: flex; gap: 32px; align-items: center; justify-content: center; flex: 1;">
+            <a href="#hero" id="homeLink"
+              style="color: var(--color); text-decoration: none; font-weight: 600; font-size: 16px; transition: opacity 0.2s; display: flex; align-items: center; gap: 4px;">
+              <img class="home-icon" src="logo.png" width="16" height="16" style="display: none;" alt="Muzo Home" />
+              <span class="home-text">Home</span>
+            </a>
+            <div style="position: relative;" class="nav-dropdown-container">
+              <div id="featuresDropdownTrigger"
+                style="cursor: pointer; color: var(--color); font-weight: 600; font-size: 16px; display: flex; align-items: center; gap: 4px;"
+                onclick="document.getElementById('featuresDropdown').classList.toggle('show')">
+                <div id="featuresNavTextWrapper" class="nav-text-slider">
+                  <span id="featuresNavText">Features</span>
+                </div>
+                <svg width="10" height="6" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="2 2 6 6 10 2"></polyline>
+                </svg>
+              </div>
+              <div id="featuresDropdown" class="section-dropdown">
+                <a href="#feature-modern_ui" class="feature-link" data-name="Modern UI">Modern UI</a>
+                <a href="#feature-lyrics" class="feature-link" data-name="Lyrics">Lyrics</a>
+                <a href="#feature-visualizer" class="feature-link" data-name="Visualizer">Visualizer</a>
+                <a href="#feature-youtube" class="feature-link" data-name="YouTube">Import from YouTube Music</a>
+                <a href="#feature-caching" class="feature-link" data-name="Offline Caching">Offline Download &
+                  Playback</a>
+                <a href="#feature-search" class="feature-link" data-name="Search">Smart Search</a>
+                <a href="#feature-ota" class="feature-link" data-name="OTA Updates">GitHub Updates</a>
+                <a href="#feature-artist" class="feature-link" data-name="Artist Profiles">Artist Profiles</a>
+                <a href="#feature-settings" class="feature-link" data-name="Audio Controls">Audio Controls</a>
+                <a href="#feature-playlists" class="feature-link" data-name="Playlists">Playlists</a>
+                <a href="#feature-queue" class="feature-link" data-name="Playback Queue">Playback Queue</a>
+                <a href="#feature-history" class="feature-link" data-name="History">History</a>
+                <a href="#feature-compatibility" class="feature-link" data-name="Compatibility">Compatibility</a>
+              </div>
+            </div>
+            <a href="#download"
+              style="color: var(--color); text-decoration: none; font-weight: 600; font-size: 16px; transition: opacity 0.2s;">Download</a>
+          </nav>
+          <div style="
+                align-items: right;
+                text-align: right;
+                display: flex;
+                flex-direction: row;
+              ">
+            <svg tabindex="0" class="focustoggle" onclick="toggleDark()" width="36px" height="36px"
+              viewBox="0 0 13.261058 13.427273" version="1.1" id="toggledark" xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+              <title>Toggle Dark/Light</title>
+              <defs id="defs1" />
+              <g id="layer1" transform="translate(-107.01,-171.72)">
+                <path id="rect19" style="
+                      fill: none;
+                      stroke: var(--color);
+                      stroke-width: 0.85;
+                      stroke-opacity: 0.7;
+                    " d="m 117.2,173.32 -9.89,9.89 z" />
+                <path id="path19" style="
+                      fill: none;
+                      stroke: var(--color);
+                      stroke-width: 0.8;
+                      stroke-linecap: butt;
+                      stroke-linejoin: miter;
+                      stroke-opacity: var(--moon);
+                    "
+                  d="m 112.85098,172.27247 c -4.3922,0.18726 -4.60114,5.76063 -2.44418,7.85042 l 2.83261,-2.83473 c -1.08989,-0.96811 -1.39424,-3.05427 -0.38843,-5.01569 z" />
+                <path id="rect20-6" style="
+                      fill: none;
+                      stroke: var(--color);
+                      stroke-width: 0.8;
+                      stroke-opacity: var(--sun);
+                    " d="m 111.88267,181.89664 -1.35482,1.35483 z" />
+                <ellipse style="
+                      fill: none;
+                      fill-opacity: 1;
+                      stroke: var(--color);
+                      stroke-width: 0.9;
+                      stroke-opacity: var(--sun);
+                    " id="path14" cx="114.46501" cy="179.3551" rx="2.17" ry="2.17" />
+                <path id="rect20" style="
+                      fill: none;
+                      stroke: var(--color);
+                      stroke-width: 0.8;
+                      stroke-opacity: var(--sun);
+                    " d="m 114.45497,182.95789 v 2.15254 z" />
+                <path id="rect20-2" style="
+                      fill: none;
+                      stroke: var(--color);
+                      stroke-width: 0.8;
+                      stroke-opacity: var(--sun);
+                    " d="m 120.27499,179.32535 h -2.15254 z" />
+                <path id="rect20-6-5" style="
+                      fill: none;
+                      stroke: var(--color);
+                      stroke-width: 0.8;
+                      stroke-opacity: var(--sun);
+                    " d="m 118.37937,175.39995 -1.35482,1.35483 z" />
+                <path id="rect20-6-3" style="
+                      fill: none;
+                      stroke: var(--color);
+                      stroke-width: 0.8;
+                      stroke-opacity: var(--sun);
+                    " d="m 118.37937,183.25147 -1.35484,-1.35483 z" />
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section id="hero" class="hero text-center text-light">
+        <div class="hero-bg"></div>
+        <div class="container-sm">
+          <div class="hero-inner">
+            <div class="hero-copy">
+              <h2 class="m-0" style="margin-bottom: 24px !important;">
+                <span class="hero-brand-title"
+                  style="font-size: 54px; font-weight: 800; color: #ff7a00; letter-spacing: -1.5px; display: inline-block;">Muzo</span>
+              </h2>
+              <p name="opensource_multilingual_application" class="hero-paragraph">
+                A multilingual fork of Kreate, built with performance
+                improvements, UI/UX refinement, and new features.
+              </p>
+              <div class="hero-cta-">
+                <a tabindex="0" class="btn-download download-apk-btn" href="https://github.com/Shashwat-CODING/Muzo/releases/latest">Download APK</a>
+                <a tabindex="0" class="btn-download btn-download-beta" href="https://github.com/Shashwat-CODING/Muzo/releases?q=&type=prerelease">Download Beta</a>
+
+              </div>
+            </div>
+            <div class="feature-extended" style="justify-content: center">
+              <div class="feature-extended-image" style="margin: 0 auto; flex: none">
+                <div class="mockup-bg">
+                  <img src="images/hero-bg.svg" alt="illustration" />
+                </div>
+                <div class="mockup-container two-phones">
+                  <img class="device-mockup phone-left" src="images/library.jpg" alt="Library Screen" loading="lazy"
+                    decoding="async" />
+                  <img class="device-mockup phone-right" src="images/player.jpg" alt="Player Screen" loading="lazy"
+                    decoding="async" />
+                  <img class="device-mockup phone-center" src="images/home.jpg" alt="Home Screen" loading="lazy"
+                    decoding="async" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="features" class="features-extended section">
+        <div class="features-extended-inner section-inner">
+          <div class="features-extended-wrap">
+            <div class="container">
+              <div id="feature-ui" class="feature-extended">
+                <div class="feature-extended-image">
+                  <div class="mockup-bg">
+                    <img src="./images/feature-bg-01.svg" alt="background" />
+                  </div>
+
+                  <img class="device-mockup is-revealing up" src="images/home.jpg" alt="Muzo Home Screen"
+                    loading="lazy" />
+                </div>
+                <div class="feature-extended-body">
+                  <div class="is-revealing down flex">
+                    <div>
+                      <h3 tabindex="0" name="feat_modern_ui" class="mt-0 mb-16">
+                        Modern & Intuitive UI.
+                      </h3>
+                      <p name="feat_modern_ui_desc" class="m-0">
+                        Enjoy a refined user experience with a beautiful
+                        interface, seamless navigation, and YouTube
+                        integration.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="feature-lyrics" class="feature-extended">
+                <div class="feature-extended-image">
+                  <div class="mockup-bg">
+                    <img src="./images/feature-bg-02.svg" alt="background" />
+                  </div>
+                  <img class="device-mockup is-revealing up" src="images/lyricswithcontrols.jpg"
+                    alt="Muzo Lyrics Screen" loading="lazy" />
+                </div>
+                <div class="feature-extended-body">
+                  <div class="is-revealing down flex">
+                    <div>
+                      <h3 tabindex="0" name="feat_lyrics" class="mt-0 mb-16">
+                        Advanced Lyrics Support.
+                      </h3>
+                      <p name="feat_lyrics_desc" class="m-0">
+                        Fetch, display, edit, synchronize, and translate
+                        lyrics in real-time.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="feature-visualizer" class="feature-extended">
+                <div class="feature-extended-image">
+                  <div class="mockup-bg">
+                    <img src="./images/feature-bg-03.svg" alt="background" />
+                  </div>
+                  <img class="device-mockup is-revealing up" src="images/player.jpg" alt="Muzo Player Screen"
+                    loading="lazy" />
+                </div>
+                <div class="feature-extended-body">
+                  <div class="is-revealing down flex">
+                    <div>
+                      <h3 tabindex="0" name="feat_visualizer" class="mt-0 mb-16">
+                        Immersive music player.
+                      </h3>
+                      <p name="feat_visualizer_desc" class="m-0">
+                        Play music from YouTube with real-time lyrics and many
+                        more features.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="feature-youtube" class="feature-extended">
+                <div class="feature-extended-image">
+                  <div class="mockup-bg">
+                    <img src="./images/feature-bg-01.svg" alt="background" />
+                  </div>
+                  <img class="device-mockup is-revealing up" src="images/ytmimport.jpg"
+                    alt="Import Data from YouTube Music" loading="lazy" decoding="async" />
+                </div>
+                <div class="feature-extended-body">
+                  <div class="is-revealing down flex">
+                    <div>
+                      <h3 tabindex="0" name="feat_youtube" class="mt-0 mb-16">
+                        Import Data from YouTube Music.
+                      </h3>
+                      <p name="feat_youtube_desc" class="m-0">
+                        Import and synchronize your playlists, recommendations,
+                        and profile content directly from YouTube Music.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="feature-caching" class="feature-extended">
+                <div class="feature-extended-image">
+                  <div class="mockup-bg">
+                    <img src="./images/feature-bg-02.svg" alt="background" />
+                  </div>
+                  <img class="device-mockup is-revealing up" src="images/offlinedownloads.jpg"
+                    alt="Muzo Offline Download & Playback" loading="lazy" />
+                </div>
+                <div class="feature-extended-body">
+                  <div class="is-revealing down flex">
+                    <div>
+                      <h3 tabindex="0" name="feat_caching" class="mt-0 mb-16">
+                        Offline Download & Playback.
+                      </h3>
+                      <p name="feat_caching_desc" class="m-0">
+                        Download your favorite tracks directly to your device for permanent
+                        access and enjoy seamless playback even while offline.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="feature-search" class="feature-extended">
+                <div class="feature-extended-image">
+                  <div class="mockup-bg">
+                    <img src="./images/feature-bg-03.svg" alt="background" />
+                  </div>
+                  <img class="device-mockup is-revealing up" src="images/search.jpg" alt="Muzo Search Screen"
+                    loading="lazy" />
+                </div>
+                <div class="feature-extended-body">
+                  <div class="is-revealing down flex">
+                    <div>
+                      <h3 tabindex="0" name="feat_search" class="mt-0 mb-16">
+                        Smart Search.
+                      </h3>
+                      <p name="feat_search_desc" class="m-0">
+                        Easily find your favorite tracks, albums, and artists.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="feature-ota" class="feature-extended">
+                <div class="feature-extended-image">
+                  <div class="mockup-bg">
+                    <img src="./images/feature-bg-01.svg" alt="background" />
+                  </div>
+                  <img class="device-mockup is-revealing up" src="images/aboutscreen.jpg" alt="Muzo GitHub Updates"
+                    loading="lazy" />
+                </div>
+                <div class="feature-extended-body">
+                  <div class="is-revealing down flex">
+                    <div>
+                      <h3 tabindex="0" name="feat_ota" class="mt-0 mb-16">
+                        In-App updates via GitHub.
+                      </h3>
+                      <p name="feat_ota_desc" class="m-0">
+                        Check for new releases inside the app, download the latest package directly
+                        from GitHub, and update easily.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div id="feature-artist" class="feature-extended">
+                <div class="feature-extended-image">
+                  <div class="mockup-bg">
+                    <img src="./images/feature-bg-02.svg" alt="background" />
+                  </div>
+                  <img class="device-mockup is-revealing up" src="images/artist.jpg" alt="Muzo Artist Profile"
+                    loading="lazy" />
+                </div>
+                <div class="feature-extended-body">
+                  <div class="is-revealing down flex">
+                    <div>
+                      <h3 tabindex="0" name="feat_artist" class="mt-0 mb-16">
+                        Detailed Artist Profiles.
+                      </h3>
+                      <p name="feat_artist_desc" class="m-0">
+                        Explore comprehensive artist profiles with top tracks,
+                        albums, and similar artists.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="feature-settings" class="feature-extended">
+                <div class="feature-extended-image">
+                  <div class="mockup-bg">
+                    <img src="./images/feature-bg-03.svg" alt="background" />
+                  </div>
+                  <img class="device-mockup is-revealing up" src="images/settings.jpg" alt="Muzo Settings Screen"
+                    loading="lazy" />
+                </div>
+                <div class="feature-extended-body">
+                  <div class="is-revealing down flex">
+                    <div>
+                      <h3 tabindex="0" name="feat_settings" class="mt-0 mb-16">
+                        Advanced Audio Controls.
+                      </h3>
+                      <p name="feat_settings_desc" class="m-0">
+                        Customize your experience with advanced audio
+                        controls, backup/restore features, and more.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="feature-playlists" class="feature-extended">
+                <div class="feature-extended-image">
+                  <div class="mockup-bg">
+                    <img src="./images/feature-bg-01.svg" alt="background" />
+                  </div>
+                  <img class="device-mockup is-revealing up" src="images/library.jpg" alt="Playlists" loading="lazy"
+                    decoding="async" />
+                </div>
+                <div class="feature-extended-body">
+                  <div class="is-revealing down flex">
+                    <div>
+                      <h3 tabindex="0" name="feat_playlists" class="mt-0 mb-16">
+                        Playlists Management.
+                      </h3>
+                      <p name="feat_playlists_desc" class="m-0">
+                        Easily create, import, export, and manage your
+                        playlists in one unified interface.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="feature-queue" class="feature-extended">
+                <div class="feature-extended-image">
+                  <div class="mockup-bg">
+                    <img src="./images/feature-bg-02.svg" alt="background" />
+                  </div>
+                  <img class="device-mockup is-revealing up" src="images/queuerelatedsongs.jpg" alt="Playback Queue"
+                    loading="lazy" decoding="async" />
+                </div>
+                <div class="feature-extended-body">
+                  <div class="is-revealing down flex">
+                    <div>
+                      <h3 tabindex="0" name="feat_queue" class="mt-0 mb-16">
+                        Playback Queue.
+                      </h3>
+                      <p name="feat_queue_desc" class="m-0">
+                        Keep track of what's playing next, rearrange songs on
+                        the fly, and manage your upcoming tracks.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="feature-history" class="feature-extended">
+                <div class="feature-extended-image">
+                  <div class="mockup-bg">
+                    <img src="./images/feature-bg-03.svg" alt="background" />
+                  </div>
+                  <img class="device-mockup is-revealing up" src="images/history.jpg" alt="History" loading="lazy"
+                    decoding="async" />
+                </div>
+                <div class="feature-extended-body">
+                  <div class="is-revealing down flex">
+                    <div>
+                      <h3 tabindex="0" name="feat_history" class="mt-0 mb-16">
+                        Complete History.
+                      </h3>
+                      <p name="feat_history_desc" class="m-0">
+                        Never lose a song you loved. Access your complete
+                        listening history at any time.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="feature-compatibility" class="feature-extended">
+                <div class="feature-extended-image">
+                  <div class="mockup-bg">
+                    <img src="./images/feature-bg-04.svg" alt="background" />
+                  </div>
+                  <div class="mockup-container two-phones is-revealing up" style="min-height: 350px;">
+                    <img class="device-mockup phone-left" src="./images/Screenshots/AndroidAuto.png" alt="Android Auto"
+                      loading="lazy" decoding="async" style="width: 55%; height: auto; max-width: none;" />
+                    <img class="device-mockup phone-right" src="./images/Screenshots/AndroidAutomotive.png"
+                      alt="Android Automotive" loading="lazy" decoding="async"
+                      style="width: 55%; height: auto; max-width: none;" />
+                    <img class="device-mockup phone-center" src="./images/Screenshots/AndroidTV.png" alt="Android TV"
+                      loading="lazy" decoding="async" style="width: 65%; height: auto; max-width: none;" />
+                    <img class="device-mockup" src="images/home.jpg" alt="Android Mobile" loading="lazy"
+                      decoding="async"
+                      style="position: absolute; right: 15%; bottom: 5%; width: 22%; height: auto; max-height: 230px; object-fit: contain; max-width: none; z-index: 4; border-radius: 8px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: transform 0.3s ease, z-index 0s;"
+                      onmouseover="this.style.transform='scale(1.1) translateY(-10px)'; this.style.zIndex='5'"
+                      onmouseout="this.style.transform='scale(1) translateY(0)'; this.style.zIndex='4'" />
+                  </div>
+                </div>
+                <div class="feature-extended-body">
+                  <div class="is-revealing down flex">
+                    <div>
+                      <h3 tabindex="0" name="feat_compatibility" class="mt-0 mb-16">
+                        Multiple Device Compatibility.
+                      </h3>
+                      <p name="feat_compatibility_desc" class="m-0">
+                        Enjoy your music everywhere! N-Zik is compatible with
+                        Android Mobile, Android Auto, Android Automotive, and
+                        Android TV. (Later Wear OS).
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer-top">
+        <section id="download" class="cta section text-light">
+          <div class="container-sm">
+            <div class="cta-inner section-inner">
+              <div class="cta-header text-center is-revealing up">
+                <h2 name="listen_to_your_favourite_music" class="section-title mt-0">
+                  Listen to your favorite music
+                </h2>
+                <p name="download_rimusic_now" class="section-paragraph">
+                  Download N-Zik Now.
+                </p>
+                <div class="cta-cta">
+                  <a tabindex="0" class="btn-download download-apk-btn" href="https://github.com/Shashwat-CODING/Muzo/releases/latest">Download APK</a>
+                  <a tabindex="0" class="btn-download btn-download-beta" href="https://github.com/Shashwat-CODING/Muzo/releases?q=&type=prerelease">Download Beta</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="site-footer-bottom">
+        <div class="container">
+          <div class="site-footer-inner">
+            <div class="brand footer-brand">
+              <a tabindex="0" href="#">
+                <img src="logo.png" width="50" alt="Muzo logo" />
+              </a>
+            </div>
+            <ul class="footer-links list-reset">
+              <li>
+                <a tabindex="0" name="repository" href="https://github.com/Shashwat-CODING/Muzo">Repository</a>
+              </li>
+              <li>
+                <a tabindex="0" name="releases" href="https://github.com/Shashwat-CODING/Muzo/releases">Releases</a>
+              </li>
+              <li>
+                <a tabindex="0" name="issue_tracker" href="https://github.com/Shashwat-CODING/Muzo/issues">Issue
+                  tracker</a>
+              </li>
+              <li>
+                <a tabindex="0" href="privacy.html">Privacy Policy</a>
+              </li>
+            </ul>
+            <ul class="footer-social-links list-reset">
+              <li>
+                <a tabindex="0" href="https://github.com/Shashwat-CODING/Muzo">
+                  <img src="./images/github-mark-white.png" alt="GitHub" width="24" height="24" />
+                </a>
+              </li>
+              <li>
+                <a tabindex="0" href="https://discord.gg/bneHC7QRje">
+                  <img src="./images/discord.svg" alt="Discord" width="24" height="24" />
+                </a>
+              </li>
+            </ul>
+            <div id="footer" class="footer-copyright">2025/2026 Muzo</div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <script src="js/main.min.js"></script>
+
+  <script type="text/javascript">
+    const languages = ['az', 'bn', 'ca', 'cs', 'da', 'de', 'en', 'es', 'et', 'fi', 'fil', 'fr', 'gl', 'he', 'hu', 'ia', 'it', 'ja', 'ko', 'ml', 'nl', 'no', 'pl', 'pt', 'pt-rBR', 'ru', 'ro', 'sr', 'sr-rCS', 'sv', 'ta', 'tr', 'uk', 'zh-rCN', 'zh-rTW'];
+    // Load the locales
+    const multilingual = new Multilingual(languages);
+
+    (async () => {
+      await multilingual.loadStrings();
+      multilingual.updateDom();
+      multilingual.setAttribute(document.documentElement);
+    })();
+    reveal();
+  </script>
+  <script>
+    // Fetch latest release APK URL from GitHub
+    fetch('https://api.github.com/repos/Shashwat-CODING/Muzo/releases/latest')
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.assets) {
+          const apkAsset = data.assets.find(asset => asset.name.endsWith('.apk'));
+          if (apkAsset) {
+            const downloadApkBtns = document.querySelectorAll('.download-apk-btn');
+            downloadApkBtns.forEach(btn => btn.href = apkAsset.browser_download_url);
+          }
+        }
+      })
+      .catch(error => console.error('Error fetching latest release:', error));
+  </script>
 </body>
 
 </html>
