@@ -1,636 +1,810 @@
-<!doctype html>
-<html lang="en" class="no-js">
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" prefix="og: https://ogp.me/ns#">
 
 <head>
-  <title>Muzo</title>
-  <meta charset="utf-8" />
-  <meta http-equiv="Permissions-Policy" content="interest-cohort=(), user-id=()" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <title>Muzo — Premium YouTube Music Client</title>
   <meta name="description"
-    content="Open source multilingual Android application for streaming music from YouTube Music" />
-  <meta name="keywords" content="Musicplayer, Muzo, Android, Apk, Youtube Music, listen, free, Open Source, FOSS" />
-  <meta name="page-topic" content="Software" />
-  <link rel="canonical" href="https://n-zik.vercel.app/" />
-  <meta name="google-site-verification" content="68Ttq133b0hXiEqi0augRXtlA_g7wV1ciy3IuE-P-Wg" />
+    content="Muzo is a privacy-focused YouTube Music client built with Flutter. Ad-free, offline downloads, karaoke lyrics, gesture player, Spotify import, community sharing — account creation is optional." />
+  <meta name="keywords"
+    content="Muzo, Flutter music app, YouTube Music client, ad-free music, karaoke lyrics, offline music, Spotify import, Android music app, free APK" />
+  <meta name="author" content="Muzo" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="canonical" href="https://muzo.xyz/" />
 
-  <!-- Open Graph / Discord Embeds -->
-  <meta property="og:site_name" content="Muzo" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Muzo" />
+  <meta property="og:url" content="https://muzo.xyz/" />
+  <meta property="og:title" content="Muzo — Premium YouTube Music Client" />
   <meta property="og:description"
-    content="Open source multilingual Android application for streaming music from YouTube Music" />
-  <meta property="og:url" content="https://n-zik.vercel.app/" />
-  <meta property="og:image" content="https://n-zik.vercel.app/favicon.png" />
-  <meta name="theme-color" content="#ff7a00" />
+    content="A privacy-focused YouTube Music client with karaoke lyrics, gesture player, offline downloads, Spotify import, and community sharing. No ads. Account creation is optional." />
+  <meta property="og:image" content="https://raw.githubusercontent.com/Scodify236/muzo-w/main/logo.png" />
+  <meta property="og:site_name" content="Muzo" />
 
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <link href="css/fonts.css" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
-  <script src="js/reveal.js"></script>
-  <script name="lang" src="js/multilingual.js"></script>
-  <link rel="stylesheet" href="css/custom.css" />
-  <script src="js/additional.js" defer></script>
-  <script>
-    window.va =
-      window.va ||
-      function () {
-        (window.vaq = window.vaq || []).push(arguments);
-      };
-  </script>
-  <script defer src="/_vercel/insights/script.js"></script>
-  <script>
-    document.documentElement.classList.remove('no-js');
-  </script>
-</head>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Muzo — Premium YouTube Music Client" />
+  <meta name="twitter:description" content="Privacy-focused YouTube Music client. Karaoke lyrics, gesture player, offline downloads, Spotify import. No ads, optional accounts." />
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/Scodify236/muzo-w/main/logo.png" />
+  <meta name="google-adsense-account" content="ca-pub-4253536927389825">
 
-<body id="top" class="has-animations" ontouchstart="detecttouch()" onload="LoadingScreen.loaded()">
-  <script>
-    const preference = localStorage.getItem('dark');
-    if (preference == 'true') {
-      document.body.classList.add('dark');
-    } else if (
-      preference !== 'false' &&
-      window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-    ) {
-      document.body.classList.add('dark');
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="apple-touch-icon" href="logo.png" />
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Muzo",
+      "operatingSystem": "Android",
+      "applicationCategory": "MusicApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Free ad-free music streaming for Android with synced lyrics, YouTube sync, and playlist import.",
+      "url": "https://muzo.xyz",
+      "logo": "https://raw.githubusercontent.com/Scodify236/muzo-w/main/logo.png"
     }
   </script>
-  <div class="loadingScreen">
-    <div class="loader"></div>
+  <style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    /* ── Top Announcement Banner ── */
+    #app-banner {
+      position: relative;
+      z-index: 9999;
+      background: #fff;
+      color: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 6px 44px;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      border-bottom: 1px solid #ebebeb;
+      flex-wrap: nowrap;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    #app-banner .banner-text {
+      color: #333;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #app-banner .banner-text strong {
+      font-weight: 700;
+      color: #111;
+    }
+
+    #app-banner .banner-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #111;
+      color: #fff;
+      text-decoration: none;
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 4px 11px;
+      border-radius: 999px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: opacity 0.15s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    #app-banner .banner-cta:hover {
+      opacity: 0.7;
+    }
+
+    #app-banner .banner-close {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #bbb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px;
+      line-height: 1;
+      transition: color 0.12s;
+    }
+
+    #app-banner .banner-close:hover {
+      color: #111;
+    }
+
+    #app-banner.banner-hidden {
+      display: none;
+    }
+
+    /* Ensure animated elements are visible (JS animates them) */
+    .mask-inner {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-sub {
+      opacity: 1;
+    }
+
+    .hero-trust {
+      opacity: 1;
+    }
+
+    .hero-eyebrow {
+      opacity: 1;
+    }
+
+    /* ====================================================
+     HELVETICA NEUE — ABSOLUTE PRIORITY (inline wins all)
+  ==================================================== */
+    html body #hero h1,
+    html body #hero h1 span,
+    html body #hero .mask-inner,
+    html body #hero .hero-desc,
+    html body #hero .hero-actions a,
+    html body #hero .hero-trust li,
+    html body #hero .hero-appname span,
+    html body .hero-content,
+    html body .hero-content * {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    }
+
+    /* Nav: always show backdrop, top is set by JS to track the banner scroll */
+    .nav {
+      background: var(--bg-nav);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Stronger border + shadow when scrolled */
+    .nav.scrolled {
+      border-bottom-color: var(--border-mid);
+      box-shadow: 0 1px 32px rgba(0, 0, 0, 0.22);
+    }
+  </style>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4253536927389825"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <!-- Muzo Movies Banner -->
+  <div id="app-banner" role="banner" aria-label="Muzo Movies app announcement">
+    <span class="banner-text">Download <strong>Muzo Movies</strong> — unlimited entertainment, free.</span>
+    <a href="https://app.muzo.xyz" target="_blank" rel="noopener noreferrer" class="banner-cta"
+      aria-label="Download Muzo Movies app">Get the App</a>
+    <button class="banner-close" id="bannerClose" aria-label="Dismiss" type="button">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+        aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
   </div>
-  <div class="body-wrap">
-    <div class="site-particles-container">
-      <canvas id="site-particles"></canvas>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+  <div class="progress-bar" id="progressBar" aria-hidden="true"></div>
+
+  <canvas id="musicCanvas" aria-hidden="true"></canvas>
+
+  <div class="ambient-lines" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="wordmark" aria-label="Muzo home">
+        <img src="logo.png" alt="Muzo logo" class="wordmark-img" width="28" height="28" />
+        <span class="wordmark-text">Muzo</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#screenshots" class="nav-link">Screenshots</a>
+        <a href="#download" class="nav-link">Download</a>
+
+        <a href="https://github.com/Shashwat-CODING/Muzo" target="_blank" rel="noopener noreferrer"
+          class="nav-link nav-github" aria-label="Open Muzo on GitHub">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path
+              d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+          </svg>
+          <span class="nav-gh-label">GitHub</span>
+        </a>
+
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15"
+            height="15" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15"
+            height="15" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <a href="#download" class="nav-pill">Get App</a>
+      </nav>
+
+      <div class="nav-mobile">
+        <button class="theme-toggle theme-toggle-mob" id="themeToggleMob" type="button" aria-label="Toggle theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15"
+            height="15" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15"
+            height="15" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <a href="#download" class="nav-pill-mob">Get App</a>
+
+        <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-controls="mobileDrawer"
+          aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
-    <header class="site-header text-light">
-      <div class="container">
-        <div class="site-header-inner">
-          <div class="brand header-brand">
-            <h1 class="m-0" style="display: flex; align-items: center; gap: 12px;">
-              <a href="#" tabindex="0" style="display: flex;">
-                <img class="header-logo-image" src="logo.png" width="50" alt="Logo" />
-              </a>
-              <span id="headerTitle" style="font-size: 24px; font-weight: bold; color: var(--color);">Muzo</span>
-            </h1>
-          </div>
-          <nav class="header-nav"
-            style="display: flex; gap: 32px; align-items: center; justify-content: center; flex: 1;">
-            <a href="#hero" id="homeLink"
-              style="color: var(--color); text-decoration: none; font-weight: 600; font-size: 16px; transition: opacity 0.2s; display: flex; align-items: center; gap: 4px;">
-              <img class="home-icon" src="logo.png" width="16" height="16" style="display: none;" alt="Muzo Home" />
-              <span class="home-text">Home</span>
-            </a>
-            <div style="position: relative;" class="nav-dropdown-container">
-              <div id="featuresDropdownTrigger"
-                style="cursor: pointer; color: var(--color); font-weight: 600; font-size: 16px; display: flex; align-items: center; gap: 4px;"
-                onclick="document.getElementById('featuresDropdown').classList.toggle('show')">
-                <div id="featuresNavTextWrapper" class="nav-text-slider">
-                  <span id="featuresNavText">Features</span>
-                </div>
-                <svg width="10" height="6" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="2 2 6 6 10 2"></polyline>
-                </svg>
-              </div>
-              <div id="featuresDropdown" class="section-dropdown">
-                <a href="#feature-modern_ui" class="feature-link" data-name="Modern UI">Modern UI</a>
-                <a href="#feature-lyrics" class="feature-link" data-name="Lyrics">Lyrics</a>
-                <a href="#feature-visualizer" class="feature-link" data-name="Visualizer">Visualizer</a>
-                <a href="#feature-youtube" class="feature-link" data-name="YouTube">Import from YouTube Music</a>
-                <a href="#feature-caching" class="feature-link" data-name="Offline Caching">Offline Download &
-                  Playback</a>
-                <a href="#feature-search" class="feature-link" data-name="Search">Smart Search</a>
-                <a href="#feature-ota" class="feature-link" data-name="OTA Updates">GitHub Updates</a>
-                <a href="#feature-artist" class="feature-link" data-name="Artist Profiles">Artist Profiles</a>
-                <a href="#feature-settings" class="feature-link" data-name="Audio Controls">Audio Controls</a>
-                <a href="#feature-playlists" class="feature-link" data-name="Playlists">Playlists</a>
-                <a href="#feature-queue" class="feature-link" data-name="Playback Queue">Playback Queue</a>
-                <a href="#feature-history" class="feature-link" data-name="History">History</a>
-                <a href="#feature-compatibility" class="feature-link" data-name="Compatibility">Compatibility</a>
-              </div>
-            </div>
-            <a href="#download"
-              style="color: var(--color); text-decoration: none; font-weight: 600; font-size: 16px; transition: opacity 0.2s;">Download</a>
-          </nav>
-          <div style="
-                align-items: right;
-                text-align: right;
-                display: flex;
-                flex-direction: row;
-              ">
-            <svg tabindex="0" class="focustoggle" onclick="toggleDark()" width="36px" height="36px"
-              viewBox="0 0 13.261058 13.427273" version="1.1" id="toggledark" xml:space="preserve"
-              xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-              <title>Toggle Dark/Light</title>
-              <defs id="defs1" />
-              <g id="layer1" transform="translate(-107.01,-171.72)">
-                <path id="rect19" style="
-                      fill: none;
-                      stroke: var(--color);
-                      stroke-width: 0.85;
-                      stroke-opacity: 0.7;
-                    " d="m 117.2,173.32 -9.89,9.89 z" />
-                <path id="path19" style="
-                      fill: none;
-                      stroke: var(--color);
-                      stroke-width: 0.8;
-                      stroke-linecap: butt;
-                      stroke-linejoin: miter;
-                      stroke-opacity: var(--moon);
-                    "
-                  d="m 112.85098,172.27247 c -4.3922,0.18726 -4.60114,5.76063 -2.44418,7.85042 l 2.83261,-2.83473 c -1.08989,-0.96811 -1.39424,-3.05427 -0.38843,-5.01569 z" />
-                <path id="rect20-6" style="
-                      fill: none;
-                      stroke: var(--color);
-                      stroke-width: 0.8;
-                      stroke-opacity: var(--sun);
-                    " d="m 111.88267,181.89664 -1.35482,1.35483 z" />
-                <ellipse style="
-                      fill: none;
-                      fill-opacity: 1;
-                      stroke: var(--color);
-                      stroke-width: 0.9;
-                      stroke-opacity: var(--sun);
-                    " id="path14" cx="114.46501" cy="179.3551" rx="2.17" ry="2.17" />
-                <path id="rect20" style="
-                      fill: none;
-                      stroke: var(--color);
-                      stroke-width: 0.8;
-                      stroke-opacity: var(--sun);
-                    " d="m 114.45497,182.95789 v 2.15254 z" />
-                <path id="rect20-2" style="
-                      fill: none;
-                      stroke: var(--color);
-                      stroke-width: 0.8;
-                      stroke-opacity: var(--sun);
-                    " d="m 120.27499,179.32535 h -2.15254 z" />
-                <path id="rect20-6-5" style="
-                      fill: none;
-                      stroke: var(--color);
-                      stroke-width: 0.8;
-                      stroke-opacity: var(--sun);
-                    " d="m 118.37937,175.39995 -1.35482,1.35483 z" />
-                <path id="rect20-6-3" style="
-                      fill: none;
-                      stroke: var(--color);
-                      stroke-width: 0.8;
-                      stroke-opacity: var(--sun);
-                    " d="m 118.37937,183.25147 -1.35484,-1.35483 z" />
-              </g>
+
+    <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+      <nav class="drawer-links" aria-label="Mobile navigation">
+        <a href="#features" class="drawer-link">Features</a>
+        <a href="#screenshots" class="drawer-link">Screenshots</a>
+        <a href="#download" class="drawer-link">Download</a>
+        <a href="https://github.com/Shashwat-CODING/Muzo" target="_blank" rel="noopener noreferrer"
+          class="drawer-link">GitHub</a>
+        <a href="https://github.com/Shashwat-CODING/Muzo/releases/latest"
+          class="drawer-cta" target="_blank" rel="noopener noreferrer">Download APK</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" id="hero" aria-labelledby="hero-heading">
+      <img class="hero-bg-gif" src="bg.gif" alt="" aria-hidden="true" loading="eager" fetchpriority="high" />
+
+      <div class="hero-grid-bg" aria-hidden="true"></div>
+      <canvas id="waveCanvas" aria-hidden="true"></canvas>
+      <canvas id="vizCanvas" aria-hidden="true"></canvas>
+      <div class="hero-vignette" aria-hidden="true"></div>
+      <div class="orb orb-1" aria-hidden="true"></div>
+      <div class="orb orb-2" aria-hidden="true"></div>
+      <div class="orb orb-3" aria-hidden="true"></div>
+      <div class="particles" id="particles" aria-hidden="true"></div>
+
+
+
+      <!-- Heading block -->
+      <div class="hero-content">
+        <h1 id="hero-heading">
+          <span class="mask-wrap">
+            <span class="mask-inner anim-l1">Pure music.</span>
+          </span>
+          <span class="mask-wrap">
+            <span class="mask-inner anim-l2">Zero distractions.</span>
+          </span>
+        </h1>
+
+        <p class="hero-desc">
+          Muzo is a powerful, privacy-focused YouTube Music client built with Flutter.
+          Enjoy word-by-word karaoke lyrics, a gesture-driven immersive player, offline
+          downloads, Spotify playlist import, and a community feed — all ad-free,
+          account creation is optional.
+        </p>
+
+        <div class="hero-actions">
+          <a href="https://github.com/Shashwat-CODING/Muzo/releases/latest"
+            class="btn-main btn-glow" target="_blank" rel="noopener noreferrer">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              aria-hidden="true">
+              <path d="M12 3v13M5 14l7 7 7-7"></path>
+              <path d="M3 21h18"></path>
             </svg>
+            Download APK — Free
+          </a>
+
+          <a href="#features" class="btn-ghost">
+            See features
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+
+        <ul class="hero-trust" aria-label="App highlights">
+          <li class="trust-item">Optional accounts</li>
+          <li class="trust-sep" aria-hidden="true"></li>
+          <li class="trust-item">Android · iOS · macOS</li>
+          <li class="trust-sep" aria-hidden="true"></li>
+          <li class="trust-item">v4.2.0</li>
+          <li class="trust-sep" aria-hidden="true"></li>
+          <li class="trust-item">Free &amp; Open Source</li>
+        </ul>
+      </div>
+
+      <!-- Phone mockups -->
+      <div class="hero-phones" aria-hidden="true">
+        <div class="s24-wrap s24-left">
+          <div class="s24-frame">
+            <div class="s24-pill"></div>
+            <div class="s24-screen">
+              <img src="library.jpg" alt="Library screen" class="s24-img" loading="eager" />
+              <div class="s24-shine"></div>
+            </div>
+            <div class="s24-btn s24-vol-up"></div>
+            <div class="s24-btn s24-vol-dn"></div>
+            <div class="s24-btn s24-power"></div>
+            <div class="s24-spen"></div>
+          </div>
+          <div class="s24-glow"></div>
+        </div>
+
+        <div class="s24-wrap s24-center">
+          <div class="s24-frame s24-frame-hero">
+            <div class="s24-pill"></div>
+            <div class="s24-screen">
+              <img src="lyricswithcontrols.jpg" alt="Now playing screen" class="s24-img" loading="eager" />
+              <div class="s24-shine"></div>
+            </div>
+            <div class="s24-btn s24-vol-up"></div>
+            <div class="s24-btn s24-vol-dn"></div>
+            <div class="s24-btn s24-power"></div>
+            <div class="s24-spen"></div>
+          </div>
+          <div class="s24-glow s24-glow-center"></div>
+        </div>
+
+        <div class="s24-wrap s24-right">
+          <div class="s24-frame">
+            <div class="s24-pill"></div>
+            <div class="s24-screen">
+              <img src="lyrics_full.jpg" alt="Lyrics screen" class="s24-img" loading="eager" />
+              <div class="s24-shine"></div>
+            </div>
+            <div class="s24-btn s24-vol-up"></div>
+            <div class="s24-btn s24-vol-dn"></div>
+            <div class="s24-btn s24-power"></div>
+            <div class="s24-spen"></div>
+          </div>
+          <div class="s24-glow"></div>
+        </div>
+      </div>
+
+      <div class="scroll-hint" aria-hidden="true">
+        <div class="scroll-chevrons">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee-wrap" aria-hidden="true">
+      <div class="marquee-track">
+        <div class="marquee-row">
+          <span>Ad-free</span><span class="md">·</span>
+          <span>Karaoke Lyrics</span><span class="md">·</span>
+          <span>Gesture Player</span><span class="md">·</span>
+          <span>Offline Downloads</span><span class="md">·</span>
+          <span>Spotify Import</span><span class="md">·</span>
+          <span>Community Feed</span><span class="md">·</span>
+          <span>Optional Account</span><span class="md">·</span>
+          <span>Glassmorphic UI</span><span class="md">·</span>
+          <span>Lofi Mode</span><span class="md">·</span>
+          <span>Open Source</span><span class="md">·</span>
+        </div>
+        <div class="marquee-row" aria-hidden="true">
+          <span>Ad-free</span><span class="md">·</span>
+          <span>Karaoke Lyrics</span><span class="md">·</span>
+          <span>Gesture Player</span><span class="md">·</span>
+          <span>Offline Downloads</span><span class="md">·</span>
+          <span>Spotify Import</span><span class="md">·</span>
+          <span>Community Feed</span><span class="md">·</span>
+          <span>Optional Account</span><span class="md">·</span>
+          <span>Glassmorphic UI</span><span class="md">·</span>
+          <span>Lofi Mode</span><span class="md">·</span>
+          <span>Open Source</span><span class="md">·</span>
+        </div>
+      </div>
+    </div>
+
+    <section class="stats-bar" aria-label="App stats">
+      <div class="stat reveal">
+        <span class="sn" data-target="100">0</span><span class="ss">%</span>
+        <p>Ad-free</p>
+      </div>
+      <div class="sdiv" aria-hidden="true"></div>
+      <div class="stat reveal" data-delay="100">
+        <span class="sn sw">60+ FPS</span>
+        <p>Karaoke lyrics</p>
+      </div>
+      <div class="sdiv" aria-hidden="true"></div>
+      <div class="stat reveal" data-delay="200">
+        <span class="sn" data-target="0">0</span>
+        <p>Mandatory accounts</p>
+      </div>
+      <div class="sdiv" aria-hidden="true"></div>
+      <div class="stat reveal" data-delay="300">
+        <span class="sn sw">v4.2</span>
+        <p>Latest release</p>
+      </div>
+    </section>
+
+    <section class="features" id="features" aria-labelledby="features-heading">
+      <div class="container">
+        <div class="feat-header">
+          <div class="eyebrow">
+            <span class="el"></span>
+            Features
+            <span class="el"></span>
+          </div>
+          <h2 class="feat-h" id="features-heading">
+            Everything that matters.
+            <br />
+            <em>Nothing that gets in the way.</em>
+          </h2>
+        </div>
+
+        <div class="feat-list">
+          <div class="feat-row reveal" data-delay="0">
+            <div class="feat-num">01</div>
+            <div class="feat-divider" aria-hidden="true"></div>
+            <div class="feat-body">
+              <h3>Word-by-word karaoke lyrics</h3>
+              <p>Words fill with color in real time as the artist sings, running at a buttery-smooth 60+ FPS. Line-by-line sweep, active-line highlight, and smooth auto-scroll included.</p>
+            </div>
+            <div class="feat-tag">Lyrics</div>
+          </div>
+
+          <div class="feat-row reveal" data-delay="60">
+            <div class="feat-num">02</div>
+            <div class="feat-divider" aria-hidden="true"></div>
+            <div class="feat-body">
+              <h3>Immersive gesture player</h3>
+              <p>Album art fills the full screen. Double-tap to play/pause, swipe to skip tracks, swipe right to control volume with a frosted glass bar — no buttons needed.</p>
+            </div>
+            <div class="feat-tag">Player</div>
+          </div>
+
+          <div class="feat-row reveal" data-delay="120">
+            <div class="feat-num">03</div>
+            <div class="feat-divider" aria-hidden="true"></div>
+            <div class="feat-body">
+              <h3>Glassmorphic adaptive UI</h3>
+              <p>Dynamic dark &amp; light themes with glass-effect panels that adapt to your album art. Contrast-aware controls, desktop optimization, and smooth 60 FPS animations throughout.</p>
+            </div>
+            <div class="feat-tag">Design</div>
+          </div>
+
+          <div class="feat-row reveal" data-delay="180">
+            <div class="feat-num">04</div>
+            <div class="feat-divider" aria-hidden="true"></div>
+            <div class="feat-body">
+              <h3>Offline downloads &amp; Spotify import</h3>
+              <p>Download any track or video for offline listening. Paste a public Spotify playlist URL to instantly import all your favorite songs.</p>
+            </div>
+            <div class="feat-tag">Library</div>
+          </div>
+
+          <div class="feat-row reveal" data-delay="240">
+            <div class="feat-num">05</div>
+            <div class="feat-divider" aria-hidden="true"></div>
+            <div class="feat-body">
+              <h3>Community feed &amp; sharing</h3>
+              <p>Search, stream, and discover tracks uploaded by the community in a global feed. Follow your favorite artists and share links directly from YouTube or YouTube Music.</p>
+            </div>
+            <div class="feat-tag">Social</div>
+          </div>
+
+          <div class="feat-row reveal" data-delay="300">
+            <div class="feat-num">06</div>
+            <div class="feat-divider" aria-hidden="true"></div>
+            <div class="feat-body">
+              <h3>Privacy-first, optional accounts</h3>
+              <p>All favorites, playlists, and history are stored locally by default. Optionally sign in with Google for cloud sync. Zero-wait launch with parallel background loading.</p>
+            </div>
+            <div class="feat-tag">Privacy</div>
           </div>
         </div>
       </div>
-    </header>
-    <main>
-      <section id="hero" class="hero text-center text-light">
-        <div class="hero-bg"></div>
-        <div class="container-sm">
-          <div class="hero-inner">
-            <div class="hero-copy">
-              <h2 class="m-0" style="margin-bottom: 24px !important;">
-                <span class="hero-brand-title"
-                  style="font-size: 54px; font-weight: 800; color: #ff7a00; letter-spacing: -1.5px; display: inline-block;">Muzo</span>
-              </h2>
-              <p name="opensource_multilingual_application" class="hero-paragraph">
-                A multilingual fork of Kreate, built with performance
-                improvements, UI/UX refinement, and new features.
-              </p>
-              <div class="hero-cta-">
-                <a tabindex="0" class="btn-download download-apk-btn" href="https://github.com/Shashwat-CODING/Muzo/releases/latest">Download APK</a>
-                <a tabindex="0" class="btn-download btn-download-beta" href="https://github.com/Shashwat-CODING/Muzo/releases?q=&type=prerelease">Download Beta</a>
+    </section>
 
-              </div>
-            </div>
-            <div class="feature-extended" style="justify-content: center">
-              <div class="feature-extended-image" style="margin: 0 auto; flex: none">
-                <div class="mockup-bg">
-                  <img src="images/hero-bg.svg" alt="illustration" />
-                </div>
-                <div class="mockup-container two-phones">
-                  <img class="device-mockup phone-left" src="images/library.jpg" alt="Library Screen" loading="lazy"
-                    decoding="async" />
-                  <img class="device-mockup phone-right" src="images/player.jpg" alt="Player Screen" loading="lazy"
-                    decoding="async" />
-                  <img class="device-mockup phone-center" src="images/home.jpg" alt="Home Screen" loading="lazy"
-                    decoding="async" />
-                </div>
-              </div>
-            </div>
-          </div>
+    <section class="scr-section" id="screenshots" aria-labelledby="screenshots-heading">
+      <div class="container">
+        <div class="eyebrow">
+          <span class="el"></span>
+          Interface
+          <span class="el"></span>
         </div>
-      </section>
-      <section id="features" class="features-extended section">
-        <div class="features-extended-inner section-inner">
-          <div class="features-extended-wrap">
-            <div class="container">
-              <div id="feature-ui" class="feature-extended">
-                <div class="feature-extended-image">
-                  <div class="mockup-bg">
-                    <img src="./images/feature-bg-01.svg" alt="background" />
-                  </div>
 
-                  <img class="device-mockup is-revealing up" src="images/home.jpg" alt="Muzo Home Screen"
-                    loading="lazy" />
-                </div>
-                <div class="feature-extended-body">
-                  <div class="is-revealing down flex">
-                    <div>
-                      <h3 tabindex="0" name="feat_modern_ui" class="mt-0 mb-16">
-                        Modern & Intuitive UI.
-                      </h3>
-                      <p name="feat_modern_ui_desc" class="m-0">
-                        Enjoy a refined user experience with a beautiful
-                        interface, seamless navigation, and YouTube
-                        integration.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div id="feature-lyrics" class="feature-extended">
-                <div class="feature-extended-image">
-                  <div class="mockup-bg">
-                    <img src="./images/feature-bg-02.svg" alt="background" />
-                  </div>
-                  <img class="device-mockup is-revealing up" src="images/lyricswithcontrols.jpg"
-                    alt="Muzo Lyrics Screen" loading="lazy" />
-                </div>
-                <div class="feature-extended-body">
-                  <div class="is-revealing down flex">
-                    <div>
-                      <h3 tabindex="0" name="feat_lyrics" class="mt-0 mb-16">
-                        Advanced Lyrics Support.
-                      </h3>
-                      <p name="feat_lyrics_desc" class="m-0">
-                        Fetch, display, edit, synchronize, and translate
-                        lyrics in real-time.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div id="feature-visualizer" class="feature-extended">
-                <div class="feature-extended-image">
-                  <div class="mockup-bg">
-                    <img src="./images/feature-bg-03.svg" alt="background" />
-                  </div>
-                  <img class="device-mockup is-revealing up" src="images/player.jpg" alt="Muzo Player Screen"
-                    loading="lazy" />
-                </div>
-                <div class="feature-extended-body">
-                  <div class="is-revealing down flex">
-                    <div>
-                      <h3 tabindex="0" name="feat_visualizer" class="mt-0 mb-16">
-                        Immersive music player.
-                      </h3>
-                      <p name="feat_visualizer_desc" class="m-0">
-                        Play music from YouTube with real-time lyrics and many
-                        more features.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div id="feature-youtube" class="feature-extended">
-                <div class="feature-extended-image">
-                  <div class="mockup-bg">
-                    <img src="./images/feature-bg-01.svg" alt="background" />
-                  </div>
-                  <img class="device-mockup is-revealing up" src="images/ytmimport.jpg"
-                    alt="Import Data from YouTube Music" loading="lazy" decoding="async" />
-                </div>
-                <div class="feature-extended-body">
-                  <div class="is-revealing down flex">
-                    <div>
-                      <h3 tabindex="0" name="feat_youtube" class="mt-0 mb-16">
-                        Import Data from YouTube Music.
-                      </h3>
-                      <p name="feat_youtube_desc" class="m-0">
-                        Import and synchronize your playlists, recommendations,
-                        and profile content directly from YouTube Music.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div id="feature-caching" class="feature-extended">
-                <div class="feature-extended-image">
-                  <div class="mockup-bg">
-                    <img src="./images/feature-bg-02.svg" alt="background" />
-                  </div>
-                  <img class="device-mockup is-revealing up" src="images/offlinedownloads.jpg"
-                    alt="Muzo Offline Download & Playback" loading="lazy" />
-                </div>
-                <div class="feature-extended-body">
-                  <div class="is-revealing down flex">
-                    <div>
-                      <h3 tabindex="0" name="feat_caching" class="mt-0 mb-16">
-                        Offline Download & Playback.
-                      </h3>
-                      <p name="feat_caching_desc" class="m-0">
-                        Download your favorite tracks directly to your device for permanent
-                        access and enjoy seamless playback even while offline.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div id="feature-search" class="feature-extended">
-                <div class="feature-extended-image">
-                  <div class="mockup-bg">
-                    <img src="./images/feature-bg-03.svg" alt="background" />
-                  </div>
-                  <img class="device-mockup is-revealing up" src="images/search.jpg" alt="Muzo Search Screen"
-                    loading="lazy" />
-                </div>
-                <div class="feature-extended-body">
-                  <div class="is-revealing down flex">
-                    <div>
-                      <h3 tabindex="0" name="feat_search" class="mt-0 mb-16">
-                        Smart Search.
-                      </h3>
-                      <p name="feat_search_desc" class="m-0">
-                        Easily find your favorite tracks, albums, and artists.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div id="feature-ota" class="feature-extended">
-                <div class="feature-extended-image">
-                  <div class="mockup-bg">
-                    <img src="./images/feature-bg-01.svg" alt="background" />
-                  </div>
-                  <img class="device-mockup is-revealing up" src="images/aboutscreen.jpg" alt="Muzo GitHub Updates"
-                    loading="lazy" />
-                </div>
-                <div class="feature-extended-body">
-                  <div class="is-revealing down flex">
-                    <div>
-                      <h3 tabindex="0" name="feat_ota" class="mt-0 mb-16">
-                        In-App updates via GitHub.
-                      </h3>
-                      <p name="feat_ota_desc" class="m-0">
-                        Check for new releases inside the app, download the latest package directly
-                        from GitHub, and update easily.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-
-              <div id="feature-artist" class="feature-extended">
-                <div class="feature-extended-image">
-                  <div class="mockup-bg">
-                    <img src="./images/feature-bg-02.svg" alt="background" />
-                  </div>
-                  <img class="device-mockup is-revealing up" src="images/artist.jpg" alt="Muzo Artist Profile"
-                    loading="lazy" />
-                </div>
-                <div class="feature-extended-body">
-                  <div class="is-revealing down flex">
-                    <div>
-                      <h3 tabindex="0" name="feat_artist" class="mt-0 mb-16">
-                        Detailed Artist Profiles.
-                      </h3>
-                      <p name="feat_artist_desc" class="m-0">
-                        Explore comprehensive artist profiles with top tracks,
-                        albums, and similar artists.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div id="feature-settings" class="feature-extended">
-                <div class="feature-extended-image">
-                  <div class="mockup-bg">
-                    <img src="./images/feature-bg-03.svg" alt="background" />
-                  </div>
-                  <img class="device-mockup is-revealing up" src="images/settings.jpg" alt="Muzo Settings Screen"
-                    loading="lazy" />
-                </div>
-                <div class="feature-extended-body">
-                  <div class="is-revealing down flex">
-                    <div>
-                      <h3 tabindex="0" name="feat_settings" class="mt-0 mb-16">
-                        Advanced Audio Controls.
-                      </h3>
-                      <p name="feat_settings_desc" class="m-0">
-                        Customize your experience with advanced audio
-                        controls, backup/restore features, and more.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div id="feature-playlists" class="feature-extended">
-                <div class="feature-extended-image">
-                  <div class="mockup-bg">
-                    <img src="./images/feature-bg-01.svg" alt="background" />
-                  </div>
-                  <img class="device-mockup is-revealing up" src="images/library.jpg" alt="Playlists" loading="lazy"
-                    decoding="async" />
-                </div>
-                <div class="feature-extended-body">
-                  <div class="is-revealing down flex">
-                    <div>
-                      <h3 tabindex="0" name="feat_playlists" class="mt-0 mb-16">
-                        Playlists Management.
-                      </h3>
-                      <p name="feat_playlists_desc" class="m-0">
-                        Easily create, import, export, and manage your
-                        playlists in one unified interface.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div id="feature-queue" class="feature-extended">
-                <div class="feature-extended-image">
-                  <div class="mockup-bg">
-                    <img src="./images/feature-bg-02.svg" alt="background" />
-                  </div>
-                  <img class="device-mockup is-revealing up" src="images/queuerelatedsongs.jpg" alt="Playback Queue"
-                    loading="lazy" decoding="async" />
-                </div>
-                <div class="feature-extended-body">
-                  <div class="is-revealing down flex">
-                    <div>
-                      <h3 tabindex="0" name="feat_queue" class="mt-0 mb-16">
-                        Playback Queue.
-                      </h3>
-                      <p name="feat_queue_desc" class="m-0">
-                        Keep track of what's playing next, rearrange songs on
-                        the fly, and manage your upcoming tracks.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div id="feature-history" class="feature-extended">
-                <div class="feature-extended-image">
-                  <div class="mockup-bg">
-                    <img src="./images/feature-bg-03.svg" alt="background" />
-                  </div>
-                  <img class="device-mockup is-revealing up" src="images/history.jpg" alt="History" loading="lazy"
-                    decoding="async" />
-                </div>
-                <div class="feature-extended-body">
-                  <div class="is-revealing down flex">
-                    <div>
-                      <h3 tabindex="0" name="feat_history" class="mt-0 mb-16">
-                        Complete History.
-                      </h3>
-                      <p name="feat_history_desc" class="m-0">
-                        Never lose a song you loved. Access your complete
-                        listening history at any time.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div id="feature-compatibility" class="feature-extended">
-                <div class="feature-extended-image">
-                  <div class="mockup-bg">
-                    <img src="./images/feature-bg-04.svg" alt="background" />
-                  </div>
-                  <div class="mockup-container two-phones is-revealing up" style="min-height: 350px;">
-                    <img class="device-mockup phone-left" src="./images/Screenshots/AndroidAuto.png" alt="Android Auto"
-                      loading="lazy" decoding="async" style="width: 55%; height: auto; max-width: none;" />
-                    <img class="device-mockup phone-right" src="./images/Screenshots/AndroidAutomotive.png"
-                      alt="Android Automotive" loading="lazy" decoding="async"
-                      style="width: 55%; height: auto; max-width: none;" />
-                    <img class="device-mockup phone-center" src="./images/Screenshots/AndroidTV.png" alt="Android TV"
-                      loading="lazy" decoding="async" style="width: 65%; height: auto; max-width: none;" />
-                    <img class="device-mockup" src="images/home.jpg" alt="Android Mobile" loading="lazy"
-                      decoding="async"
-                      style="position: absolute; right: 15%; bottom: 5%; width: 22%; height: auto; max-height: 230px; object-fit: contain; max-width: none; z-index: 4; border-radius: 8px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: transform 0.3s ease, z-index 0s;"
-                      onmouseover="this.style.transform='scale(1.1) translateY(-10px)'; this.style.zIndex='5'"
-                      onmouseout="this.style.transform='scale(1) translateY(0)'; this.style.zIndex='4'" />
-                  </div>
-                </div>
-                <div class="feature-extended-body">
-                  <div class="is-revealing down flex">
-                    <div>
-                      <h3 tabindex="0" name="feat_compatibility" class="mt-0 mb-16">
-                        Multiple Device Compatibility.
-                      </h3>
-                      <p name="feat_compatibility_desc" class="m-0">
-                        Enjoy your music everywhere! N-Zik is compatible with
-                        Android Mobile, Android Auto, Android Automotive, and
-                        Android TV. (Later Wear OS).
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-    <footer class="site-footer">
-      <div class="site-footer-top">
-        <section id="download" class="cta section text-light">
-          <div class="container-sm">
-            <div class="cta-inner section-inner">
-              <div class="cta-header text-center is-revealing up">
-                <h2 name="listen_to_your_favourite_music" class="section-title mt-0">
-                  Listen to your favorite music
-                </h2>
-                <p name="download_rimusic_now" class="section-paragraph">
-                  Download N-Zik Now.
-                </p>
-                <div class="cta-cta">
-                  <a tabindex="0" class="btn-download download-apk-btn" href="https://github.com/Shashwat-CODING/Muzo/releases/latest">Download APK</a>
-                  <a tabindex="0" class="btn-download btn-download-beta" href="https://github.com/Shashwat-CODING/Muzo/releases?q=&type=prerelease">Download Beta</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <h2 class="sh reveal" id="screenshots-heading">
+          Built to stay out of the way.<br />
+          Made to keep you in the music.
+        </h2>
       </div>
-      <div class="site-footer-bottom">
-        <div class="container">
-          <div class="site-footer-inner">
-            <div class="brand footer-brand">
-              <a tabindex="0" href="#">
-                <img src="logo.png" width="50" alt="Muzo logo" />
-              </a>
+
+      <div class="scr-scroll" id="scrScroll">
+        <article class="scr-item reveal">
+          <div class="scr-s24">
+            <div class="scr-s24-frame">
+              <div class="scr-pill"></div>
+              <img src="home.jpg" alt="Home screen" loading="lazy" />
+              <div class="scr-shine"></div>
+              <div class="scr-btn scr-vol-up"></div>
+              <div class="scr-btn scr-vol-dn"></div>
+              <div class="scr-btn scr-power"></div>
+              <div class="scr-spen"></div>
             </div>
-            <ul class="footer-links list-reset">
-              <li>
-                <a tabindex="0" name="repository" href="https://github.com/Shashwat-CODING/Muzo">Repository</a>
-              </li>
-              <li>
-                <a tabindex="0" name="releases" href="https://github.com/Shashwat-CODING/Muzo/releases">Releases</a>
-              </li>
-              <li>
-                <a tabindex="0" name="issue_tracker" href="https://github.com/Shashwat-CODING/Muzo/issues">Issue
-                  tracker</a>
-              </li>
-              <li>
-                <a tabindex="0" href="privacy.html">Privacy Policy</a>
-              </li>
-            </ul>
-            <ul class="footer-social-links list-reset">
-              <li>
-                <a tabindex="0" href="https://github.com/Shashwat-CODING/Muzo">
-                  <img src="./images/github-mark-white.png" alt="GitHub" width="24" height="24" />
-                </a>
-              </li>
-              <li>
-                <a tabindex="0" href="https://discord.gg/bneHC7QRje">
-                  <img src="./images/discord.svg" alt="Discord" width="24" height="24" />
-                </a>
-              </li>
-            </ul>
-            <div id="footer" class="footer-copyright">2025/2026 Muzo</div>
+            <div class="scr-glow"></div>
           </div>
-        </div>
+          <p>Home</p>
+        </article>
+
+        <article class="scr-item reveal">
+          <div class="scr-s24">
+            <div class="scr-s24-frame">
+              <div class="scr-pill"></div>
+              <img src="player.jpg" alt="Now Playing screen" loading="lazy" />
+              <div class="scr-shine"></div>
+              <div class="scr-btn scr-vol-up"></div>
+              <div class="scr-btn scr-vol-dn"></div>
+              <div class="scr-btn scr-power"></div>
+              <div class="scr-spen"></div>
+            </div>
+            <div class="scr-glow"></div>
+          </div>
+          <p>Now Playing</p>
+        </article>
+
+        <article class="scr-item reveal">
+          <div class="scr-s24">
+            <div class="scr-s24-frame">
+              <div class="scr-pill"></div>
+              <img src="lyricswithcontrols.jpg" alt="Lyrics with controls screen" loading="lazy" />
+              <div class="scr-shine"></div>
+              <div class="scr-btn scr-vol-up"></div>
+              <div class="scr-btn scr-vol-dn"></div>
+              <div class="scr-btn scr-power"></div>
+              <div class="scr-spen"></div>
+            </div>
+            <div class="scr-glow"></div>
+          </div>
+          <p>Lyrics + Controls</p>
+        </article>
+
+        <article class="scr-item reveal">
+          <div class="scr-s24">
+            <div class="scr-s24-frame">
+              <div class="scr-pill"></div>
+              <img src="lyrics_full.jpg" alt="Full lyrics screen" loading="lazy" />
+              <div class="scr-shine"></div>
+              <div class="scr-btn scr-vol-up"></div>
+              <div class="scr-btn scr-vol-dn"></div>
+              <div class="scr-btn scr-power"></div>
+              <div class="scr-spen"></div>
+            </div>
+            <div class="scr-glow"></div>
+          </div>
+          <p>Full Lyrics</p>
+        </article>
+
+        <article class="scr-item reveal">
+          <div class="scr-s24">
+            <div class="scr-s24-frame">
+              <div class="scr-pill"></div>
+              <img src="library.jpg" alt="Library screen" loading="lazy" />
+              <div class="scr-shine"></div>
+              <div class="scr-btn scr-vol-up"></div>
+              <div class="scr-btn scr-vol-dn"></div>
+              <div class="scr-btn scr-power"></div>
+              <div class="scr-spen"></div>
+            </div>
+            <div class="scr-glow"></div>
+          </div>
+          <p>Library</p>
+        </article>
+
+        <article class="scr-item reveal">
+          <div class="scr-s24">
+            <div class="scr-s24-frame">
+              <div class="scr-pill"></div>
+              <img src="search.jpg" alt="Search screen" loading="lazy" />
+              <div class="scr-shine"></div>
+              <div class="scr-btn scr-vol-up"></div>
+              <div class="scr-btn scr-vol-dn"></div>
+              <div class="scr-btn scr-power"></div>
+              <div class="scr-spen"></div>
+            </div>
+            <div class="scr-glow"></div>
+          </div>
+          <p>Search</p>
+        </article>
+
+        <article class="scr-item reveal">
+          <div class="scr-s24">
+            <div class="scr-s24-frame">
+              <div class="scr-pill"></div>
+              <img src="queuerelatedsongs.jpg" alt="Queue and related songs screen" loading="lazy" />
+              <div class="scr-shine"></div>
+              <div class="scr-btn scr-vol-up"></div>
+              <div class="scr-btn scr-vol-dn"></div>
+              <div class="scr-btn scr-power"></div>
+              <div class="scr-spen"></div>
+            </div>
+            <div class="scr-glow"></div>
+          </div>
+          <p>Queue</p>
+        </article>
+
+        <article class="scr-item reveal">
+          <div class="scr-s24">
+            <div class="scr-s24-frame">
+              <div class="scr-pill"></div>
+              <img src="community.jpg" alt="Community screen" loading="lazy" />
+              <div class="scr-shine"></div>
+              <div class="scr-btn scr-vol-up"></div>
+              <div class="scr-btn scr-vol-dn"></div>
+              <div class="scr-btn scr-power"></div>
+              <div class="scr-spen"></div>
+            </div>
+            <div class="scr-glow"></div>
+          </div>
+          <p>Community</p>
+        </article>
       </div>
-    </footer>
-  </div>
-  <script src="js/main.min.js"></script>
+    </section>
 
-  <script type="text/javascript">
-    const languages = ['az', 'bn', 'ca', 'cs', 'da', 'de', 'en', 'es', 'et', 'fi', 'fil', 'fr', 'gl', 'he', 'hu', 'ia', 'it', 'ja', 'ko', 'ml', 'nl', 'no', 'pl', 'pt', 'pt-rBR', 'ru', 'ro', 'sr', 'sr-rCS', 'sv', 'ta', 'tr', 'uk', 'zh-rCN', 'zh-rTW'];
-    // Load the locales
-    const multilingual = new Multilingual(languages);
+    <section class="dl-section" id="download" aria-labelledby="download-heading">
+      <div class="dl-grid-bg" aria-hidden="true"></div>
+      <div class="dl-orb dl-o1" aria-hidden="true"></div>
+      <div class="dl-orb dl-o2" aria-hidden="true"></div>
 
-    (async () => {
-      await multilingual.loadStrings();
-      multilingual.updateDom();
-      multilingual.setAttribute(document.documentElement);
-    })();
-    reveal();
-  </script>
+      <div class="dl-inner reveal">
+        <div class="eyebrow">
+          <span class="el"></span>
+          Download
+          <span class="el"></span>
+        </div>
+
+        <h2 class="dl-h" id="download-heading">Ready to press play?</h2>
+        <p class="dl-sub">Free to download. Account creation is optional. Install and start listening.</p>
+
+        <div class="dl-card">
+          <div class="dl-card-row">
+            <div class="dl-icon">
+              <img src="logo.png" alt="Muzo app icon" width="46" height="46" />
+            </div>
+
+            <div class="dl-info">
+              <strong>Muzo</strong>
+              <span>v4.2.0 &middot; Android &middot; iOS &middot; macOS</span>
+            </div>
+
+            <a href="https://github.com/Shashwat-CODING/Muzo/releases/latest"
+              class="btn-main btn-glow" target="_blank" rel="noopener noreferrer">
+              Download APK
+            </a>
+          </div>
+          <div class="dl-card-shine"></div>
+        </div>
+
+        <p class="dl-note">
+          By downloading, you agree to our
+          <a href="/terms.html">Terms</a> and
+          <a href="/privacy.html">Privacy Policy</a>.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <a href="/" class="wordmark">
+          <img src="logo.png" alt="Muzo logo" class="wordmark-img" width="28" height="28" />
+          <span class="wordmark-text">Muzo</span>
+        </a>
+        <p>Premium YouTube Music client. Free &amp; open source.</p>
+      </div>
+
+      <nav class="ft-cols" aria-label="Footer navigation">
+        <div class="ft-col">
+          <h4>App</h4>
+          <a href="#features">Features</a>
+          <a href="#screenshots">Screenshots</a>
+          <a href="#download">Download</a>
+        </div>
+
+        <div class="ft-col">
+          <h4>Legal</h4>
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/terms.html">Terms of Use</a>
+        </div>
+
+        <div class="ft-col">
+          <h4>Links</h4>
+          <a href="https://github.com/Shashwat-CODING/Muzo" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </nav>
+    </div>
+
+    <div class="ft-bottom">
+      <p>&copy; 2025 Muzo. All rights reserved.</p>
+      <p>Made for people who love music.</p>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
   <script>
-    // Fetch latest release APK URL from GitHub
-    fetch('https://api.github.com/repos/Shashwat-CODING/Muzo/releases/latest')
-      .then(response => response.json())
-      .then(data => {
-        if (data && data.assets) {
-          const apkAsset = data.assets.find(asset => asset.name.endsWith('.apk'));
-          if (apkAsset) {
-            const downloadApkBtns = document.querySelectorAll('.download-apk-btn');
-            downloadApkBtns.forEach(btn => btn.href = apkAsset.browser_download_url);
-          }
-        }
-      })
-      .catch(error => console.error('Error fetching latest release:', error));
+    // Banner dismiss logic — nav position is managed by app.js scroll handler
+    (function () {
+      var banner = document.getElementById('app-banner');
+      var btn = document.getElementById('bannerClose');
+      if (!banner) return;
+
+      // Restore dismissed state before first paint
+      if (sessionStorage.getItem('muzo-banner-dismissed') === '1') {
+        banner.classList.add('banner-hidden');
+      }
+
+      if (btn) {
+        btn.addEventListener('click', function () {
+          banner.classList.add('banner-hidden');
+          sessionStorage.setItem('muzo-banner-dismissed', '1');
+          // Snap nav immediately, let app.js recalculate
+          var nav = document.getElementById('nav');
+          if (nav) nav.style.top = '0px';
+          window.dispatchEvent(new Event('scroll'));
+        });
+      }
+    })();
   </script>
+
+  <!-- Ad Zone #7013881 -->
+
+
 </body>
 
 </html>
