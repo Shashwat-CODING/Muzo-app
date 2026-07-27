@@ -8,31 +8,31 @@
 
   <title>Muzo — Premium YouTube Music Client</title>
   <meta name="description"
-    content="Muzo is a privacy-focused YouTube Music client built with Flutter. Ad-free, offline downloads, karaoke lyrics, gesture player, Spotify import, community sharing — no account needed." />
+    content="Muzo is a privacy-focused YouTube Music client built with Flutter. Ad-free, offline downloads, karaoke lyrics, gesture player, music recognition — no account needed." />
   <meta name="keywords"
-    content="Muzo, Flutter music app, YouTube Music client, ad-free music, karaoke lyrics, offline music, Spotify import, Android music app, free APK" />
+    content="Muzo, Flutter music app, YouTube Music client, ad-free music, karaoke lyrics, offline music, music recognition, Android music app" />
   <meta name="author" content="Muzo" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#000000" />
-  <link rel="canonical" href="https://muzo.dpdns.org" />
+  <link rel="canonical" href="https://muzo-app.netlify.app" />
 
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://muzo.dpdns.org" />
+  <meta property="og:url" content="https://muzo-app.netlify.app" />
   <meta property="og:title" content="Muzo — Premium YouTube Music Client" />
   <meta property="og:description"
-    content="A privacy-focused YouTube Music client with karaoke lyrics, gesture player, offline downloads, Spotify import, and community sharing. No ads. No account required." />
-  <meta property="og:image" content="https://raw.githubusercontent.com/Scodify236/muzo-w/main/logo.png" />
+    content="A privacy-focused YouTube Music client with karaoke lyrics, gesture player, offline downloads, and music recognition. No ads. No account required." />
+  <meta property="og:image" content="https://raw.githubusercontent.com/Scodify236/muzo-w/main/logo.webp" />
   <meta property="og:site_name" content="Muzo" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Muzo — Premium YouTube Music Client" />
   <meta name="twitter:description"
-    content="Privacy-focused YouTube Music client. Karaoke lyrics, gesture player, offline downloads, Spotify import. No ads, no account." />
-  <meta name="twitter:image" content="https://raw.githubusercontent.com/Scodify236/muzo-w/main/logo.png" />
+    content="Privacy-focused YouTube Music client. Karaoke lyrics, gesture player, offline downloads, music recognition. No ads, no account." />
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/Scodify236/muzo-w/main/logo.webp" />
   <meta name="google-adsense-account" content="ca-pub-4253536927389825">
 
-  <link rel="icon" type="image/png" href="logo.png" />
-  <link rel="apple-touch-icon" href="logo.png" />
+  <link rel="icon" type="image/webp" href="logo.webp" />
+  <link rel="apple-touch-icon" href="logo.webp" />
 
   <script type="application/ld+json">
     {
@@ -46,9 +46,9 @@
         "price": "0",
         "priceCurrency": "USD"
       },
-      "description": "Free ad-free music streaming for Android with synced lyrics, YouTube sync, and playlist import.",
-      "url": "https://muzo.dpdns.org",
-      "logo": "https://raw.githubusercontent.com/Scodify236/muzo-w/main/logo.png"
+      "description": "Free ad-free music streaming for Android with synced lyrics, YouTube sync, playlist import, and music recognition.",
+      "url": "https://muzo-app.netlify.app",
+      "logo": "https://raw.githubusercontent.com/Scodify236/muzo-w/main/logo.webp"
     }
   </script>
   <style>
@@ -65,22 +65,20 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      padding: 6px 44px;
+      gap: 12px;
+      padding: 8px 44px;
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-size: 12px;
       font-weight: 400;
       letter-spacing: 0.01em;
       border-bottom: 1px solid #ebebeb;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
       text-align: center;
-      white-space: nowrap;
     }
 
     #app-banner .banner-text {
       color: #333;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      line-height: 1.4;
     }
 
     #app-banner .banner-text strong {
@@ -191,11 +189,11 @@
 
 <body>
 
-  <!-- Luxa Banner -->
-  <div id="app-banner" role="banner" aria-label="Luxa app announcement">
-    <span class="banner-text">Download <strong>Luxa</strong> — unlimited entertainment, free.</span>
-    <a href="https://muzo.dpdns.org" target="_blank" rel="noopener noreferrer" class="banner-cta"
-      aria-label="Download Luxa app">Get the App</a>
+  <!-- LibreAI Banner -->
+  <div id="app-banner" role="banner" aria-label="LibreAI announcement">
+    <span class="banner-text"><strong>LibreAI</strong> — unrestricted, open-source AI client. No tracking, no middlemen.</span>
+    <a href="https://github.com/Shashwat-CODING/LibreAI" target="_blank" rel="noopener noreferrer" class="banner-cta"
+      aria-label="View LibreAI repository">Get LibreAI</a>
     <button class="banner-close" id="bannerClose" aria-label="Dismiss" type="button">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
         aria-hidden="true">
@@ -219,7 +217,7 @@
   <header class="nav" id="nav">
     <div class="nav-inner">
       <a href="/" class="wordmark" aria-label="Muzo home">
-        <img src="logo.png" alt="Muzo logo" class="wordmark-img" width="28" height="28" />
+        <img src="logo.webp" alt="Muzo logo" class="wordmark-img" width="28" height="28" />
         <span class="wordmark-text">Muzo</span>
       </a>
 
@@ -295,8 +293,8 @@
         <a href="#download" class="drawer-link">Download</a>
         <a href="https://github.com/Shashwat-CODING/Muzo" target="_blank" rel="noopener noreferrer"
           class="drawer-link">GitHub</a>
-        <a href="https://github.com/Shashwat-CODING/Muzo/releases/latest" class="drawer-cta" target="_blank"
-          rel="noopener noreferrer">Download APK</a>
+        <a href="https://play.google.com/store/apps/details?id=com.Shashwat.Muzo" class="drawer-cta" target="_blank"
+          rel="noopener noreferrer">Get on Google Play</a>
       </nav>
     </div>
   </header>
@@ -330,19 +328,19 @@
         <p class="hero-desc">
           Muzo is a powerful, privacy-focused YouTube Music client built with Flutter.
           Enjoy word-by-word karaoke lyrics, an immersive player, offline
-          downloads, and a community feed — all ad-free,
+          downloads, and instant music recognition — all ad-free,
           no account required.
         </p>
 
         <div class="hero-actions">
-          <a href="https://github.com/Shashwat-CODING/Muzo/releases/latest" class="btn-main btn-glow" target="_blank"
+          <a href="https://play.google.com/store/apps/details?id=com.Shashwat.Muzo" class="btn-main btn-glow" target="_blank"
             rel="noopener noreferrer">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
               aria-hidden="true">
               <path d="M12 3v13M5 14l7 7 7-7"></path>
               <path d="M3 21h18"></path>
             </svg>
-            Download APK — Free
+            Get it on Google Play
           </a>
 
           <a href="#features" class="btn-ghost">
@@ -357,9 +355,7 @@
         <ul class="hero-trust" aria-label="App highlights">
           <li class="trust-item">No account needed</li>
           <li class="trust-sep" aria-hidden="true"></li>
-          <li class="trust-item">Android · iOS · macOS</li>
-          <li class="trust-sep" aria-hidden="true"></li>
-          <li class="trust-item">v4.0.0</li>
+          <li class="trust-item">Available on Android</li>
           <li class="trust-sep" aria-hidden="true"></li>
           <li class="trust-item">Free &amp; Open Source</li>
         </ul>
@@ -429,10 +425,9 @@
           <span>Karaoke Lyrics</span><span class="md">·</span>
           <span>Gesture Player</span><span class="md">·</span>
           <span>Offline Downloads</span><span class="md">·</span>
-          <span>Spotify Import</span><span class="md">·</span>
-          <span>Community Feed</span><span class="md">·</span>
+          <span>Liquid Glass UI</span><span class="md">·</span>
+          <span>Music Recognition</span><span class="md">·</span>
           <span>No Account</span><span class="md">·</span>
-          <span>Glassmorphic UI</span><span class="md">·</span>
           <span>Lofi Mode</span><span class="md">·</span>
           <span>Open Source</span><span class="md">·</span>
         </div>
@@ -441,10 +436,9 @@
           <span>Karaoke Lyrics</span><span class="md">·</span>
           <span>Gesture Player</span><span class="md">·</span>
           <span>Offline Downloads</span><span class="md">·</span>
-          <span>Spotify Import</span><span class="md">·</span>
-          <span>Community Feed</span><span class="md">·</span>
+          <span>Liquid Glass UI</span><span class="md">·</span>
+          <span>Music Recognition</span><span class="md">·</span>
           <span>No Account</span><span class="md">·</span>
-          <span>Glassmorphic UI</span><span class="md">·</span>
           <span>Lofi Mode</span><span class="md">·</span>
           <span>Open Source</span><span class="md">·</span>
         </div>
@@ -468,8 +462,8 @@
       </div>
       <div class="sdiv" aria-hidden="true"></div>
       <div class="stat reveal" data-delay="300">
-        <span class="sn sw">v4.0</span>
-        <p>Latest release</p>
+        <span class="sn sw">Instant</span>
+        <p>Music recognition</p>
       </div>
     </section>
 
@@ -515,9 +509,8 @@
             <div class="feat-num">03</div>
             <div class="feat-divider" aria-hidden="true"></div>
             <div class="feat-body">
-              <h3>Glassmorphic adaptive UI</h3>
-              <p>Dynamic dark &amp; light themes with glass-effect panels that adapt to your album art. Contrast-aware
-                controls, desktop optimization, and smooth 60 FPS animations throughout.</p>
+              <h3>Liquid Glass adaptive UI</h3>
+              <p>Dynamic dark &amp; light themes with fluid, morphing ambient gradients and semi-transparent liquid-glass panels that adapt to your album art. Elegant transitions and rich visual depth throughout.</p>
             </div>
             <div class="feat-tag">Design</div>
           </div>
@@ -526,9 +519,8 @@
             <div class="feat-num">04</div>
             <div class="feat-divider" aria-hidden="true"></div>
             <div class="feat-body">
-              <h3>Offline downloads &amp; Spotify import</h3>
-              <p>Download any track or video for offline listening. Paste a public Spotify playlist URL to instantly
-                import all your favorite songs.</p>
+              <h3>Offline downloads &amp; local library</h3>
+              <p>Download any track or video for offline playback. Keep all your playlists, favorites, and listening history saved securely and locally on your device.</p>
             </div>
             <div class="feat-tag">Library</div>
           </div>
@@ -537,11 +529,15 @@
             <div class="feat-num">05</div>
             <div class="feat-divider" aria-hidden="true"></div>
             <div class="feat-body">
-              <h3>Community feed &amp; sharing</h3>
-              <p>Search, stream, and discover tracks uploaded by the community in a global feed. Follow your favorite
-                artists and share links directly from YouTube or YouTube Music.</p>
+              <h3>Instant music recognition</h3>
+              <p>Listen to any song playing around you or on your device. Identify it in seconds and view synchronized lyrics, artist details, and album info instantly.</p>
             </div>
-            <div class="feat-tag">Social</div>
+            <div class="feat-tag">
+              <span class="soundwave-mini" aria-hidden="true">
+                <span></span><span></span><span></span><span></span>
+              </span>
+              Identify
+            </div>
           </div>
 
           <div class="feat-row reveal" data-delay="300">
@@ -689,7 +685,7 @@
           <div class="scr-s24">
             <div class="scr-s24-frame">
               <div class="scr-pill"></div>
-              <img src="community.jpg" alt="Community screen" loading="lazy" />
+              <img src="musicrecognition.jpg" alt="Music Recognition screen" loading="lazy" />
               <div class="scr-shine"></div>
               <div class="scr-btn scr-vol-up"></div>
               <div class="scr-btn scr-vol-dn"></div>
@@ -698,7 +694,7 @@
             </div>
             <div class="scr-glow"></div>
           </div>
-          <p>Community</p>
+          <p>Music Recognition</p>
         </article>
       </div>
     </section>
@@ -721,17 +717,17 @@
         <div class="dl-card">
           <div class="dl-card-row">
             <div class="dl-icon">
-              <img src="logo.png" alt="Muzo app icon" width="46" height="46" />
+              <img src="logo.webp" alt="Muzo app icon" width="46" height="46" />
             </div>
 
             <div class="dl-info">
               <strong>Muzo</strong>
-              <span>v4.0.0 &middot; Android &middot; iOS &middot; macOS</span>
+              <span>Available for Android</span>
             </div>
 
-            <a href="https://github.com/Shashwat-CODING/Muzo/releases/latest" class="btn-main btn-glow" target="_blank"
+            <a href="https://play.google.com/store/apps/details?id=com.Shashwat.Muzo" class="btn-main btn-glow" target="_blank"
               rel="noopener noreferrer">
-              Download APK
+              Get on Google Play
             </a>
           </div>
           <div class="dl-card-shine"></div>
@@ -750,7 +746,7 @@
     <div class="ft-top">
       <div class="ft-brand">
         <a href="/" class="wordmark">
-          <img src="logo.png" alt="Muzo logo" class="wordmark-img" width="28" height="28" />
+          <img src="logo.webp" alt="Muzo logo" class="wordmark-img" width="28" height="28" />
           <span class="wordmark-text">Muzo</span>
         </a>
         <p>Premium YouTube Music client. Free &amp; open source.</p>

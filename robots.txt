@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://muzo.xyz/sitemap.xml
+Sitemap: https://muzo-app.netlify.app/sitemap.xml
 
 # Block system/asset paths
 Disallow: /cdn-cgi/
