@@ -128,7 +128,6 @@
   if (audioPlayer) {
     audioPlayer.setAttribute('playsinline', '');
     audioPlayer.setAttribute('webkit-playsinline', '');
-    audioPlayer.crossOrigin = 'anonymous';
 
     audioPlayer.addEventListener('error', (e) => {
       const err = audioPlayer.error;
