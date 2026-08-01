@@ -29,6 +29,7 @@
   const pauseIcon = document.getElementById('pauseIcon');
   
   const progressBar = document.getElementById('progressBar');
+  const progressFill = document.getElementById('progressFill');
   const currentTimeEl = document.getElementById('currentTime');
   const totalDurationEl = document.getElementById('totalDuration');
   
@@ -49,90 +50,102 @@
     return `${m}:${s < 10 ? '0' : ''}${s}`;
   }
 
-  // ── 1. Fetch Track Metadata (Client Fallback if static HTML has skeletons) ──
-  async function fetchMetadata() {
-    // If Edge function already rendered trackTitle text, skip refetching metadata
-    if (trackTitle && trackTitle.textContent && !trackTitle.querySelector('.skeleton')) {
-      return;
+  // ── Global Error Interceptor & Copiable Error Banner ──
+  const logs = [];
+  
+  function captureLog(type, args) {
+    const msg = args.map(arg => (typeof arg === 'object' ? JSON.stringify(arg) : String(arg))).join(' ');
+    const entry = `[${new Date().toLocaleTimeString()}] [${type.toUpperCase()}] ${msg}`;
+    logs.push(entry);
+  }
+
+  const originalConsoleError = console.error;
+  console.error = function (...args) {
+    captureLog('error', args);
+    showErrorOverlay(args.join(' '));
+    originalConsoleError.apply(console, args);
+  };
+
+  window.addEventListener('error', function (e) {
+    const errorMsg = e.error ? (e.error.stack || e.error.message) : `${e.message} at ${e.filename}:${e.lineno}`;
+    captureLog('window.error', [errorMsg]);
+    showErrorOverlay(errorMsg);
+  });
+
+  window.addEventListener('unhandledrejection', function (e) {
+    const reason = e.reason ? (e.reason.stack || e.reason.message || e.reason) : 'Unhandled promise rejection';
+    captureLog('promise.rejection', [reason]);
+    showErrorOverlay(reason);
+  });
+
+  function showErrorOverlay(errorText) {
+    let banner = document.getElementById('errorBanner');
+    if (!banner) {
+      banner = document.createElement('div');
+      banner.id = 'errorBanner';
+      banner.className = 'error-banner';
+      banner.innerHTML = `
+        <div class="error-header">
+          <div class="error-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span>Playback Error Logs</span>
+          </div>
+          <div class="error-actions">
+            <button id="copyErrorBtn" class="btn-copy-error">Copy Logs</button>
+            <button id="closeErrorBtn" class="btn-close-error">&times;</button>
+          </div>
+        </div>
+        <div id="errorLogBox" class="error-box"></div>
+      `;
+      document.body.appendChild(banner);
+
+      document.getElementById('closeErrorBtn').addEventListener('click', () => {
+        banner.style.display = 'none';
+      });
+
+      document.getElementById('copyErrorBtn').addEventListener('click', () => {
+        const fullLogs = logs.join('\n');
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(fullLogs).then(() => {
+            document.getElementById('copyErrorBtn').textContent = 'Copied!';
+            setTimeout(() => {
+              document.getElementById('copyErrorBtn').textContent = 'Copy Logs';
+            }, 2000);
+          });
+        }
+      });
     }
 
-    const metadataApiUrl = `https://shashwatidr-img.hf.space/api/metadata/${trackId}`;
-    try {
-      const res = await fetch(metadataApiUrl);
-      if (!res.ok) throw new Error('Metadata API response error');
-      const data = await res.json();
-
-      // Normalize title & artists (handles both response formats)
-      const title = data.title || data.name || 'Unknown Track';
-      let artistText = '';
-      if (Array.isArray(data.artists_data) && data.artists_data.length > 0) {
-        artistText = data.artists_data.map(a => a.name).join(', ');
-      } else if (typeof data.artists === 'string') {
-        artistText = data.artists;
-      } else {
-        artistText = 'Unknown Artist';
-      }
-
-      // Album name
-      const albumName = (data.album && data.album.name) ? data.album.name : '';
-
-      // High quality thumbnail selection & URL upgrading to w800-h800
-      let thumbUrl = data.thumbnail || '';
-      if (Array.isArray(data.thumbnails) && data.thumbnails.length > 0) {
-        const sorted = [...data.thumbnails].sort((a, b) => (b.width || 0) - (a.width || 0));
-        thumbUrl = sorted[0].url || thumbUrl;
-      }
-      if (thumbUrl) {
-        thumbUrl = thumbUrl.replace(/=w\d+-h\d+/, '=w800-h800');
-      }
-
-      // Update DOM with Metadata
-      document.title = `${title} • ${artistText} — Muzo`;
-      trackTitle.textContent = title;
-      trackArtists.textContent = artistText;
-      trackAlbum.textContent = albumName ? `Album: ${albumName}` : '';
-      
-      if (thumbUrl) {
-        trackArt.src = thumbUrl;
-        ambientBg.style.backgroundImage = `url('${thumbUrl}')`;
-      }
-
-      // Update meta tags for link preview (Song name & Song thumbnail)
-      const ogTitle = document.getElementById('ogTitle');
-      const ogDesc = document.getElementById('ogDesc');
-      const ogImage = document.getElementById('ogImage');
-      const twTitle = document.getElementById('twTitle');
-      const twDesc = document.getElementById('twDesc');
-      const twImage = document.getElementById('twImage');
-
-      if (ogTitle) ogTitle.content = title;
-      if (ogDesc) ogDesc.content = artistText ? `Listen to ${title} by ${artistText} on Muzo` : `Listen to ${title} on Muzo`;
-      if (twTitle) twTitle.content = title;
-      if (twDesc) twDesc.content = artistText ? `Listen to ${title} by ${artistText} on Muzo` : `Listen to ${title} on Muzo`;
-      
-      if (thumbUrl) {
-        if (ogImage) ogImage.content = thumbUrl;
-        if (twImage) twImage.content = thumbUrl;
-      }
-
-      if (data.is_explicit) {
-        explicitBadge.style.display = 'inline-block';
-      } else {
-        explicitBadge.style.display = 'none';
-      }
-
-      // Pre-populate duration if provided
-      if (data.duration_seconds) {
-        totalDurationEl.textContent = formatTime(data.duration_seconds);
-        progressBar.max = data.duration_seconds;
-      }
-
-    } catch (err) {
-      console.warn('Failed to load metadata, using defaults:', err);
+    banner.style.display = 'flex';
+    const logBox = document.getElementById('errorLogBox');
+    if (logBox) {
+      logBox.textContent = logs.join('\n');
+      logBox.scrollTop = logBox.scrollHeight;
     }
   }
 
-  // ── 2. Fetch Audio Stream URL ──
+  // Ensure audio element has mobile-friendly playback attributes
+  if (audioPlayer) {
+    audioPlayer.setAttribute('playsinline', '');
+    audioPlayer.setAttribute('webkit-playsinline', '');
+    audioPlayer.crossOrigin = 'anonymous';
+
+    audioPlayer.addEventListener('error', (e) => {
+      const err = audioPlayer.error;
+      let errDetail = 'Unknown Audio Error';
+      if (err) {
+        switch (err.code) {
+          case err.MEDIA_ERR_ABORTED: errDetail = 'MEDIA_ERR_ABORTED: Playback aborted by user'; break;
+          case err.MEDIA_ERR_NETWORK: errDetail = 'MEDIA_ERR_NETWORK: Network error downloading stream'; break;
+          case err.MEDIA_ERR_DECODE: errDetail = 'MEDIA_ERR_DECODE: Audio decoding failed'; break;
+          case err.MEDIA_ERR_SRC_NOT_SUPPORTED: errDetail = `MEDIA_ERR_SRC_NOT_SUPPORTED: Audio format not supported or URL invalid (${audioPlayer.src})`; break;
+        }
+      }
+      console.error(errDetail);
+    });
+  }
+
+  // ── 1. Fetch Audio Stream URL (Client Side) ──
   async function fetchStream() {
     const streamApiUrl = `https://mlc.kouzu.in/api/stream?id=${trackId}`;
     try {
@@ -142,11 +155,7 @@
 
       if (data && data.url) {
         audioPlayer.src = data.url;
-        // Optionally update track/artist from stream endpoint if missing
-        if (trackTitle.textContent.includes('skeleton')) {
-          if (data.name) trackTitle.textContent = data.name;
-          if (data.artist) trackArtists.textContent = data.artist;
-        }
+        audioPlayer.load(); // Force mobile browsers to load media pipeline
       } else {
         throw new Error('No stream URL returned');
       }
@@ -155,76 +164,91 @@
     }
   }
 
-  // ── 3. Audio Player Logic & Controls ──
-  function togglePlay() {
-    if (!audioPlayer.src) return;
+  // ── 2. Custom Player Controls & Event Listeners ──
+  async function togglePlay() {
+    if (!audioPlayer.src) {
+      await fetchStream();
+    }
+    
     if (audioPlayer.paused) {
-      audioPlayer.play().catch(e => console.error('Play blocked:', e));
+      try {
+        const promise = audioPlayer.play();
+        if (promise !== undefined) {
+          await promise;
+        }
+      } catch (e) {
+        console.error('Mobile play blocked or failed:', e);
+      }
     } else {
       audioPlayer.pause();
     }
   }
 
-  audioPlayer.addEventListener('play', () => {
-    playIcon.style.display = 'none';
-    pauseIcon.style.display = 'block';
-  });
+  if (audioPlayer) {
+    audioPlayer.addEventListener('play', () => {
+      if (playIcon) playIcon.style.display = 'none';
+      if (pauseIcon) pauseIcon.style.display = 'block';
+    });
 
-  audioPlayer.addEventListener('pause', () => {
-    playIcon.style.display = 'block';
-    pauseIcon.style.display = 'none';
-  });
+    audioPlayer.addEventListener('pause', () => {
+      if (playIcon) playIcon.style.display = 'block';
+      if (pauseIcon) pauseIcon.style.display = 'none';
+    });
 
-  const progressFill = document.getElementById('progressFill');
-
-  function updateProgressFill() {
-    if (progressBar.max && progressBar.max > 0) {
-      const percentage = (progressBar.value / progressBar.max) * 100;
-      if (progressFill) {
-        progressFill.style.width = `${Math.min(100, Math.max(0, percentage))}%`;
+    function updateProgressFill() {
+      if (progressBar && progressBar.max && progressBar.max > 0) {
+        const percentage = (progressBar.value / progressBar.max) * 100;
+        if (progressFill) {
+          progressFill.style.width = `${Math.min(100, Math.max(0, percentage))}%`;
+        }
       }
+    }
+
+    audioPlayer.addEventListener('loadedmetadata', () => {
+      if (audioPlayer.duration && !isNaN(audioPlayer.duration)) {
+        if (totalDurationEl) totalDurationEl.textContent = formatTime(audioPlayer.duration);
+        if (progressBar) progressBar.max = audioPlayer.duration;
+        updateProgressFill();
+      }
+    });
+
+    audioPlayer.addEventListener('timeupdate', () => {
+      if (!isNaN(audioPlayer.currentTime)) {
+        if (currentTimeEl) currentTimeEl.textContent = formatTime(audioPlayer.currentTime);
+        if (progressBar) progressBar.value = audioPlayer.currentTime;
+        updateProgressFill();
+      }
+    });
+
+    if (progressBar) {
+      progressBar.addEventListener('input', () => {
+        audioPlayer.currentTime = progressBar.value;
+        updateProgressFill();
+      });
     }
   }
 
-  audioPlayer.addEventListener('loadedmetadata', () => {
-    if (audioPlayer.duration && !isNaN(audioPlayer.duration)) {
-      totalDurationEl.textContent = formatTime(audioPlayer.duration);
-      progressBar.max = audioPlayer.duration;
-      updateProgressFill();
-    }
-  });
-
-  audioPlayer.addEventListener('timeupdate', () => {
-    if (!isNaN(audioPlayer.currentTime)) {
-      currentTimeEl.textContent = formatTime(audioPlayer.currentTime);
-      progressBar.value = audioPlayer.currentTime;
-      updateProgressFill();
-    }
-  });
-
-  progressBar.addEventListener('input', () => {
-    audioPlayer.currentTime = progressBar.value;
-    updateProgressFill();
-  });
-
-  playPauseBtn.addEventListener('click', togglePlay);
+  if (playPauseBtn) {
+    playPauseBtn.addEventListener('click', togglePlay);
+  }
 
   // Share action
-  shareBtn.addEventListener('click', () => {
-    const shareData = {
-      title: document.title,
-      text: `Listen to ${trackTitle.textContent} on Muzo`,
-      url: window.location.href
-    };
-    if (navigator.share) {
-      navigator.share(shareData).catch(console.warn);
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert('Link copied to clipboard!');
-    }
-  });
+  if (shareBtn) {
+    shareBtn.addEventListener('click', () => {
+      const shareData = {
+        title: document.title,
+        text: `Listen to ${trackTitle ? trackTitle.textContent : 'Music'} on Muzo`,
+        url: window.location.href
+      };
+      if (navigator.share) {
+        navigator.share(shareData).catch(console.warn);
+      } else {
+        navigator.clipboard.writeText(window.location.href);
+        alert('Link copied to clipboard!');
+      }
+    });
+  }
 
   // ── Initialize ──
-  fetchMetadata();
   fetchStream();
 })();

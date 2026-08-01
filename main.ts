@@ -179,8 +179,8 @@ Deno.serve(async (req) => {
 
   </main>
 
-  <!-- Audio Element -->
-  <audio id="audioPlayer" preload="metadata"></audio>
+  <!-- Hidden Audio Element for Web Playback Engine -->
+  <audio id="audioPlayer" preload="auto" playsinline webkit-playsinline style="display: none;"></audio>
 
   <script src="/play.js"></script>
 </body>
