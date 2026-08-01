@@ -1,6 +1,6 @@
 export default async function handler(request, context) {
   const url = new URL(request.url);
-  
+
   // Extract ID from /code/play/<id>, /play/<id>, or ?id=<id>
   const match = url.pathname.match(/(?:\/code)?\/play\/([^/]+)/);
   let trackId = match ? match[1] : url.searchParams.get('id') || url.searchParams.get('v');
@@ -21,13 +21,13 @@ export default async function handler(request, context) {
     if (metaRes.ok) {
       const data = await metaRes.json();
       title = data.title || data.name || 'Muzo Player — Stream Music';
-      
+
       if (Array.isArray(data.artists_data) && data.artists_data.length > 0) {
         artistText = data.artists_data.map(a => a.name).join(', ');
       } else if (typeof data.artists === 'string') {
         artistText = data.artists;
       }
-      
+
       if (data.album && data.album.name) {
         albumName = data.album.name;
       }
@@ -38,7 +38,8 @@ export default async function handler(request, context) {
         thumbUrl = sorted[0].url || thumbUrl;
       }
       if (thumbUrl) {
-        thumbUrl = thumbUrl.replace(/=w\d+-h\d+/, '=w800-h800');
+        // Upgrade YouTube googleusercontent thumbnail dimensions to 500x500
+        thumbUrl = thumbUrl.replace(/=w\d+-h\d+/, '=w500-h500');
       }
 
       isExplicit = !!data.is_explicit;
