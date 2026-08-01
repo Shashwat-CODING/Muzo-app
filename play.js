@@ -49,8 +49,13 @@
     return `${m}:${s < 10 ? '0' : ''}${s}`;
   }
 
-  // ── 1. Fetch Track Metadata ──
+  // ── 1. Fetch Track Metadata (Client Fallback if static HTML has skeletons) ──
   async function fetchMetadata() {
+    // If Edge function already rendered trackTitle text, skip refetching metadata
+    if (trackTitle && trackTitle.textContent && !trackTitle.querySelector('.skeleton')) {
+      return;
+    }
+
     const metadataApiUrl = `https://shashwatidr-img.hf.space/api/metadata/${trackId}`;
     try {
       const res = await fetch(metadataApiUrl);
