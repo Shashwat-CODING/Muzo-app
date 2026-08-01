@@ -33,8 +33,6 @@
   const currentTimeEl = document.getElementById('currentTime');
   const totalDurationEl = document.getElementById('totalDuration');
   
-  const muteBtn = document.getElementById('muteBtn');
-  const volumeBar = document.getElementById('volumeBar');
   const shareBtn = document.getElementById('shareBtn');
   
   const navOpenMuzoBtn = document.getElementById('navOpenMuzoBtn');
@@ -74,11 +72,14 @@
       // Album name
       const albumName = (data.album && data.album.name) ? data.album.name : '';
 
-      // High quality thumbnail selection
+      // High quality thumbnail selection & URL upgrading to w800-h800
       let thumbUrl = data.thumbnail || '';
       if (Array.isArray(data.thumbnails) && data.thumbnails.length > 0) {
         const sorted = [...data.thumbnails].sort((a, b) => (b.width || 0) - (a.width || 0));
         thumbUrl = sorted[0].url || thumbUrl;
+      }
+      if (thumbUrl) {
+        thumbUrl = thumbUrl.replace(/=w\d+-h\d+/, '=w800-h800');
       }
 
       // Update DOM with Metadata
@@ -90,20 +91,23 @@
       if (thumbUrl) {
         trackArt.src = thumbUrl;
         ambientBg.style.backgroundImage = `url('${thumbUrl}')`;
+      }
 
-        // Update meta tags for link preview
-        const ogTitle = document.getElementById('ogTitle');
-        const ogDesc = document.getElementById('ogDesc');
-        const ogImage = document.getElementById('ogImage');
-        const twTitle = document.getElementById('twTitle');
-        const twDesc = document.getElementById('twDesc');
-        const twImage = document.getElementById('twImage');
+      // Update meta tags for link preview (Song name & Song thumbnail)
+      const ogTitle = document.getElementById('ogTitle');
+      const ogDesc = document.getElementById('ogDesc');
+      const ogImage = document.getElementById('ogImage');
+      const twTitle = document.getElementById('twTitle');
+      const twDesc = document.getElementById('twDesc');
+      const twImage = document.getElementById('twImage');
 
-        if (ogTitle) ogTitle.content = `${title} - ${artistText}`;
-        if (ogDesc) ogDesc.content = `Stream ${title} by ${artistText} on Muzo`;
+      if (ogTitle) ogTitle.content = title;
+      if (ogDesc) ogDesc.content = artistText ? `Listen to ${title} by ${artistText} on Muzo` : `Listen to ${title} on Muzo`;
+      if (twTitle) twTitle.content = title;
+      if (twDesc) twDesc.content = artistText ? `Listen to ${title} by ${artistText} on Muzo` : `Listen to ${title} on Muzo`;
+      
+      if (thumbUrl) {
         if (ogImage) ogImage.content = thumbUrl;
-        if (twTitle) twTitle.content = `${title} - ${artistText}`;
-        if (twDesc) twDesc.content = `Stream ${title} by ${artistText} on Muzo`;
         if (twImage) twImage.content = thumbUrl;
       }
 
@@ -183,16 +187,6 @@
 
   progressBar.addEventListener('input', () => {
     audioPlayer.currentTime = progressBar.value;
-  });
-
-  volumeBar.addEventListener('input', () => {
-    audioPlayer.volume = volumeBar.value;
-    audioPlayer.muted = (volumeBar.value === "0");
-  });
-
-  muteBtn.addEventListener('click', () => {
-    audioPlayer.muted = !audioPlayer.muted;
-    volumeBar.value = audioPlayer.muted ? 0 : audioPlayer.volume || 1;
   });
 
   playPauseBtn.addEventListener('click', togglePlay);
