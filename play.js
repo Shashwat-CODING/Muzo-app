@@ -145,29 +145,18 @@
     });
   }
 
-  // ── 1. Fetch Audio Stream URL (Client Side) ──
-  async function fetchStream() {
-    const streamApiUrl = `https://mlc.kouzu.in/api/stream?id=${trackId}`;
-    try {
-      const res = await fetch(streamApiUrl);
-      if (!res.ok) throw new Error('Stream API response error');
-      const data = await res.json();
-
-      if (data && data.url) {
-        audioPlayer.src = data.url;
-        audioPlayer.load(); // Force mobile browsers to load media pipeline
-      } else {
-        throw new Error('No stream URL returned');
-      }
-    } catch (err) {
-      console.error('Error fetching stream URL:', err);
+  // ── 1. Set Direct Audio Stream URL ──
+  function setupStream() {
+    if (audioPlayer) {
+      audioPlayer.src = `https://mlc.kouzu.in/api/stream/listen/${trackId}`;
+      audioPlayer.load();
     }
   }
 
   // ── 2. Custom Player Controls & Event Listeners ──
   async function togglePlay() {
     if (!audioPlayer.src) {
-      await fetchStream();
+      setupStream();
     }
     
     if (audioPlayer.paused) {
@@ -250,5 +239,5 @@
   }
 
   // ── Initialize ──
-  fetchStream();
+  setupStream();
 })();
