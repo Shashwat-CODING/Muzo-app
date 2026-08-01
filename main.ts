@@ -2,6 +2,8 @@ Deno.serve(async (req) => {
   const url = new URL(req.url);
   const pathname = url.pathname;
 
+  const v = Date.now();
+
   // Handle static assets
   if (pathname === "/play.css") {
     return serveStaticFile(req, pathname, "text/css; charset=utf-8");
@@ -72,6 +74,9 @@ Deno.serve(async (req) => {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>${escapeHtml(pageTitle)}</title>
 
   <!-- Server-rendered OpenGraph & Twitter Meta Tags for Link Previews -->
@@ -90,7 +95,7 @@ Deno.serve(async (req) => {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/play.css" />
+  <link rel="stylesheet" href="/play.css?v=${v}" />
 </head>
 <body>
 
@@ -182,14 +187,16 @@ Deno.serve(async (req) => {
   <!-- Hidden Audio Element for Web Playback Engine -->
   <audio id="audioPlayer" preload="auto" playsinline webkit-playsinline style="display: none;"></audio>
 
-  <script src="/play.js"></script>
+  <script src="/play.js?v=${v}"></script>
 </body>
 </html>`;
 
     return new Response(html, {
       headers: {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "pragma": "no-cache",
+        "expires": "0",
       },
     });
   }
@@ -204,7 +211,12 @@ async function serveStaticFile(req: Request, relPath: string, contentTypeOverrid
     const file = await Deno.readFile(filePath);
     const contentType = contentTypeOverride || getContentType(relPath);
     return new Response(file, {
-      headers: { "content-type": contentType },
+      headers: {
+        "content-type": contentType,
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "pragma": "no-cache",
+        "expires": "0",
+      },
     });
   } catch (_e) {
     return new Response("Not Found", { status: 404 });
