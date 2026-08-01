@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Muzo Player — Stream Music</title>
 
-  <!-- Dynamic / Fallback OpenGraph & Twitter Meta Tags for Link Previews -->
+  <!-- Dynamic OpenGraph & Twitter Meta Tags for Link Previews (Populated via JS / Server) -->
   <meta property="og:type" content="music.song" />
-  <meta property="og:title" id="ogTitle" content="Listen on Muzo" />
-  <meta property="og:description" id="ogDesc" content="Stream high quality audio on Muzo Web Player" />
-  <meta property="og:image" id="ogImage" content="https://muzo-app.netlify.app/logo.webp" />
+  <meta property="og:title" id="ogTitle" content="" />
+  <meta property="og:description" id="ogDesc" content="" />
+  <meta property="og:image" id="ogImage" content="" />
   <meta property="og:site_name" content="Muzo" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" id="twTitle" content="Listen on Muzo" />
-  <meta name="twitter:description" id="twDesc" content="Stream high quality audio on Muzo Web Player" />
-  <meta name="twitter:image" id="twImage" content="https://muzo-app.netlify.app/logo.webp" />
+  <meta name="twitter:title" id="twTitle" content="" />
+  <meta name="twitter:description" id="twDesc" content="" />
+  <meta name="twitter:image" id="twImage" content="" />
 
   <link rel="icon" type="image/webp" href="/logo.webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,7 +46,7 @@
     <!-- Left Column: Album Art & Visualizer -->
     <div class="art-column">
       <div class="art-card" id="artCard">
-        <img id="trackArt" src="/logo.webp" alt="Track Cover Art" class="track-artwork" />
+        <img id="trackArt" src="" alt="Track Cover Art" class="track-artwork" />
         <div class="art-overlay"></div>
       </div>
     </div>
@@ -76,8 +76,9 @@
             <span id="totalDuration">0:00</span>
           </div>
           <div class="slider-wrapper" id="progressWrapper">
-            <input type="range" id="progressBar" min="0" max="100" value="0" step="0.1" aria-label="Seek track" />
+            <div class="slider-track-bg"></div>
             <div class="progress-fill" id="progressFill"></div>
+            <input type="range" id="progressBar" min="0" max="100" value="0" step="0.1" aria-label="Seek track" />
           </div>
         </div>
 

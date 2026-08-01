@@ -18,7 +18,6 @@
   // DOM Elements
   const trackArt = document.getElementById('trackArt');
   const ambientBg = document.getElementById('ambientBg');
-  const defaultLogoUrl = 'https://muzo-app.netlify.app/logo.webp';
   const trackTitle = document.getElementById('trackTitle');
   const trackArtists = document.getElementById('trackArtists');
   const trackAlbum = document.getElementById('trackAlbum');
@@ -171,10 +170,22 @@
     pauseIcon.style.display = 'none';
   });
 
+  const progressFill = document.getElementById('progressFill');
+
+  function updateProgressFill() {
+    if (progressBar.max && progressBar.max > 0) {
+      const percentage = (progressBar.value / progressBar.max) * 100;
+      if (progressFill) {
+        progressFill.style.width = `${Math.min(100, Math.max(0, percentage))}%`;
+      }
+    }
+  }
+
   audioPlayer.addEventListener('loadedmetadata', () => {
     if (audioPlayer.duration && !isNaN(audioPlayer.duration)) {
       totalDurationEl.textContent = formatTime(audioPlayer.duration);
       progressBar.max = audioPlayer.duration;
+      updateProgressFill();
     }
   });
 
@@ -182,11 +193,13 @@
     if (!isNaN(audioPlayer.currentTime)) {
       currentTimeEl.textContent = formatTime(audioPlayer.currentTime);
       progressBar.value = audioPlayer.currentTime;
+      updateProgressFill();
     }
   });
 
   progressBar.addEventListener('input', () => {
     audioPlayer.currentTime = progressBar.value;
+    updateProgressFill();
   });
 
   playPauseBtn.addEventListener('click', togglePlay);
