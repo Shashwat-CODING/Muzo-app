@@ -147,7 +147,7 @@
   // ── 1. Set Direct Audio Stream URL ──
   function setupStream() {
     if (audioPlayer) {
-      audioPlayer.src = `https://mlc.kouzu.in/api/stream/listen/${trackId}`;
+      audioPlayer.src = `https://velamhere-img.hf.space/song/${trackId}`;
       audioPlayer.load();
     }
   }
