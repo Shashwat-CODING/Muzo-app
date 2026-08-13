@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/play/:id*",
+      "destination": "/api/play?id=:id*"
+    },
+    {
+      "source": "/play",
+      "destination": "/api/play"
+    },
+    {
+      "source": "/code/play/:id*",
+      "destination": "/api/play?id=:id*"
+    },
+    {
+      "source": "/code/play",
+      "destination": "/api/play"
+    }
+  ]
+}
